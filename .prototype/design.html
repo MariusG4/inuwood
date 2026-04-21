@@ -1,0 +1,685 @@
+Page: Wood & Grain | Bespoke Woodworking ```html
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Wood & Grain | Bespoke Craftsmanship</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Iconify -->
+        <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+        <!-- Tailwind Configuration -->
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['"League Spartan"', "sans-serif"],
+                        },
+                        colors: {
+                            primary: {
+                                bg: "#F9F7F2",
+                                text: "#2D2C2C",
+                            },
+                            secondary: {
+                                bg: "#EFECE5",
+                                text: "#5D4037",
+                            },
+                            accent: "#334B49",
+                        },
+                        transitionTimingFunction: {
+                            custom: "cubic-bezier(0.16, 1, 0.3, 1)",
+                        },
+                        animation: {
+                            "bounce-slow": "bounceSlow 4s ease-in-out infinite",
+                        },
+                        keyframes: {
+                            bounceSlow: {
+                                "0%, 100%": { transform: "translateY(-5%)" },
+                                "50%": { transform: "translateY(5%)" },
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+
+        <style>
+            /* Custom scrollbar for an editorial feel */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+            ::-webkit-scrollbar-track {
+                background: #efece5;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #5d4037;
+            }
+
+            /* Reveal Animation Base Class */
+            .reveal-up {
+                opacity: 0;
+                transform: translateY(40px);
+                transition:
+                    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .reveal-up.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Utility for 10px tracking labels */
+            .util-label {
+                font-size: 10px;
+                font-weight: 900;
+                letter-spacing: 0.4em;
+                text-transform: uppercase;
+            }
+        </style>
+    </head>
+    <body
+        class="bg-primary-bg text-primary-text font-sans antialiased selection:bg-accent selection:text-primary-bg overflow-x-hidden"
+    >
+        <!-- Navigation -->
+        <nav
+            class="fixed top-0 w-full h-[80px] z-50 bg-[#F9F7F2]/85 backdrop-blur-[12px] border-b border-[#5D4037]/10 flex items-center justify-between px-6 md:px-12 transition-all duration-1000 ease-custom"
+        >
+            <a
+                href="#"
+                id="nav-brand"
+                class="font-black text-xl tracking-tight text-secondary-text"
+            >
+                WOOD & GRAIN
+            </a>
+
+            <div class="hidden md:flex items-center gap-12">
+                <a
+                    href="#projects"
+                    id="nav-projects"
+                    class="text-[10px] uppercase font-bold tracking-[0.2em] text-primary-text hover:text-accent transition-colors duration-500"
+                    >Projects</a
+                >
+                <a
+                    href="#services"
+                    id="nav-services"
+                    class="text-[10px] uppercase font-bold tracking-[0.2em] text-primary-text hover:text-accent transition-colors duration-500"
+                    >Services</a
+                >
+                <a
+                    href="#journal"
+                    id="nav-journal"
+                    class="text-[10px] uppercase font-bold tracking-[0.2em] text-primary-text hover:text-accent transition-colors duration-500"
+                    >Journal</a
+                >
+            </div>
+
+            <a
+                href="#contact"
+                id="nav-cta"
+                class="bg-accent text-primary-bg px-[32px] py-[12px] rounded-full text-[10px] uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
+            >
+                Contact
+            </a>
+        </nav>
+
+        <!-- Main Content Wrapper -->
+        <main class="w-full">
+            <!-- Hero Section -->
+            <section
+                class="min-h-screen pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto relative"
+            >
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 w-full items-center py-20 lg:py-0"
+                >
+                    <!-- Left: Typography -->
+                    <div class="lg:col-span-7 z-10">
+                        <h1
+                            class="text-[15vw] lg:text-[11vw] font-black leading-[0.75] tracking-tighter text-secondary-text reveal-up uppercase"
+                        >
+                            Timber <br />
+                            <span
+                                class="text-accent font-medium lowercase italic tracking-normal pr-4"
+                                >handcrafted</span
+                            >
+                            <br />
+                            Form
+                        </h1>
+                        <p
+                            class="text-xl md:text-2xl text-primary-text/70 mt-10 max-w-md reveal-up font-light leading-relaxed"
+                            style="transition-delay: 100ms"
+                        >
+                            We shape raw nature into enduring legacy pieces.
+                            Solid wood, traditional joinery, uncompromised
+                            quality.
+                        </p>
+                        <div
+                            class="reveal-up mt-16"
+                            style="transition-delay: 200ms"
+                        >
+                            <a
+                                href="#projects"
+                                id="hero-cta"
+                                class="inline-flex items-center gap-4 pb-2 border-b-2 border-accent text-accent font-black uppercase text-[10px] tracking-[0.4em] hover:text-secondary-text hover:border-secondary-text transition-colors duration-500"
+                            >
+                                Explore Works
+                                <iconify-icon
+                                    icon="lucide:arrow-right"
+                                    class="text-lg"
+                                ></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Image Card -->
+                    <div
+                        class="lg:col-span-5 relative mt-20 lg:mt-0 reveal-up"
+                        style="transition-delay: 300ms"
+                    >
+                        <div
+                            class="relative rounded-[24px] overflow-hidden aspect-[3/4] group"
+                        >
+                            <img
+                                src="https://images.unsplash.com/photo-1599696848652-f0ff23bc911f?auto=format&fit=crop&q=80&w=1200"
+                                alt="Crafting wood"
+                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                            />
+                        </div>
+
+                        <!-- Floating Badge -->
+                        <div
+                            class="absolute -bottom-12 -left-8 md:-left-16 w-[140px] h-[140px] md:w-[160px] md:h-[160px] rounded-full bg-secondary-text text-primary-bg flex flex-col items-center justify-center animate-bounce-slow z-20 shadow-2xl border-4 border-primary-bg"
+                        >
+                            <span
+                                class="text-2xl md:text-3xl font-medium italic mb-1"
+                                >Bespoke</span
+                            >
+                            <span
+                                class="text-[8px] md:text-[10px] uppercase font-black tracking-[0.4em] opacity-80"
+                                >Edition</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section
+                id="services"
+                class="bg-secondary-bg py-32 md:py-48 px-6 md:px-12"
+            >
+                <div class="max-w-[1440px] mx-auto">
+                    <h2
+                        class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter leading-[0.8] mb-24 reveal-up"
+                    >
+                        What we craft
+                    </h2>
+
+                    <div
+                        class="grid grid-cols-1 lg:grid-cols-3 border-t border-l border-secondary-text/20"
+                    >
+                        <!-- Service 1 -->
+                        <article
+                            class="group border-r border-b border-secondary-text/20 p-10 md:p-14 bg-primary-bg hover:bg-accent transition-colors duration-1000 ease-custom reveal-up cursor-pointer"
+                        >
+                            <div class="mb-16">
+                                <iconify-icon
+                                    icon="ph:tree-structure-bold"
+                                    class="text-5xl text-secondary-text group-hover:text-primary-bg transition-colors duration-1000 ease-custom"
+                                ></iconify-icon>
+                            </div>
+                            <h3
+                                class="font-black uppercase text-2xl md:text-3xl tracking-tight text-secondary-text group-hover:text-primary-bg mb-6 transition-colors duration-1000 ease-custom"
+                            >
+                                Joinery
+                            </h3>
+                            <p
+                                class="text-primary-text/70 group-hover:text-primary-bg/80 leading-relaxed transition-colors duration-1000 ease-custom"
+                            >
+                                Traditional mortise and tenon construction,
+                                dovetails, and precisely fitted joints that
+                                allow wood to move naturally while lasting
+                                generations.
+                            </p>
+                        </article>
+
+                        <!-- Service 2 -->
+                        <article
+                            class="group border-r border-b border-secondary-text/20 p-10 md:p-14 bg-primary-bg hover:bg-accent transition-colors duration-1000 ease-custom reveal-up"
+                            style="transition-delay: 100ms"
+                        >
+                            <div class="mb-16">
+                                <iconify-icon
+                                    icon="ph:paint-brush-broad-bold"
+                                    class="text-5xl text-secondary-text group-hover:text-primary-bg transition-colors duration-1000 ease-custom"
+                                ></iconify-icon>
+                            </div>
+                            <h3
+                                class="font-black uppercase text-2xl md:text-3xl tracking-tight text-secondary-text group-hover:text-primary-bg mb-6 transition-colors duration-1000 ease-custom"
+                            >
+                                Finishing
+                            </h3>
+                            <p
+                                class="text-primary-text/70 group-hover:text-primary-bg/80 leading-relaxed transition-colors duration-1000 ease-custom"
+                            >
+                                Hand-rubbed natural oils and waxes that
+                                penetrate deep into the grain, protecting the
+                                timber while enhancing its inherent warmth and
+                                character.
+                            </p>
+                        </article>
+
+                        <!-- Service 3 -->
+                        <article
+                            class="group border-r border-b border-secondary-text/20 p-10 md:p-14 bg-primary-bg hover:bg-accent transition-colors duration-1000 ease-custom reveal-up"
+                            style="transition-delay: 200ms"
+                        >
+                            <div class="mb-16">
+                                <iconify-icon
+                                    icon="ph:hammer-bold"
+                                    class="text-5xl text-secondary-text group-hover:text-primary-bg transition-colors duration-1000 ease-custom"
+                                ></iconify-icon>
+                            </div>
+                            <h3
+                                class="font-black uppercase text-2xl md:text-3xl tracking-tight text-secondary-text group-hover:text-primary-bg mb-6 transition-colors duration-1000 ease-custom"
+                            >
+                                Restoration
+                            </h3>
+                            <p
+                                class="text-primary-text/70 group-hover:text-primary-bg/80 leading-relaxed transition-colors duration-1000 ease-custom"
+                            >
+                                Careful and respectful breathing of new life
+                                into vintage and antique solid wood pieces,
+                                preserving their history while restoring
+                                functionality.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Portfolio Section -->
+            <section
+                id="projects"
+                class="py-32 md:py-48 px-6 md:px-12 bg-primary-bg"
+            >
+                <div class="max-w-[1440px] mx-auto">
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-16 gap-y-24"
+                    >
+                        <!-- Column 1 (Odds) -->
+                        <div class="flex flex-col gap-y-24">
+                            <!-- Portfolio Item 1 -->
+                            <article class="group reveal-up">
+                                <a
+                                    href="#project-1"
+                                    id="proj-link-1"
+                                    class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8"
+                                >
+                                    <img
+                                        src="https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=1200"
+                                        alt="The Artisan Chair"
+                                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                                    />
+                                    <div
+                                        class="absolute inset-0 bg-primary-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10"
+                                    >
+                                        <span
+                                            class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 group-hover:scale-100 transition-transform duration-1000 ease-custom"
+                                        >
+                                            View
+                                        </span>
+                                    </div>
+                                </a>
+                                <div>
+                                    <span
+                                        class="util-label text-accent mb-4 block"
+                                        >Seating</span
+                                    >
+                                    <h3
+                                        class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3"
+                                    >
+                                        The Artisan Chair
+                                    </h3>
+                                    <div
+                                        class="text-sm text-primary-text/60 font-medium"
+                                    >
+                                        Solid Ash &bull; 2024
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Portfolio Item 3 -->
+                            <article class="group reveal-up">
+                                <a
+                                    href="#project-3"
+                                    id="proj-link-3"
+                                    class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8"
+                                >
+                                    <img
+                                        src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&q=80&w=1200"
+                                        alt="Lounge Frame"
+                                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                                    />
+                                    <div
+                                        class="absolute inset-0 bg-primary-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10"
+                                    >
+                                        <span
+                                            class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 group-hover:scale-100 transition-transform duration-1000 ease-custom"
+                                        >
+                                            View
+                                        </span>
+                                    </div>
+                                </a>
+                                <div>
+                                    <span
+                                        class="util-label text-accent mb-4 block"
+                                        >Framework</span
+                                    >
+                                    <h3
+                                        class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3"
+                                    >
+                                        Lounge Frame
+                                    </h3>
+                                    <div
+                                        class="text-sm text-primary-text/60 font-medium"
+                                    >
+                                        White Oak &bull; 2023
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- Column 2 (Evens - Staggered) -->
+                        <div class="flex flex-col gap-y-24 md:pt-[120px]">
+                            <!-- Portfolio Item 2 -->
+                            <article class="group reveal-up">
+                                <a
+                                    href="#project-2"
+                                    id="proj-link-2"
+                                    class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8"
+                                >
+                                    <img
+                                        src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&q=80&w=1200"
+                                        alt="Dining Table"
+                                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                                    />
+                                    <div
+                                        class="absolute inset-0 bg-primary-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10"
+                                    >
+                                        <span
+                                            class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 group-hover:scale-100 transition-transform duration-1000 ease-custom"
+                                        >
+                                            View
+                                        </span>
+                                    </div>
+                                </a>
+                                <div>
+                                    <span
+                                        class="util-label text-accent mb-4 block"
+                                        >Tables</span
+                                    >
+                                    <h3
+                                        class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3"
+                                    >
+                                        Monument Dining
+                                    </h3>
+                                    <div
+                                        class="text-sm text-primary-text/60 font-medium"
+                                    >
+                                        Black Walnut &bull; 2024
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Portfolio Item 4 -->
+                            <article class="group reveal-up">
+                                <a
+                                    href="#project-4"
+                                    id="proj-link-4"
+                                    class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8"
+                                >
+                                    <img
+                                        src="https://images.unsplash.com/photo-1604578762246-41134e37f9cc?auto=format&fit=crop&q=80&w=1200"
+                                        alt="Cabinet Detail"
+                                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                                    />
+                                    <div
+                                        class="absolute inset-0 bg-primary-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10"
+                                    >
+                                        <span
+                                            class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 group-hover:scale-100 transition-transform duration-1000 ease-custom"
+                                        >
+                                            View
+                                        </span>
+                                    </div>
+                                </a>
+                                <div>
+                                    <span
+                                        class="util-label text-accent mb-4 block"
+                                        >Storage</span
+                                    >
+                                    <h3
+                                        class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3"
+                                    >
+                                        Credenza Detail
+                                    </h3>
+                                    <div
+                                        class="text-sm text-primary-text/60 font-medium"
+                                    >
+                                        Cherry &bull; 2023
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-secondary-bg pt-32 pb-8 px-6 md:px-12">
+            <div class="max-w-[1440px] mx-auto">
+                <!-- Main Footer Content -->
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-24"
+                >
+                    <!-- Left: Brand & Mission (5 cols) -->
+                    <div class="lg:col-span-5 reveal-up">
+                        <h2
+                            class="text-4xl md:text-5xl font-black tracking-tighter text-secondary-text mb-8"
+                        >
+                            WOOD & GRAIN
+                        </h2>
+                        <p
+                            class="text-2xl text-primary-text/80 max-w-sm leading-snug font-medium"
+                        >
+                            Solid wood, solid craft &ndash; made to last
+                            generations.
+                        </p>
+                    </div>
+
+                    <!-- Right: Links (7 cols) -->
+                    <div
+                        class="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12"
+                    >
+                        <!-- Sub-column 1 -->
+                        <div class="reveal-up" style="transition-delay: 100ms">
+                            <h4
+                                class="util-label text-accent mb-8 pb-2 border-b border-secondary-text inline-block"
+                            >
+                                Menu
+                            </h4>
+                            <ul class="flex flex-col gap-4">
+                                <li>
+                                    <a
+                                        href="#"
+                                        id="foot-nav-1"
+                                        class="text-sm font-medium text-primary-text/70 hover:text-accent transition-colors"
+                                        >Projects</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        id="foot-nav-2"
+                                        class="text-sm font-medium text-primary-text/70 hover:text-accent transition-colors"
+                                        >Services</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        id="foot-nav-3"
+                                        class="text-sm font-medium text-primary-text/70 hover:text-accent transition-colors"
+                                        >Our Process</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        id="foot-nav-4"
+                                        class="text-sm font-medium text-primary-text/70 hover:text-accent transition-colors"
+                                        >Journal</a
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Sub-column 2 -->
+                        <div class="reveal-up" style="transition-delay: 200ms">
+                            <h4
+                                class="util-label text-accent mb-8 pb-2 border-b border-secondary-text inline-block"
+                            >
+                                Social
+                            </h4>
+                            <ul class="flex flex-col gap-4">
+                                <li>
+                                    <a
+                                        href="#"
+                                        id="foot-soc-1"
+                                        class="text-sm font-medium text-primary-text/70 hover:text-accent transition-colors"
+                                        >Instagram</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        id="foot-soc-2"
+                                        class="text-sm font-medium text-primary-text/70 hover:text-accent transition-colors"
+                                        >Pinterest</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        id="foot-soc-3"
+                                        class="text-sm font-medium text-primary-text/70 hover:text-accent transition-colors"
+                                        >Behance</a
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Sub-column 3 -->
+                        <div
+                            class="reveal-up col-span-2 md:col-span-1"
+                            style="transition-delay: 300ms"
+                        >
+                            <h4
+                                class="util-label text-accent mb-8 pb-2 border-b border-secondary-text inline-block"
+                            >
+                                Workshop
+                            </h4>
+                            <address
+                                class="not-italic flex flex-col gap-4 text-sm font-medium text-primary-text/70"
+                            >
+                                <p>
+                                    124 Timberline Way<br />Portland, OR 97204
+                                </p>
+                                <p class="mt-2">
+                                    <a
+                                        href="mailto:hello@woodandgrain.com"
+                                        id="foot-mail"
+                                        class="hover:text-accent transition-colors"
+                                        >hello@woodandgrain.com</a
+                                    ><br />
+                                    +1 (503) 555-0198
+                                </p>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Bar -->
+                <div
+                    class="border-t border-secondary-text/15 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 reveal-up"
+                >
+                    <p
+                        class="text-[9px] font-black uppercase tracking-[0.2em] text-primary-text/40"
+                    >
+                        &copy; 2024 Wood & Grain. All rights reserved.
+                    </p>
+                    <div class="flex gap-8">
+                        <a
+                            href="#"
+                            id="legal-1"
+                            class="text-[9px] font-black uppercase tracking-[0.2em] text-primary-text/40 hover:text-accent transition-colors"
+                            >Terms</a
+                        >
+                        <a
+                            href="#"
+                            id="legal-2"
+                            class="text-[9px] font-black uppercase tracking-[0.2em] text-primary-text/40 hover:text-accent transition-colors"
+                            >Privacy</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Interactions Scripts -->
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Intersection Observer for Reveal Up Animation
+                const observerOptions = {
+                    root: null,
+                    rootMargin: "0px",
+                    threshold: 0.15,
+                };
+
+                const observer = new IntersectionObserver(
+                    (entries, observer) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                // Add class to trigger animation
+                                entry.target.classList.add("is-visible");
+                                // Optional: stop observing once revealed for performance
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    },
+                    observerOptions,
+                );
+
+                // Select all elements with the reveal-up class
+                const revealElements = document.querySelectorAll(".reveal-up");
+                revealElements.forEach((el) => observer.observe(el));
+            });
+        </script>
+    </body>
+</html>
+``` Please reference this design and implement it into our codebase; Try to
+understand the structure, which part of our codebase is relevant and implement

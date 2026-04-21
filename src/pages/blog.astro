@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const blogPosts = [
+  {
+    title: 'The Art of Hand-Cut Dovetails',
+    excerpt: 'Discover the timeless joinery technique that has defined quality craftsmanship for centuries.',
+    date: 'March 15, 2024',
+    category: 'Techniques',
+    image: 'https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&q=80&w=1200',
+    readTime: '5 min read'
+  },
+  {
+    title: 'Choosing the Right Wood for Your Project',
+    excerpt: 'A comprehensive guide to selecting hardwoods based on durability, appearance, and application.',
+    date: 'March 8, 2024',
+    category: 'Materials',
+    image: 'https://images.unsplash.com/photo-1606137034906-cd2fabc93e5b?auto=format&fit=crop&q=80&w=1200',
+    readTime: '7 min read'
+  },
+  {
+    title: 'Sustainable Forestry: Our Commitment',
+    excerpt: 'How we source our lumber responsibly and support the future of woodworking.',
+    date: 'February 28, 2024',
+    category: 'Sustainability',
+    image: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=1200',
+    readTime: '6 min read'
+  },
+  {
+    title: 'Restoring a Mid-Century Modern Classic',
+    excerpt: 'A deep dive into our process of bringing a 1960s credenza back to its original glory.',
+    date: 'February 20, 2024',
+    category: 'Case Study',
+    image: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=1200',
+    readTime: '8 min read'
+  },
+  {
+    title: 'Tools of the Trade: Essential Woodworking Equipment',
+    excerpt: 'From hand planes to mortisers, explore the tools that make fine furniture possible.',
+    date: 'February 12, 2024',
+    category: 'Tools',
+    image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=1200',
+    readTime: '6 min read'
+  },
+  {
+    title: 'The Beauty of Live Edge Design',
+    excerpt: 'Celebrating the natural form of wood and incorporating organic edges into modern furniture.',
+    date: 'February 5, 2024',
+    category: 'Design',
+    image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&q=80&w=1200',
+    readTime: '5 min read'
+  }
+];
+---
+
+<Layout title="Blog | Wood & Grain" description="Read our latest articles on woodworking techniques, sustainable practices, and furniture design insights.">
+  <!-- Hero Section -->
+  <section class="min-h-[60vh] pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto">
+    <div class="w-full py-20">
+      <div class="reveal-up">
+        <span class="util-label text-accent mb-4 block">Stories & Insights</span>
+        <h1 class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
+          Our Blog
+        </h1>
+        <p class="text-xl md:text-2xl text-primary-text/70 max-w-3xl font-light leading-relaxed">
+          Explore articles on woodworking techniques, design philosophy, and the craft behind each
+          piece we create.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Grid -->
+  <section class="py-32 md:py-48 px-6 md:px-12 bg-primary-bg">
+    <div class="max-w-[1440px] mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 lg:gap-x-12 gap-y-16">
+        {blogPosts.map((post, index) => (
+          <article class="group reveal-up" style={`transition-delay: ${index * 50}ms`}>
+            <a href="#" class="block">
+              <div class="relative rounded-[16px] overflow-hidden aspect-[4/3] mb-6">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 ease-custom"
+                />
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3 text-xs text-primary-text/60 font-medium">
+                  <span class="util-label text-accent">{post.category}</span>
+                  <span>&bull;</span>
+                  <span>{post.date}</span>
+                  <span>&bull;</span>
+                  <span>{post.readTime}</span>
+                </div>
+                <h3 class="text-2xl md:text-3xl font-black text-secondary-text tracking-tighter group-hover:text-accent transition-colors duration-300">
+                  {post.title}
+                </h3>
+                <p class="text-base text-primary-text/70 leading-relaxed">
+                  {post.excerpt}
+                </p>
+                <div class="inline-flex items-center gap-2 text-accent font-bold text-sm uppercase tracking-[0.2em] group-hover:gap-4 transition-all duration-300">
+                  Read More
+                  <iconify-icon icon="lucide:arrow-right" class="text-base"></iconify-icon>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="py-32 md:py-48 px-6 md:px-12 bg-secondary-bg">
+    <div class="max-w-[1440px] mx-auto">
+      <div class="max-w-3xl mx-auto text-center reveal-up">
+        <h2 class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-8">
+          Stay Inspired
+        </h2>
+        <p class="text-xl text-primary-text/70 mb-12">
+          Subscribe to our newsletter for woodworking tips, project updates, and exclusive insights
+          from our workshop.
+        </p>
+        <form class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+          <input
+            type="email"
+            placeholder="Your email address"
+            required
+            class="flex-1 px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-full focus:outline-none focus:border-accent transition-colors duration-300"
+          />
+          <button
+            type="submit"
+            class="bg-accent text-primary-bg px-8 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500 whitespace-nowrap"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>

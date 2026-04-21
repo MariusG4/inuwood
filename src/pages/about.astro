@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About Us | Wood & Grain" description="Learn about our craft, our story, and our commitment to traditional woodworking excellence.">
+  <!-- Hero Section -->
+  <section class="min-h-[60vh] pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto">
+    <div class="w-full py-20">
+      <div class="reveal-up">
+        <span class="util-label text-accent mb-4 block">Our Story</span>
+        <h1 class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
+          About Wood & Grain
+        </h1>
+        <p class="text-xl md:text-2xl text-primary-text/70 max-w-3xl font-light leading-relaxed">
+          For over two decades, we've been crafting heirloom-quality furniture using traditional
+          techniques and sustainably sourced hardwoods.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Section -->
+  <section class="py-32 md:py-48 px-6 md:px-12 bg-secondary-bg">
+    <div class="max-w-[1440px] mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div class="reveal-up">
+          <img
+            src="https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?auto=format&fit=crop&q=80&w=1200"
+            alt="Workshop interior"
+            class="w-full aspect-[4/3] object-cover rounded-[24px]"
+          />
+        </div>
+        <div class="reveal-up" style="transition-delay: 100ms">
+          <h2 class="text-4xl md:text-5xl font-black text-secondary-text tracking-tighter mb-8">
+            Craftsmanship Rooted in Tradition
+          </h2>
+          <div class="space-y-6 text-lg text-primary-text/70 leading-relaxed">
+            <p>
+              Founded in 2002, Wood & Grain emerged from a simple belief: that furniture should be
+              built to last generations, not seasons. Our workshop in Portland, Oregon serves as
+              the birthplace of pieces that marry timeless design with uncompromising quality.
+            </p>
+            <p>
+              Every joint, curve, and finish is executed by hand, using techniques passed down
+              through centuries of woodworking tradition. We source our lumber from responsibly
+              managed forests, ensuring that the natural beauty we work with today will be
+              available for craftspeople tomorrow.
+            </p>
+            <p>
+              Our small team of artisans brings decades of combined experience to each project,
+              whether it's a custom dining table or the restoration of a cherished heirloom.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="py-32 md:py-48 px-6 md:px-12 bg-primary-bg">
+    <div class="max-w-[1440px] mx-auto">
+      <header class="mb-20 reveal-up text-center">
+        <span class="util-label text-accent mb-4 block">Our Philosophy</span>
+        <h2 class="text-5xl md:text-7xl font-black text-secondary-text tracking-tighter">
+          What We Stand For
+        </h2>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+        <!-- Value 1 -->
+        <article class="reveal-up text-center">
+          <div class="mb-8 flex justify-center">
+            <iconify-icon
+              icon="ph:tree-evergreen-bold"
+              class="text-7xl text-accent"
+            ></iconify-icon>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-black text-secondary-text mb-4">
+            Sustainability
+          </h3>
+          <p class="text-base text-primary-text/70 leading-relaxed">
+            We source only from certified sustainable forests and use every part of the wood,
+            minimizing waste and respecting the resource.
+          </p>
+        </article>
+
+        <!-- Value 2 -->
+        <article class="reveal-up text-center" style="transition-delay: 100ms">
+          <div class="mb-8 flex justify-center">
+            <iconify-icon
+              icon="ph:hammer-bold"
+              class="text-7xl text-accent"
+            ></iconify-icon>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-black text-secondary-text mb-4">
+            Quality
+          </h3>
+          <p class="text-base text-primary-text/70 leading-relaxed">
+            Each piece undergoes rigorous quality checks. We never compromise on materials or
+            technique, ensuring furniture that lasts.
+          </p>
+        </article>
+
+        <!-- Value 3 -->
+        <article class="reveal-up text-center" style="transition-delay: 200ms">
+          <div class="mb-8 flex justify-center">
+            <iconify-icon
+              icon="ph:users-three-bold"
+              class="text-7xl text-accent"
+            ></iconify-icon>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-black text-secondary-text mb-4">
+            Community
+          </h3>
+          <p class="text-base text-primary-text/70 leading-relaxed">
+            We believe in fair wages, supporting local suppliers, and sharing our knowledge through
+            workshops and apprenticeships.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-32 md:py-48 px-6 md:px-12 bg-accent">
+    <div class="max-w-[1440px] mx-auto text-center reveal-up">
+      <h2 class="text-4xl md:text-6xl font-black text-primary-bg tracking-tighter mb-8">
+        Ready to Start Your Project?
+      </h2>
+      <p class="text-xl text-primary-bg/80 mb-12 max-w-2xl mx-auto">
+        Whether you're looking for a custom piece or want to restore a family heirloom, we'd love
+        to hear from you.
+      </p>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-4 bg-primary-bg text-accent px-12 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-bg transition-colors duration-500"
+      >
+        Get in Touch
+        <iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>
+      </a>
+    </div>
+  </section>
+</Layout>
