@@ -1,0 +1,72 @@
+---
+// WhatsApp Floating Button Component
+// Mobile-optimized floating action button for WhatsApp contact
+
+interface Props {
+  phoneNumber?: string;
+  message?: string;
+  position?: 'bottom-right' | 'bottom-left';
+}
+
+const {
+  phoneNumber = '40753481013',
+  message = 'Bună! Sunt interesat de produsele InuWood. Aș dori mai multe informații.',
+  position = 'bottom-right',
+} = Astro.props;
+
+// Build WhatsApp URL
+const encodedMessage = encodeURIComponent(message);
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+const positionClasses = position === 'bottom-right'
+  ? 'right-4 sm:right-6'
+  : 'left-4 sm:left-6';
+---
+
+<a
+  href={whatsappUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contactează-ne pe WhatsApp"
+  class={`fixed bottom-4 sm:bottom-6 ${positionClasses} z-40 group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] shadow-lg hover:shadow-xl active:scale-90 transition-all duration-300 ease-out focus:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/40`}
+  style="padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px);"
+>
+  {/* WhatsApp SVG Icon */}
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    fill="currentColor"
+    class="w-7 h-7 sm:w-8 sm:h-8 text-white transition-transform duration-300 group-hover:scale-110"
+    aria-hidden="true"
+  >
+    <path d="M16.002 2.5c-7.455 0-13.5 6.045-13.5 13.5 0 2.383.62 4.624 1.707 6.573L2 30l7.65-2.143A13.46 13.46 0 0016.002 29c7.455 0 13.5-6.045 13.5-13.5S23.457 2.5 16.002 2.5zm7.744 18.877c-.337.947-1.678 1.74-2.31 1.848-.618.105-1.14.151-1.71-.08-.39-.165-.793-.33-1.21-.536-2.257-1.143-3.95-2.758-5.193-4.938-.645-1.108-1.078-2.306-1.202-3.603-.062-.674.047-1.28.33-1.86.165-.338.42-.583.758-.76.27-.143.528-.156.75.06.32.312.622.642.918.977.243.275.493.545.712.838.357.478.29.952-.07 1.407-.152.19-.324.362-.5.528-.14.133-.292.253-.426.39-.12.122-.233.256-.322.4-.172.28-.133.538.082.768.59.618 1.224 1.194 1.96 1.63 1.048.636 2.163 1.074 3.404 1.217.365.042.72-.023.976-.308.226-.252.458-.498.692-.742.22-.23.458-.432.742-.576.275-.14.545-.168.784.067.3.295.593.598.884.903.27.282.534.57.805.85.247.255.254.52.02.803-.182.22-.37.433-.57.638z"/>
+  </svg>
+
+  {/* Tooltip / Label for desktop */}
+  <span class="absolute right-full mr-3 hidden md:flex items-center px-3 py-1.5 bg-white text-sm font-medium text-gray-800 rounded-lg shadow-md opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap pointer-events-none">
+    Scrie-ne pe WhatsApp
+    <span class="absolute right-[-4px] w-2 h-2 bg-white rotate-45"></span>
+  </span>
+
+  {/* Ripple/Pulse animation ring */}
+  <span class="absolute inset-0 rounded-full bg-[#25D366] opacity-60 animate-ping" style="animation-duration: 2.5s;"></span>
+</a>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    a {
+      transition: none;
+    }
+    a .animate-ping {
+      animation: none;
+    }
+  }
+
+  /* Ensure safe area support for modern mobile devices */
+  @supports (padding: max(0px)) {
+    a {
+      bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+      right: max(1rem, env(safe-area-inset-right, 1rem));
+    }
+  }
+</style>

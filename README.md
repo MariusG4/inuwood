@@ -1,37 +1,87 @@
-# Wood & Grain - Astro Website
+# InuWood - Website Astro
 
-A beautiful, modern website for Wood & Grain woodworking company built with Astro and Tailwind CSS.
+Website modern și complet optimizat SEO pentru InuWood, atelier de tâmplărie artizanală din **Bacău, România**.
 
-## 🚀 Project Structure
+✨ **Construit cu arhitectură pe componente reutilizabile**
+🚀 **Astro + Tailwind CSS**
+🇷🇴 **100% în limba română**
+⚡ **SEO perfect cu Schema.org**
+
+## 🚀 Project Structure (Cu Componente!)
 
 ```
-/
+InuWood/
 ├── public/
-│   └── favicon.svg
+│   ├── favicon.svg
+│   ├── og-image.svg
+│   ├── robots.txt
+│   └── sitemap.xml
 ├── src/
 │   ├── components/
+│   │   ├── SEO/                    ← Componente SEO reutilizabile
+│   │   │   ├── SEOHead.astro
+│   │   │   ├── OrganizationSchema.astro
+│   │   │   └── LocalBusinessSchema.astro
+│   │   ├── UI/                     ← Componente UI reutilizabile
+│   │   │   ├── Hero.astro
+│   │   │   ├── SectionHeader.astro
+│   │   │   ├── ProductCard.astro
+│   │   │   ├── BlogCard.astro
+│   │   │   └── CTASection.astro
 │   │   ├── Navigation.astro
 │   │   └── Footer.astro
 │   ├── layouts/
-│   │   └── Layout.astro
+│   │   └── Layout.astro            ← Layout cu SEOHead component
 │   └── pages/
-│       ├── index.astro
+│       ├── index.astro             ← Folosește componente UI
 │       ├── about.astro
 │       ├── products.astro
 │       ├── contact.astro
 │       └── blog.astro
-├── astro.config.mjs
-├── tailwind.config.mjs
+├── COMPONENTS.md                   ← Documentație componente (NOU!)
+├── SEO.md
+├── DEPLOYMENT.md
 └── package.json
 ```
 
-## 📄 Pages
+## 📄 Pagini
 
-- **Landing Page** (`/`) - Hero section with featured services and portfolio preview
-- **About Us** (`/about`) - Company story, values, and philosophy
-- **Products** (`/products`) - Portfolio of handcrafted furniture pieces
-- **Contact** (`/contact`) - Contact form and workshop information
-- **Blog** (`/blog`) - Articles on woodworking techniques and insights
+- **Pagina Principală** (`/`) - Hero, servicii, portofoliu (folosește Hero, SectionHeader, ProductCard)
+- **Despre Noi** (`/about`) - Poveste, valori, CTA (folosește Hero, SectionHeader, CTASection)
+- **Produse** (`/products`) - Portofoliu 6 produse (folosește ProductCard component)
+- **Contact** (`/contact`) - Formular Netlify + info atelier (folosește Hero component)
+- **Blog** (`/blog`) - 6 articole + newsletter (folosește BlogCard component)
+
+## 🎯 Arhitectură pe Componente (NOU!)
+
+### Componente SEO Reutilizabile
+- ✅ **SEOHead.astro** - Meta tags (Title, OG, Twitter) pentru toate paginile
+- ✅ **OrganizationSchema.astro** - Schema.org Organization (global)
+- ✅ **LocalBusinessSchema.astro** - Schema.org LocalBusiness (reutilizabil)
+
+### Componente UI Reutilizabile
+- ✅ **Hero.astro** - Hero section (label, heading, description)
+- ✅ **SectionHeader.astro** - Headers pentru secțiuni
+- ✅ **ProductCard.astro** - Card produs cu Schema.org Product
+- ✅ **BlogCard.astro** - Card blog cu Schema.org BlogPosting
+- ✅ **CTASection.astro** - Call-to-action customizabil
+
+**Vezi [COMPONENTS.md](./COMPONENTS.md) pentru documentație completă!**
+
+## ✨ Caracteristici SEO
+
+- ✅ **100% Optimizat pentru SEO** - Meta tags complete, Open Graph, Twitter Cards
+- ✅ **Structured Data (Schema.org)** - Organization, LocalBusiness, Product, Blog schemas
+- ✅ **Sitemap.xml** - Pentru indexare optimă
+- ✅ **Robots.txt** - Configurare pentru motoare de căutare
+- ✅ **URL-uri Canonice** - Previne duplicate content
+- ✅ **Imagini Optimizate** - Lazy loading, alt text descriptiv
+- ✅ **Conținut în Română** - Toate textele traduse și optimizate
+- ✅ **SEO Local** - Optimizat pentru căutări Cluj-Napoca
+- ✅ **Mobile-First** - Design responsive complet
+- ✅ **Performanță Optimizată** - Core Web Vitals ready
+
+Vezi [SEO.md](./SEO.md) pentru detalii complete despre optimizările SEO.
 
 ## 🧞 Commands
 
@@ -57,18 +107,28 @@ This project is configured for deployment to Netlify:
 
 The site will automatically rebuild and deploy when you push changes to your repository.
 
-## 🎨 Design Features
+## 🎨 Caracteristici Design
 
-- Custom color palette with warm, earthy tones
-- League Spartan font for editorial feel
-- Smooth reveal animations on scroll
-- Responsive design for all devices
-- Hover effects and transitions throughout
-- Grayscale images with color on hover
+- Paletă de culori caldă, cu tonuri pământii
+- Font League Spartan pentru aspect editorial
+- Animații smooth de reveal la scroll (Intersection Observer)
+- Design responsive pentru toate dispozitivele
+- Efecte hover și tranziții fluide
+- Imagini grayscale cu culoare la hover
 
-## 📦 Technologies
+## 📦 Tehnologii
 
-- [Astro](https://astro.build/) - Static Site Generator
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Iconify](https://iconify.design/) - Icon framework
-- [Netlify](https://www.netlify.com/) - Deployment platform
+- [Astro](https://astro.build/) - Static Site Generator (v4.5)
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utility-first (v3.4)
+- [Iconify](https://iconify.design/) - Framework icoane
+- [Netlify](https://www.netlify.com/) - Platform deployment cu Forms
+
+## 🌍 SEO & Accesibilitate
+
+- **HTML Semantic** - Header, nav, main, article, section
+- **ARIA Labels** - Pentru screen readers
+- **Alt Text** - Toate imaginile au descrieri în română
+- **Structured Data** - JSON-LD pentru rich snippets
+- **Meta Tags** - Complete pe toate paginile
+- **Mobile-Friendly** - 100% responsive
+- **Core Web Vitals** - Optimizat pentru performanță

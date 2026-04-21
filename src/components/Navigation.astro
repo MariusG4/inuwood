@@ -1,56 +1,176 @@
 ---
 const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/', label: 'Acasă', ariaLabel: 'Acasă' },
+  { href: '/about', label: 'Despre Noi', ariaLabel: 'Despre Noi' },
+  { href: '/products', label: 'Produse', ariaLabel: 'Produse' },
+  { href: '/blog', label: 'Blog', ariaLabel: 'Blog' },
+];
 ---
 
 <nav
   class="fixed top-0 w-full h-[80px] z-50 bg-[#F9F7F2]/85 backdrop-blur-[12px] border-b border-[#5D4037]/10 flex items-center justify-between px-6 md:px-12 transition-all duration-1000 ease-custom"
+  role="navigation"
+  aria-label="Navigație principală"
 >
   <a
     href="/"
-    class="font-black text-xl tracking-tight text-secondary-text"
+    class="z-50 relative flex items-center"
+    aria-label="InuWood - Acasă"
   >
-    WOOD & GRAIN
+    <img
+      src="/logo.png"
+      alt="InuWood"
+      width="120"
+      height="48"
+      class="h-10 sm:h-12 w-auto object-contain"
+      loading="eager"
+    />
   </a>
 
+  {/* Desktop Links */}
   <ul class="hidden md:flex gap-12 items-center">
-    <li>
-      <a
-        href="/"
-        class={`text-[10px] uppercase font-bold tracking-[0.2em] hover:text-accent transition-colors duration-500 ${currentPath === '/' ? 'text-accent' : 'text-primary-text/70'}`}
-      >
-        Home
-      </a>
-    </li>
-    <li>
-      <a
-        href="/about"
-        class={`text-[10px] uppercase font-bold tracking-[0.2em] hover:text-accent transition-colors duration-500 ${currentPath === '/about' ? 'text-accent' : 'text-primary-text/70'}`}
-      >
-        About
-      </a>
-    </li>
-    <li>
-      <a
-        href="/products"
-        class={`text-[10px] uppercase font-bold tracking-[0.2em] hover:text-accent transition-colors duration-500 ${currentPath === '/products' ? 'text-accent' : 'text-primary-text/70'}`}
-      >
-        Products
-      </a>
-    </li>
-    <li>
-      <a
-        href="/blog"
-        class={`text-[10px] uppercase font-bold tracking-[0.2em] hover:text-accent transition-colors duration-500 ${currentPath === '/blog' ? 'text-accent' : 'text-primary-text/70'}`}
-      >
-        Blog
-      </a>
-    </li>
+    {navLinks.map(link => (
+      <li>
+        <a
+          href={link.href}
+          class={`text-[10px] uppercase font-bold tracking-[0.2em] hover:text-accent transition-colors duration-500 ${currentPath === link.href ? 'text-accent' : 'text-primary-text/70'}`}
+          aria-label={link.ariaLabel}
+          aria-current={currentPath === link.href ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      </li>
+    ))}
   </ul>
 
+  {/* Desktop CTA */}
   <a
     href="/contact"
-    class="bg-accent text-primary-bg px-[32px] py-[12px] rounded-full text-[10px] uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
+    class="hidden md:inline-flex bg-accent text-primary-bg px-[32px] py-[12px] rounded-full text-[10px] uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
+    aria-label="Contact"
   >
     Contact
   </a>
+
+  {/* Mobile Hamburger */}
+  <button
+    id="mobile-menu-toggle"
+    type="button"
+    class="md:hidden z-[70] relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg"
+    aria-label="Deschide meniul"
+    aria-expanded="false"
+    aria-controls="mobile-menu-overlay"
+  >
+    <span class="block w-6 h-0.5 bg-secondary-text transition-all duration-300 origin-center" id="hamburger-line-1"></span>
+    <span class="block w-6 h-0.5 bg-secondary-text transition-all duration-300" id="hamburger-line-2"></span>
+    <span class="block w-6 h-0.5 bg-secondary-text transition-all duration-300 origin-center" id="hamburger-line-3"></span>
+  </button>
 </nav>
+
+{/* Mobile Overlay - outside nav so it covers full viewport including navbar */}
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 z-[60] bg-[#F9F7F2]/95 backdrop-blur-xl flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500 ease-custom md:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Meniu mobil"
+>
+  <a href="/" aria-label="InuWood - Acasă" class="mb-6">
+    <img
+      src="/logo.png"
+      alt="InuWood"
+      width="120"
+      height="48"
+      class="h-12 w-auto object-contain"
+      loading="eager"
+    />
+  </a>
+  <ul class="flex flex-col items-center gap-6">
+    {navLinks.map(link => (
+      <li>
+        <a
+          href={link.href}
+          class={`mobile-nav-link text-3xl font-black uppercase tracking-tight hover:text-accent transition-colors duration-300 ${currentPath === link.href ? 'text-accent' : 'text-secondary-text'}`}
+          aria-label={link.ariaLabel}
+          aria-current={currentPath === link.href ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      </li>
+    ))}
+    <li class="mt-4">
+      <a
+        href="/contact"
+        class="mobile-nav-link inline-flex bg-accent text-primary-bg px-10 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
+        aria-label="Contact"
+      >
+        Contact
+      </a>
+    </li>
+  </ul>
+</div>
+
+<script>
+  (function() {
+    const toggle = document.getElementById('mobile-menu-toggle')!;
+    const overlay = document.getElementById('mobile-menu-overlay')!;
+    const line1 = document.getElementById('hamburger-line-1')!;
+    const line2 = document.getElementById('hamburger-line-2')!;
+    const line3 = document.getElementById('hamburger-line-3')!;
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    let isOpen = false;
+
+    function openMenu() {
+      isOpen = true;
+      document.body.style.overflow = 'hidden';
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.classList.add('opacity-100', 'pointer-events-auto');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Închide meniul');
+      line1.classList.add('rotate-45', 'translate-y-2');
+      line2.classList.add('opacity-0');
+      line3.classList.add('-rotate-45', '-translate-y-2');
+      setTimeout(() => {
+        const firstLink = overlay.querySelector('a');
+        if (firstLink) (firstLink as HTMLElement).focus();
+      }, 100);
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      document.body.style.overflow = '';
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      overlay.classList.remove('opacity-100', 'pointer-events-auto');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Deschide meniul');
+      line1.classList.remove('rotate-45', 'translate-y-2');
+      line2.classList.remove('opacity-0');
+      line3.classList.remove('-rotate-45', '-translate-y-2');
+      (toggle as HTMLElement).focus();
+    }
+
+    toggle.addEventListener('click', () => {
+      if (isOpen) closeMenu();
+      else openMenu();
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        closeMenu();
+      }
+    });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeMenu();
+      }
+    });
+  })();
+</script>

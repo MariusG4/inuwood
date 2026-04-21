@@ -1,0 +1,72 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  ogType?: string;
+  canonicalURL?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Mobilier din lemn masiv realizat manual cu tehnici tradiționale de tâmplărie. Calitate superioară și design personalizat în Bacău, Moldova, România.',
+  keywords = 'mobilier lemn masiv, tâmplărie artizanală, mobila personalizată, lemn masiv Bacău, mobilier handmade România, restaurare mobilier Bacău, design mobilier lemn, atelier lemn Bacău',
+  ogImage = '/og-image.svg',
+  ogType = 'website',
+  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+  noindex = false
+} = Astro.props;
+
+const siteURL = Astro.site || 'https://inuwood.ro';
+const fullTitle = title.includes('InuWood') ? title : `${title} | InuWood`;
+---
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="author" content="InuWood" />
+<meta name="generator" content={Astro.generator} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+{!noindex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(ogImage, siteURL).href} />
+<meta property="og:locale" content="ro_RO" />
+<meta property="og:site_name" content="InuWood" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(ogImage, siteURL).href} />
+
+<!-- Additional Meta Tags -->
+<meta name="theme-color" content="#334B49" />
+<meta name="color-scheme" content="light" />
+<meta name="format-detection" content="telephone=no" />
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="InuWood" />
+
+<!-- Mobile optimization -->
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="application-name" content="InuWood" />

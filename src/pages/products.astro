@@ -1,64 +1,78 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+const pageTitle = "Produse - Mobilier din Lemn Masiv | InuWood";
+const pageDescription = "Explorează colecția noastră de mobilier artizanal din lemn masiv. Fiecare piesă este realizată manual cu îmbinări tradiționale și lemn de provenință sustenabilă.";
+const pageKeywords = "mobilier lemn masiv, catalog mobilier artizanal, scaune lemn masiv, mese lemn natural, dulapuri lemn, birou lemn masiv, rafturi lemn, mobilier stejar nuc cireș";
+
 const products = [
   {
-    title: 'The Artisan Chair',
-    category: 'Seating',
-    wood: 'Walnut',
+    title: 'Scaunul Artizanului',
+    category: 'Scaune',
+    wood: 'Nuc',
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=1200'
+    image: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=1200',
+    alt: 'Scaun artizanal din lemn de nuc cu finisaj manual'
   },
   {
-    title: 'Live Edge Dining',
-    category: 'Tables',
-    wood: 'Oak',
+    title: 'Masă Live Edge',
+    category: 'Mese',
+    wood: 'Stejar',
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&q=80&w=1200'
+    image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&q=80&w=1200',
+    alt: 'Masă de dining din stejar cu margine naturală live edge'
   },
   {
-    title: 'Lounge Frame',
-    category: 'Framework',
-    wood: 'White Oak',
+    title: 'Cadru Lounge',
+    category: 'Structuri',
+    wood: 'Stejar Alb',
     year: '2023',
-    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1200'
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1200',
+    alt: 'Cadru lounge minimalist din stejar alb'
   },
   {
-    title: 'Credenza Detail',
-    category: 'Storage',
-    wood: 'Cherry',
+    title: 'Credință Detaliată',
+    category: 'Depozitare',
+    wood: 'Cireș',
     year: '2023',
-    image: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=1200'
+    image: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=1200',
+    alt: 'Credință din lemn de cireș cu detalii sculptate manual'
   },
   {
-    title: 'Executive Desk',
-    category: 'Workspace',
-    wood: 'Maple',
+    title: 'Birou Executiv',
+    category: 'Spațiu de Lucru',
+    wood: 'Arțar',
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=80&w=1200'
+    image: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=80&w=1200',
+    alt: 'Birou executiv din lemn de arțar cu finisaje premium'
   },
   {
-    title: 'Floating Shelf',
-    category: 'Storage',
-    wood: 'Ash',
+    title: 'Raft Plutitor',
+    category: 'Depozitare',
+    wood: 'Frasin',
     year: '2023',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1200'
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1200',
+    alt: 'Raft plutitor minimalist din lemn de frasin'
   }
 ];
 ---
 
-<Layout title="Products | Wood & Grain" description="Explore our collection of handcrafted furniture pieces, each one built with traditional joinery and sustainably sourced hardwoods.">
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  ogType="website"
+>
   <!-- Hero Section -->
-  <section class="min-h-[60vh] pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto">
+  <section class="min-h-[60vh] pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto" aria-labelledby="products-heading">
     <div class="w-full py-20">
       <div class="reveal-up">
-        <span class="util-label text-accent mb-4 block">Our Collection</span>
-        <h1 class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
-          Handcrafted Products
+        <span class="util-label text-accent mb-4 block">Colecția Noastră</span>
+        <h1 id="products-heading" class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
+          Produse Meșteșugite Manual
         </h1>
         <p class="text-xl md:text-2xl text-primary-text/70 max-w-3xl font-light leading-relaxed">
-          Each piece is meticulously crafted using traditional joinery techniques and sustainably
-          sourced hardwoods. Browse our portfolio of completed works.
+          Fiecare piesă este realizată cu meticulozitate folosind tehnici tradiționale de îmbinare și lemn masiv de provenință sustenabilă. Descoperă portofoliul lucrărilor finalizate.
         </p>
       </div>
     </div>
@@ -71,25 +85,29 @@ const products = [
         <!-- Column 1 (Odds) -->
         <div class="flex flex-col gap-y-24">
           {products.filter((_, i) => i % 2 === 0).map((product) => (
-            <article class="group reveal-up">
+            <article class="group reveal-up" itemscope itemtype="https://schema.org/Product">
               <div class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8">
                 <img
                   src={product.image}
-                  alt={product.title}
-                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                  alt={product.alt}
+                  class="w-full h-full object-cover grayscale touch-color group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                  loading="lazy"
+                  width="1200"
+                  height="1600"
+                  itemprop="image"
                 />
-                <div class="absolute inset-0 bg-primary-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10">
-                  <span class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 group-hover:scale-100 transition-transform duration-1000 ease-custom">
-                    View
+                <div class="absolute inset-0 bg-primary-text/20 opacity-0 touch-overlay group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10">
+                  <span class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 touch-badge group-hover:scale-100 transition-transform duration-1000 ease-custom" aria-hidden="true">
+                    Vezi
                   </span>
                 </div>
               </div>
               <div>
-                <span class="util-label text-accent mb-4 block">{product.category}</span>
-                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3">
+                <span class="util-label text-accent mb-4 block" itemprop="category">{product.category}</span>
+                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3" itemprop="name">
                   {product.title}
                 </h3>
-                <div class="text-sm text-primary-text/60 font-medium">
+                <div class="text-sm text-primary-text/60 font-medium" itemprop="material">
                   {product.wood} &bull; {product.year}
                 </div>
               </div>
@@ -100,25 +118,29 @@ const products = [
         <!-- Column 2 (Evens - Staggered) -->
         <div class="flex flex-col gap-y-24 md:pt-[120px]">
           {products.filter((_, i) => i % 2 === 1).map((product, index) => (
-            <article class="group reveal-up" style={`transition-delay: ${(index + 1) * 100}ms`}>
+            <article class="group reveal-up" style={`transition-delay: ${(index + 1) * 100}ms`} itemscope itemtype="https://schema.org/Product">
               <div class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8">
                 <img
                   src={product.image}
-                  alt={product.title}
-                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                  alt={product.alt}
+                  class="w-full h-full object-cover grayscale touch-color group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                  loading="lazy"
+                  width="1200"
+                  height="1600"
+                  itemprop="image"
                 />
-                <div class="absolute inset-0 bg-primary-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10">
-                  <span class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 group-hover:scale-100 transition-transform duration-1000 ease-custom">
-                    View
+                <div class="absolute inset-0 bg-primary-text/20 opacity-0 touch-overlay group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10">
+                  <span class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 touch-badge group-hover:scale-100 transition-transform duration-1000 ease-custom" aria-hidden="true">
+                    Vezi
                   </span>
                 </div>
               </div>
               <div>
-                <span class="util-label text-accent mb-4 block">{product.category}</span>
-                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3">
+                <span class="util-label text-accent mb-4 block" itemprop="category">{product.category}</span>
+                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3" itemprop="name">
                   {product.title}
                 </h3>
-                <div class="text-sm text-primary-text/60 font-medium">
+                <div class="text-sm text-primary-text/60 font-medium" itemprop="material">
                   {product.wood} &bull; {product.year}
                 </div>
               </div>
@@ -133,19 +155,59 @@ const products = [
   <section class="py-32 md:py-48 px-6 md:px-12 bg-secondary-bg">
     <div class="max-w-[1440px] mx-auto text-center reveal-up">
       <h2 class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-8">
-        Commission a Custom Piece
+        Comandă o Piesă Personalizată
       </h2>
       <p class="text-xl text-primary-text/70 mb-12 max-w-2xl mx-auto">
-        Have a vision for a unique furniture piece? We work closely with clients to bring custom
-        designs to life.
+        Ai o viziune pentru o piesă de mobilier unică? Lucrăm îndeaproape cu clienții pentru a da viață designurilor personalizate.
       </p>
       <a
         href="/contact"
         class="inline-flex items-center gap-4 bg-accent text-primary-bg px-12 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
+        aria-label="Începe proiectul tău personalizat"
       >
-        Start Your Project
-        <iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>
+        Începe Proiectul Tău
+        <iconify-icon icon="lucide:arrow-right" class="text-lg" aria-hidden="true"></iconify-icon>
       </a>
     </div>
   </section>
+
+  <!-- Structured Data for ItemList -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Produse Mobilier InuWood",
+    "description": "Colecția noastră de mobilier artizanal din lemn masiv",
+    "numberOfItems": products.length,
+    "itemListElement": products.map((product, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Product",
+        "name": product.title,
+        "category": product.category,
+        "material": product.wood,
+        "image": product.image,
+        "brand": {
+          "@type": "Brand",
+          "name": "InuWood"
+        }
+      }
+    }))
+  })} />
+
+<style>
+  /* Touch devices: always show color images and subtle overlay */
+  @media (hover: none) and (pointer: coarse) {
+    .touch-color {
+      filter: grayscale(0) !important;
+    }
+    .touch-overlay {
+      opacity: 0.35 !important;
+    }
+    .touch-badge {
+      transform: scale(1) !important;
+      opacity: 1 !important;
+    }
+  }
+</style>
 </Layout>

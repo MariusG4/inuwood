@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogPost from '../../components/Blog/BlogPost.astro';
+import BlogPostSchema from '../../components/SEO/BlogPostSchema.astro';
+import CTASection from '../../components/UI/CTASection.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog', ({ data }) => {
+    return data.draft !== true;
+  });
+  
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const pageTitle = `${entry.data.title} | Blog InuWood`;
+const pageDescription = entry.data.excerpt;
+
+// CTA personalizat bazat pe categorie
+const ctaData = {
+  'Tehnici': {
+    heading: 'Vrei Mobilier cu Îmbinări Tradiționale?',
+    description: 'Descoperă cum putem crea piese unice pentru tine, folosind tehnici tradiționale de tâmplărie.',
+    ctaText: 'Solicită Consultație',
+    ctaLink: '/contact',
+    backgroundColor: 'bg-secondary-bg'
+  },
+  'Materiale': {
+    heading: 'Ai Nevoie de Consultanță pentru Alegerea Lemnului?',
+    description: 'Vino în atelierul nostru din Bacău pentru o consultație gratuită. Îți vom arăta mostre și te vom ajuta să alegi perfect.',
+    ctaText: 'Programează Consultație',
+    ctaLink: '/contact',
+    backgroundColor: 'bg-accent'
+  },
+  'Sustenabilitate': {
+    heading: 'Vrei Mobilier Sustenabil și Etic?',
+    description: 'Fiecare piesă InuWood vine cu certificare FSC/PEFC. Mobilier de care poți fi mândru, fără compromisuri.',
+    ctaText: 'Explorează Colecția',
+    ctaLink: '/products',
+    backgroundColor: 'bg-secondary-bg'
+  },
+  'Studiu de Caz': {
+    heading: 'Ai Mobilier Vechi Care Merită Restaurat?',
+    description: 'Adu-ți amintirile înapoi la viață. Oferim consultații gratuite pentru restaurare de mobilier vintage.',
+    ctaText: 'Solicită Evaluare Gratuită',
+    ctaLink: '/contact',
+    backgroundColor: 'bg-accent'
+  },
+  'Unelte': {
+    heading: 'Vrei să Vezi Uneltele în Acțiune?',
+    description: 'Vizitează atelierul nostru din Bacău pentru un tur al facilităților și demonstrații live de meșteșug.',
+    ctaText: 'Programează Vizită',
+    ctaLink: '/contact',
+    backgroundColor: 'bg-secondary-bg'
+  },
+  'Design': {
+    heading: 'Visezi la o Piesă Live Edge Unică?',
+    description: 'Avem trunchuri spectaculoase de stejar și nuc care așteaptă să devină mobilierul tău de vis.',
+    ctaText: 'Vezi Trunchurile Disponibile',
+    ctaLink: '/contact',
+    backgroundColor: 'bg-accent'
+  }
+};
+
+const cta = ctaData[entry.data.category as keyof typeof ctaData] || {
+  heading: 'Gata să Începi Proiectul Tău?',
+  description: 'Contactează-ne pentru o consultație gratuită și să discutăm despre visul tău de mobilier.',
+  ctaText: 'Contactează-ne',
+  ctaLink: '/contact',
+  backgroundColor: 'bg-accent'
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} ogType="article">
+  <BlogPost 
+    title={entry.data.title}
+    excerpt={entry.data.excerpt}
+    date={entry.data.date}
+    category={entry.data.category}
+    image={entry.data.image}
+    readTime={entry.data.readTime}
+    author={entry.data.author}
+  >
+    <Content />
+  </BlogPost>
+
+  <CTASection 
+    heading={cta.heading}
+    description={cta.description}
+    ctaText={cta.ctaText}
+    ctaLink={cta.ctaLink}
+    backgroundColor={cta.backgroundColor}
+  />
+
+  <BlogPostSchema 
+    title={entry.data.title}
+    description={entry.data.excerpt}
+    date={entry.data.date}
+    category={entry.data.category}
+    image={entry.data.image}
+    slug={entry.slug}
+    author={entry.data.author}
+  />
+</Layout>

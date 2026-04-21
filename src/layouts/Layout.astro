@@ -1,44 +1,85 @@
 ---
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import SEOHead from '../components/SEO/SEOHead.astro';
+import OrganizationSchema from '../components/SEO/OrganizationSchema.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 
 interface Props {
   title: string;
   description?: string;
+  keywords?: string;
+  ogImage?: string;
+  ogType?: string;
+  canonicalURL?: string;
+  noindex?: boolean;
 }
 
-const { title, description = 'Bespoke woodworking crafted with traditional joinery and uncompromised quality.' } = Astro.props;
+const {
+  title,
+  description,
+  keywords,
+  ogImage,
+  ogType,
+  canonicalURL,
+  noindex
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="ro" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
 
-    <!-- Fonts -->
+    <!-- SEO Meta Tags -->
+    <SEOHead
+      title={title}
+      description={description}
+      keywords={keywords}
+      ogImage={ogImage}
+      ogType={ogType}
+      canonicalURL={canonicalURL}
+      noindex={noindex}
+    />
+
+    <!-- Fonts - Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <!-- Iconify -->
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" is:inline></script>
+
+    <!-- Structured Data - Organization Schema -->
+    <OrganizationSchema />
   </head>
   <body
     class="bg-primary-bg text-primary-text font-sans antialiased selection:bg-accent selection:text-primary-bg overflow-x-hidden"
   >
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:bg-accent focus:text-primary-bg focus:rounded-full focus:text-sm focus:font-bold focus:uppercase focus:tracking-[0.2em] focus:shadow-lg"
+    >
+      Sari la conținut
+    </a>
     <Navigation />
-    <main class="w-full">
+    <main class="w-full" id="main-content">
       <slot />
     </main>
     <Footer />
+    <WhatsAppButton />
   </body>
 </html>
 
@@ -73,6 +114,35 @@ const { title, description = 'Bespoke woodworking crafted with traditional joine
     font-weight: 900;
     letter-spacing: 0.4em;
     text-transform: uppercase;
+  }
+
+  /* Touch action optimization for mobile */
+  html {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal-up {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Hover-none: touch devices show grayscale images in color */
+  @media (hover: none) and (pointer: coarse) {
+    .grayscale {
+      filter: grayscale(0) !important;
+    }
   }
 </style>
 

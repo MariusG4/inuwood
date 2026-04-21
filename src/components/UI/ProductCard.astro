@@ -1,0 +1,74 @@
+---
+interface Props {
+  title: string;
+  category: string;
+  wood: string;
+  year: string;
+  image: string;
+  alt: string;
+  delay?: number;
+}
+
+const {
+  title,
+  category,
+  wood,
+  year,
+  image,
+  alt,
+  delay = 0
+} = Astro.props;
+---
+
+<article
+  class="group reveal-up"
+  style={delay ? `transition-delay: ${delay}ms` : undefined}
+  itemscope
+  itemtype="https://schema.org/Product"
+>
+  <div class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8">
+    <img
+      src={image}
+      alt={alt}
+      class="product-card-img w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+      loading="lazy"
+      width="1200"
+      height="1600"
+      itemprop="image"
+    />
+    <div
+      class="product-card-overlay absolute inset-0 bg-primary-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10"
+    >
+      <span
+        class="product-card-badge w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 group-hover:scale-100 transition-transform duration-1000 ease-custom"
+        aria-hidden="true"
+      >
+        Vezi
+      </span>
+    </div>
+  </div>
+  <div>
+    <span class="util-label text-accent mb-4 block" itemprop="category">{category}</span>
+    <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3" itemprop="name">
+      {title}
+    </h3>
+    <div class="text-sm text-primary-text/60 font-medium" itemprop="material">
+      {wood} &bull; {year}
+    </div>
+  </div>
+</article>
+
+<style>
+  @media (hover: none) and (pointer: coarse) {
+    .product-card-img {
+      filter: grayscale(0) !important;
+      transform: scale(1.04);
+    }
+    .product-card-overlay {
+      opacity: 1;
+    }
+    .product-card-badge {
+      transform: scale(0.85);
+    }
+  }
+</style>

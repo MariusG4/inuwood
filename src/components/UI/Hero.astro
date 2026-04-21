@@ -1,0 +1,34 @@
+---
+interface Props {
+  label?: string;
+  heading: string;
+  description: string;
+  ariaLabelledBy?: string;
+  minHeight?: string;
+}
+
+const {
+  label,
+  heading,
+  description,
+  ariaLabelledBy = 'hero-heading',
+  minHeight = 'min-h-[60vh]'
+} = Astro.props;
+---
+
+<section 
+  class={`${minHeight} pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto`}
+  aria-labelledby={ariaLabelledBy}
+>
+  <div class="w-full py-20">
+    <div class="reveal-up">
+      {label && <span class="util-label text-accent mb-4 block">{label}</span>}
+      <h1 id={ariaLabelledBy} class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
+        {heading}
+      </h1>
+      <p class="text-xl md:text-2xl text-primary-text/70 max-w-3xl font-light leading-relaxed">
+        {description}
+      </p>
+    </div>
+  </div>
+</section>

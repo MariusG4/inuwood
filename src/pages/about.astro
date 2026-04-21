@@ -1,23 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/UI/Hero.astro';
+import SectionHeader from '../components/UI/SectionHeader.astro';
+import CTASection from '../components/UI/CTASection.astro';
+
+const pageTitle = "Despre Noi - InuWood";
+const pageDescription = "Descoperă povestea InuWood, atelierul de tâmplărie artizanală din Bacău. Peste două decenii de experiență în crearea mobilierului din lemn masiv cu tehnici tradiționale.";
+const pageKeywords = "despre InuWood, atelier tâmplărie Bacău, meșteri lemn România, mobilier artizanal Bacău, experiență tâmplărie, atelier lemn masiv, craftsman Bacău";
 ---
 
-<Layout title="About Us | Wood & Grain" description="Learn about our craft, our story, and our commitment to traditional woodworking excellence.">
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  ogType="website"
+>
   <!-- Hero Section -->
-  <section class="min-h-[60vh] pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto">
-    <div class="w-full py-20">
-      <div class="reveal-up">
-        <span class="util-label text-accent mb-4 block">Our Story</span>
-        <h1 class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
-          About Wood & Grain
-        </h1>
-        <p class="text-xl md:text-2xl text-primary-text/70 max-w-3xl font-light leading-relaxed">
-          For over two decades, we've been crafting heirloom-quality furniture using traditional
-          techniques and sustainably sourced hardwoods.
-        </p>
-      </div>
-    </div>
-  </section>
+  <Hero
+    label="Povestea Noastră"
+    heading="Despre InuWood"
+    description="De peste două decenii creăm mobilier de calitate superioară folosind tehnici tradiționale și lemn masiv de provenință responsabilă."
+    ariaLabelledBy="about-heading"
+  />
 
   <!-- Story Section -->
   <section class="py-32 md:py-48 px-6 md:px-12 bg-secondary-bg">
@@ -26,29 +30,26 @@ import Layout from '../layouts/Layout.astro';
         <div class="reveal-up">
           <img
             src="https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?auto=format&fit=crop&q=80&w=1200"
-            alt="Workshop interior"
+            alt="Interiorul atelierului InuWood din Bacău cu unelte tradiționale de tâmplărie"
             class="w-full aspect-[4/3] object-cover rounded-[24px]"
+            loading="lazy"
+            width="1200"
+            height="900"
           />
         </div>
         <div class="reveal-up" style="transition-delay: 100ms">
           <h2 class="text-4xl md:text-5xl font-black text-secondary-text tracking-tighter mb-8">
-            Craftsmanship Rooted in Tradition
+            Meșteșug Înrădăcinat în Tradiție
           </h2>
           <div class="space-y-6 text-lg text-primary-text/70 leading-relaxed">
             <p>
-              Founded in 2002, Wood & Grain emerged from a simple belief: that furniture should be
-              built to last generations, not seasons. Our workshop in Portland, Oregon serves as
-              the birthplace of pieces that marry timeless design with uncompromising quality.
+              Fondat în 2002, InuWood s-a născut dintr-o convingere simplă: mobilierul trebuie construit pentru a dăinui generații întregi, nu sezoane. Atelierul nostru din Bacău este locul unde se nasc piese care îmbină designul intemporal cu calitatea fără compromis.
             </p>
             <p>
-              Every joint, curve, and finish is executed by hand, using techniques passed down
-              through centuries of woodworking tradition. We source our lumber from responsibly
-              managed forests, ensuring that the natural beauty we work with today will be
-              available for craftspeople tomorrow.
+              Fiecare îmbinare, curbă și finisaj este executat manual, folosind tehnici transmise de-a lungul secolelor de tradiție în tâmplărie. Aprovizionăm lemnul din păduri gestionate responsabil, asigurându-ne că frumusețea naturală cu care lucrăm astăzi va fi disponibilă și pentru meșteșugarii de mâine.
             </p>
             <p>
-              Our small team of artisans brings decades of combined experience to each project,
-              whether it's a custom dining table or the restoration of a cherished heirloom.
+              Echipa noastră restrânsă de artizani aduce decenii de experiență combinată în fiecare proiect, fie că este vorba de o masă de dining personalizată sau restaurarea unei moșteniri de familie prețioase.
             </p>
           </div>
         </div>
@@ -57,64 +58,61 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Values Section -->
-  <section class="py-32 md:py-48 px-6 md:px-12 bg-primary-bg">
+  <section class="py-32 md:py-48 px-6 md:px-12 bg-primary-bg" aria-labelledby="values-heading">
     <div class="max-w-[1440px] mx-auto">
-      <header class="mb-20 reveal-up text-center">
-        <span class="util-label text-accent mb-4 block">Our Philosophy</span>
-        <h2 class="text-5xl md:text-7xl font-black text-secondary-text tracking-tighter">
-          What We Stand For
-        </h2>
-      </header>
+      <SectionHeader
+        label="Filosofia Noastră"
+        heading="Valorile Noastre"
+        headingId="values-heading"
+        alignment="center"
+      />
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
         <!-- Value 1 -->
         <article class="reveal-up text-center">
-          <div class="mb-8 flex justify-center">
+          <div class="mb-8 flex justify-center" aria-hidden="true">
             <iconify-icon
               icon="ph:tree-evergreen-bold"
               class="text-7xl text-accent"
             ></iconify-icon>
           </div>
           <h3 class="text-2xl md:text-3xl font-black text-secondary-text mb-4">
-            Sustainability
+            Sustenabilitate
           </h3>
           <p class="text-base text-primary-text/70 leading-relaxed">
-            We source only from certified sustainable forests and use every part of the wood,
-            minimizing waste and respecting the resource.
+            Ne aprovizionăm doar din păduri certificate sustenabil și folosim fiecare parte a lemnului, minimizând deșeurile și respectând resursa.
           </p>
         </article>
 
         <!-- Value 2 -->
         <article class="reveal-up text-center" style="transition-delay: 100ms">
-          <div class="mb-8 flex justify-center">
+          <div class="mb-8 flex justify-center" aria-hidden="true">
             <iconify-icon
               icon="ph:hammer-bold"
               class="text-7xl text-accent"
             ></iconify-icon>
           </div>
           <h3 class="text-2xl md:text-3xl font-black text-secondary-text mb-4">
-            Quality
+            Calitate
           </h3>
           <p class="text-base text-primary-text/70 leading-relaxed">
-            Each piece undergoes rigorous quality checks. We never compromise on materials or
-            technique, ensuring furniture that lasts.
+            Fiecare piesă trece prin controale riguroase de calitate. Nu acceptăm niciodată compromisuri în privința materialelor sau tehnicilor, asigurând mobilier durabil.
           </p>
         </article>
 
         <!-- Value 3 -->
         <article class="reveal-up text-center" style="transition-delay: 200ms">
-          <div class="mb-8 flex justify-center">
+          <div class="mb-8 flex justify-center" aria-hidden="true">
             <iconify-icon
               icon="ph:users-three-bold"
               class="text-7xl text-accent"
             ></iconify-icon>
           </div>
           <h3 class="text-2xl md:text-3xl font-black text-secondary-text mb-4">
-            Community
+            Comunitate
           </h3>
           <p class="text-base text-primary-text/70 leading-relaxed">
-            We believe in fair wages, supporting local suppliers, and sharing our knowledge through
-            workshops and apprenticeships.
+            Credem în salarii echitabile, sprijinirea furnizorilor locali și împărtășirea cunoștințelor noastre prin workshop-uri și ucenicie.
           </p>
         </article>
       </div>
@@ -122,22 +120,38 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- CTA Section -->
-  <section class="py-32 md:py-48 px-6 md:px-12 bg-accent">
-    <div class="max-w-[1440px] mx-auto text-center reveal-up">
-      <h2 class="text-4xl md:text-6xl font-black text-primary-bg tracking-tighter mb-8">
-        Ready to Start Your Project?
-      </h2>
-      <p class="text-xl text-primary-bg/80 mb-12 max-w-2xl mx-auto">
-        Whether you're looking for a custom piece or want to restore a family heirloom, we'd love
-        to hear from you.
-      </p>
-      <a
-        href="/contact"
-        class="inline-flex items-center gap-4 bg-primary-bg text-accent px-12 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-bg transition-colors duration-500"
-      >
-        Get in Touch
-        <iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>
-      </a>
-    </div>
-  </section>
+  <CTASection
+    heading="Gata să Începi Proiectul Tău?"
+    description="Fie că vrei o piesă personalizată sau dorești să restaurezi o moștenire de familie, ne-ar plăcea să auzim de la tine."
+    ctaText="Intră în Legătură"
+    ctaLink="/contact"
+    ctaAriaLabel="Contactează-ne pentru a discuta proiectul tău"
+  />
+
+  <!-- Structured Data for About Page -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "Despre InuWood",
+      "description": "Descoperă povestea InuWood, atelierul de tâmplărie artizanală din Cluj-Napoca cu peste două decenii de experiență.",
+      "url": "https://inuwood.ro/about",
+      "inLanguage": "ro-RO",
+      "mainEntity": {
+        "@type": "LocalBusiness",
+        "name": "InuWood",
+        "foundingDate": "2002",
+        "description": "Atelier de tâmplărie artizanală specializat în mobilier din lemn masiv realizat manual",
+        "knowsAbout": ["Tâmplărie artizanală", "Mobilier din lemn masiv", "Restaurare mobilier", "Design personalizat"],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Str. Meșteșugului nr. 24",
+          "addressLocality": "Bacău",
+          "addressRegion": "BC",
+          "postalCode": "600001",
+          "addressCountry": "RO"
+        }
+      }
+    }
+  </script>
 </Layout>

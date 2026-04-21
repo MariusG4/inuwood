@@ -1,0 +1,24 @@
+---
+interface Props {
+  label: string;
+  heading: string;
+  headingId?: string;
+  alignment?: 'left' | 'center';
+}
+
+const {
+  label,
+  heading,
+  headingId,
+  alignment = 'left'
+} = Astro.props;
+
+const alignmentClass = alignment === 'center' ? 'text-center' : '';
+---
+
+<header class={`mb-20 reveal-up ${alignmentClass}`}>
+  <span class="util-label text-accent mb-4 block">{label}</span>
+  <h2 id={headingId} class="text-5xl md:text-7xl font-black text-secondary-text tracking-tighter">
+    {heading}
+  </h2>
+</header>

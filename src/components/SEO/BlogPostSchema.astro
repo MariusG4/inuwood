@@ -1,0 +1,53 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  date: string;
+  category: string;
+  image: string;
+  slug: string;
+  author?: string;
+}
+
+const {
+  title,
+  description,
+  date,
+  category,
+  image,
+  slug,
+  author = "InuWood"
+} = Astro.props;
+
+const publishedDate = new Date(date).toISOString();
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description,
+  "image": image,
+  "datePublished": publishedDate,
+  "dateModified": publishedDate,
+  "author": {
+    "@type": "Organization",
+    "name": author,
+    "url": "https://inuwood.ro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InuWood",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://inuwood.ro/favicon.svg"
+    }
+  },
+  "articleSection": category,
+  "url": `https://inuwood.ro/blog/${slug}`,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://inuwood.ro/blog/${slug}`
+  },
+  "inLanguage": "ro-RO"
+})} />

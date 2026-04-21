@@ -1,23 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/UI/Hero.astro';
+import LocalBusinessSchema from '../components/SEO/LocalBusinessSchema.astro';
+
+const pageTitle = "Contact - InuWood";
+const pageDescription = "Contactează atelierul InuWood din Bacău pentru comenzi de mobilier personalizat, restaurări sau consultații. Program L-V 9-17, Sâmbătă 10-15.";
+const pageKeywords = "contact InuWood, atelier lemn Bacău contact, comanda mobilier personalizat, consultanta mobilier lemn, restaurare mobilier Bacău, telefon atelier lemn";
 ---
 
-<Layout title="Contact Us | Wood & Grain" description="Get in touch with our team to discuss your custom furniture project or restoration needs.">
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  ogType="website"
+>
   <!-- Hero Section -->
-  <section class="min-h-[40vh] pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto">
-    <div class="w-full py-20">
-      <div class="reveal-up">
-        <span class="util-label text-accent mb-4 block">Get in Touch</span>
-        <h1 class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
-          Contact Us
-        </h1>
-        <p class="text-xl md:text-2xl text-primary-text/70 max-w-3xl font-light leading-relaxed">
-          Have a project in mind? We'd love to hear from you. Fill out the form below or reach out
-          directly.
-        </p>
-      </div>
-    </div>
-  </section>
+  <Hero
+    label="Suntem Aici"
+    heading="Contactează-ne"
+    description="Ai un proiect în minte? Ne-ar plăcea să auzim de la tine. Completează formularul de mai jos sau contactează-ne direct."
+    ariaLabelledBy="contact-heading"
+    minHeight="min-h-[40vh]"
+  />
 
   <!-- Contact Section -->
   <section class="py-32 md:py-48 px-6 md:px-12 bg-secondary-bg">
@@ -26,15 +30,20 @@ import Layout from '../layouts/Layout.astro';
         <!-- Contact Form -->
         <div class="reveal-up">
           <h2 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-8">
-            Send Us a Message
+            Trimite-ne un Mesaj
           </h2>
-          <form class="space-y-6">
+          <form class="space-y-6" method="POST" name="contact" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="contact" />
+            <p class="hidden">
+              <label>Nu completa dacă ești om: <input name="bot-field" /></label>
+            </p>
+
             <div>
               <label
                 for="name"
                 class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
               >
-                Name
+                Nume
               </label>
               <input
                 type="text"
@@ -42,6 +51,8 @@ import Layout from '../layouts/Layout.astro';
                 name="name"
                 required
                 class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+                autocomplete="name"
+                aria-required="true"
               />
             </div>
 
@@ -58,6 +69,8 @@ import Layout from '../layouts/Layout.astro';
                 name="email"
                 required
                 class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+                autocomplete="email"
+                aria-required="true"
               />
             </div>
 
@@ -66,13 +79,14 @@ import Layout from '../layouts/Layout.astro';
                 for="phone"
                 class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
               >
-                Phone (Optional)
+                Telefon (Opțional)
               </label>
               <input
                 type="tel"
                 id="phone"
                 name="phone"
                 class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+                autocomplete="tel"
               />
             </div>
 
@@ -81,19 +95,21 @@ import Layout from '../layouts/Layout.astro';
                 for="project"
                 class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
               >
-                Project Type
+                Tip Proiect
               </label>
               <select
                 id="project"
                 name="project"
                 required
                 class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+                autocomplete="off"
+                aria-required="true"
               >
-                <option value="">Select a project type</option>
-                <option value="custom">Custom Furniture</option>
-                <option value="restoration">Restoration</option>
-                <option value="consultation">Consultation</option>
-                <option value="other">Other</option>
+                <option value="">Selectează tipul proiectului</option>
+                <option value="custom">Mobilier Personalizat</option>
+                <option value="restoration">Restaurare</option>
+                <option value="consultation">Consultație</option>
+                <option value="other">Altele</option>
               </select>
             </div>
 
@@ -102,7 +118,7 @@ import Layout from '../layouts/Layout.astro';
                 for="message"
                 class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
               >
-                Message
+                Mesaj
               </label>
               <textarea
                 id="message"
@@ -110,6 +126,8 @@ import Layout from '../layouts/Layout.astro';
                 required
                 rows="6"
                 class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300 resize-none"
+                autocomplete="off"
+                aria-required="true"
               ></textarea>
             </div>
 
@@ -117,7 +135,7 @@ import Layout from '../layouts/Layout.astro';
               type="submit"
               class="w-full bg-accent text-primary-bg px-12 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
             >
-              Send Message
+              Trimite Mesajul
             </button>
           </form>
         </div>
@@ -125,16 +143,16 @@ import Layout from '../layouts/Layout.astro';
         <!-- Contact Info -->
         <div class="reveal-up" style="transition-delay: 100ms">
           <h2 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-8">
-            Visit Our Workshop
+            Vizitează Atelierul
           </h2>
-          
+
           <div class="space-y-8 mb-12">
             <div>
-              <h3 class="util-label text-accent mb-4">Address</h3>
+              <h3 class="util-label text-accent mb-4">Adresă</h3>
               <address class="not-italic text-lg text-primary-text/70 leading-relaxed">
-                124 Timberline Way<br />
-                Portland, OR 97204<br />
-                United States
+                Str. Meșteșugului nr. 24<br />
+                Bacău, BC 600001<br />
+                România
               </address>
             </div>
 
@@ -142,40 +160,39 @@ import Layout from '../layouts/Layout.astro';
               <h3 class="util-label text-accent mb-4">Contact</h3>
               <div class="text-lg text-primary-text/70 space-y-2">
                 <p>
-                  <a
-                    href="mailto:hello@woodandgrain.com"
-                    class="hover:text-accent transition-colors"
-                  >
-                    hello@woodandgrain.com
+                  <a href="mailto:contact@inuwood.ro" class="hover:text-accent transition-colors">
+                    contact@inuwood.ro
                   </a>
                 </p>
                 <p>
-                  <a href="tel:+15035550198" class="hover:text-accent transition-colors">
-                    +1 (503) 555-0198
+                  <a href="tel:+40234555198" class="hover:text-accent transition-colors">
+                    +40 234 555 198
                   </a>
                 </p>
               </div>
             </div>
 
             <div>
-              <h3 class="util-label text-accent mb-4">Hours</h3>
+              <h3 class="util-label text-accent mb-4">Program</h3>
               <div class="text-lg text-primary-text/70 space-y-1">
-                <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
-                <p>Saturday: 10:00 AM - 3:00 PM</p>
-                <p>Sunday: Closed</p>
+                <p>Luni - Vineri: 9:00 - 17:00</p>
+                <p>Sâmbătă: 10:00 - 15:00</p>
+                <p>Duminică: Închis</p>
               </div>
             </div>
           </div>
 
           <div class="bg-primary-bg p-8 rounded-[24px]">
-            <h3 class="text-xl font-black text-secondary-text mb-4">Workshop Visits</h3>
+            <h3 class="text-xl font-black text-secondary-text mb-4">Vizite la Atelier</h3>
             <p class="text-base text-primary-text/70 leading-relaxed">
-              We welcome visitors to our workshop by appointment. Schedule a visit to see our
-              craftspeople at work and discuss your project in person.
+              Primim vizitatori în atelierul nostru cu programare. Stabilește o vizită pentru a vedea meșteșugarii noștri la lucru și pentru a discuta despre proiectul tău în persoană.
             </p>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Structured Data for Contact Page -->
+  <LocalBusinessSchema includedIn="ContactPage" />
 </Layout>

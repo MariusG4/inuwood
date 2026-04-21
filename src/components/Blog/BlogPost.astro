@@ -1,0 +1,146 @@
+---
+interface Props {
+  title: string;
+  excerpt: string;
+  date: string;
+  category: string;
+  image: string;
+  readTime: string;
+  author?: string;
+}
+
+const {
+  title,
+  excerpt,
+  date,
+  category,
+  image,
+  readTime,
+  author = "InuWood"
+} = Astro.props;
+---
+
+<article class="max-w-4xl mx-auto px-6 md:px-12 py-20">
+  <!-- Article Header -->
+  <header class="mb-12">
+    <div class="flex items-center gap-3 text-sm text-primary-text/60 font-medium mb-6">
+      <span class="util-label text-accent">{category}</span>
+      <span aria-hidden="true">&bull;</span>
+      <time datetime={date}>{date}</time>
+      <span aria-hidden="true">&bull;</span>
+      <span>{readTime}</span>
+    </div>
+    
+    <h1 class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-6">
+      {title}
+    </h1>
+    
+    <p class="text-xl md:text-2xl text-primary-text/70 font-light leading-relaxed">
+      {excerpt}
+    </p>
+  </header>
+
+  <!-- Featured Image -->
+  <div class="relative rounded-[24px] overflow-hidden aspect-[16/9] mb-12">
+    <img
+      src={image}
+      alt={title}
+      class="w-full h-full object-cover"
+      loading="eager"
+      width="1600"
+      height="900"
+    />
+  </div>
+
+  <!-- Article Content -->
+  <div class="prose prose-lg max-w-none">
+    <slot />
+  </div>
+
+  <!-- Article Footer -->
+  <footer class="mt-16 pt-8 border-t border-secondary-text/10">
+    <div class="flex items-center justify-between flex-wrap gap-6">
+      <div class="text-sm text-primary-text/60">
+        <span class="font-bold">Autor:</span> {author}
+      </div>
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 text-accent font-bold text-sm uppercase tracking-[0.2em] hover:text-secondary-text transition-colors"
+      >
+        <iconify-icon icon="lucide:arrow-left" class="text-base"></iconify-icon>
+        Înapoi la Blog
+      </a>
+    </div>
+  </footer>
+</article>
+
+<style>
+  .prose {
+    color: var(--tw-prose-body);
+    max-width: 65ch;
+  }
+  
+  .prose :global(h2) {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #5D4037;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+  }
+  
+  .prose :global(h3) {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #5D4037;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .prose :global(p) {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+    color: rgba(45, 44, 44, 0.8);
+  }
+  
+  .prose :global(ul), .prose :global(ol) {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  .prose :global(li) {
+    margin-bottom: 0.75rem;
+    line-height: 1.75;
+  }
+  
+  .prose :global(strong) {
+    font-weight: 700;
+    color: #2D2C2C;
+  }
+  
+  .prose :global(a) {
+    color: #334B49;
+    text-decoration: underline;
+    transition: color 0.3s;
+  }
+  
+  .prose :global(a:hover) {
+    color: #5D4037;
+  }
+  
+  .prose :global(blockquote) {
+    border-left: 4px solid #334B49;
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: rgba(45, 44, 44, 0.7);
+  }
+  
+  .prose :global(code) {
+    background: #EFECE5;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.9em;
+    color: #5D4037;
+  }
+</style>

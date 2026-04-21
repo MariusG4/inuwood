@@ -4,44 +4,63 @@
 <footer class="bg-secondary-bg py-24 px-6 md:px-12 border-t border-secondary-text/10">
   <div class="max-w-[1440px] mx-auto">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-16 mb-20">
-      <!-- Sub-column 1 -->
+      <!-- Brand Column -->
       <div class="reveal-up col-span-2 md:col-span-1">
+        <a href="/" aria-label="InuWood - Acasă" class="inline-block mb-6">
+          <img
+            src="/logo.png"
+            alt="InuWood"
+            width="160"
+            height="64"
+            class="h-16 w-auto object-contain"
+            loading="lazy"
+          />
+        </a>
+        <p class="text-sm text-primary-text/60 leading-relaxed max-w-[220px]">
+          Mobilier din lemn masiv realizat manual cu tehnici tradiționale de tâmplărie în Bacău, România.
+        </p>
+      </div>
+
+      <!-- Sub-column 1 -->
+      <div class="reveal-up" style="transition-delay: 100ms;">
         <h4 class="util-label text-accent mb-8 pb-2 border-b border-secondary-text inline-block">
-          Navigate
+          Navigare
         </h4>
-        <ul class="flex flex-col gap-4 text-sm font-medium text-primary-text/70">
-          <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
-          <li><a href="/about" class="hover:text-accent transition-colors">About</a></li>
-          <li><a href="/products" class="hover:text-accent transition-colors">Products</a></li>
-          <li><a href="/blog" class="hover:text-accent transition-colors">Blog</a></li>
-          <li><a href="/contact" class="hover:text-accent transition-colors">Contact</a></li>
-        </ul>
+        <nav aria-label="Footer navigation">
+          <ul class="flex flex-col gap-4 text-sm font-medium text-primary-text/70">
+            <li><a href="/" class="hover:text-accent transition-colors">Acasă</a></li>
+            <li><a href="/about" class="hover:text-accent transition-colors">Despre Noi</a></li>
+            <li><a href="/products" class="hover:text-accent transition-colors">Produse</a></li>
+            <li><a href="/blog" class="hover:text-accent transition-colors">Blog</a></li>
+            <li><a href="/contact" class="hover:text-accent transition-colors">Contact</a></li>
+          </ul>
+        </nav>
       </div>
 
       <!-- Sub-column 2 -->
-      <div class="reveal-up col-span-2 md:col-span-1" style="transition-delay: 150ms;">
+      <div class="reveal-up" style="transition-delay: 200ms;">
         <h4 class="util-label text-accent mb-8 pb-2 border-b border-secondary-text inline-block">
-          Follow
+          Urmărește-ne
         </h4>
         <ul class="flex flex-col gap-4 text-sm font-medium text-primary-text/70">
-          <li><a href="#" class="hover:text-accent transition-colors">Instagram</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">Pinterest</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">LinkedIn</a></li>
+          <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors" aria-label="Instagram">Instagram</a></li>
+          <li><a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors" aria-label="Pinterest">Pinterest</a></li>
+          <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors" aria-label="LinkedIn">LinkedIn</a></li>
         </ul>
       </div>
 
       <!-- Sub-column 3 -->
-      <div class="reveal-up col-span-2 md:col-span-1" style="transition-delay: 300ms;">
+      <div class="reveal-up" style="transition-delay: 300ms;">
         <h4 class="util-label text-accent mb-8 pb-2 border-b border-secondary-text inline-block">
-          Workshop
+          Atelier
         </h4>
         <address class="not-italic flex flex-col gap-4 text-sm font-medium text-primary-text/70">
-          <p>124 Timberline Way<br />Portland, OR 97204</p>
+          <p>Str. Meșteșugului nr. 24<br />Bacău, BC 600001<br />România</p>
           <p class="mt-2">
-            <a href="mailto:hello@woodandgrain.com" class="hover:text-accent transition-colors"
-              >hello@woodandgrain.com</a
+            <a href="mailto:contact@inuwood.ro" class="hover:text-accent transition-colors"
+              >contact@inuwood.ro</a
             ><br />
-            +1 (503) 555-0198
+            <a href="tel:+40234555198" class="hover:text-accent transition-colors">+40 234 555 198</a>
           </p>
         </address>
       </div>
@@ -49,10 +68,10 @@
 
     <div class="border-t border-secondary-text/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
       <p class="text-xs text-primary-text/50 font-medium">
-        &copy; {new Date().getFullYear()} Wood & Grain. All rights reserved.
+        &copy; {new Date().getFullYear()} InuWood. Toate drepturile rezervate.
       </p>
       <p class="text-xs text-primary-text/50 font-medium">
-        Crafted with care in Portland, Oregon.
+        Meșteșugit cu pasiune în Bacău, România.
       </p>
     </div>
   </div>
