@@ -26,7 +26,13 @@ const {
   noindex
 } = Astro.props;
 
-const GTM_ID = import.meta.env.GTM_ID || '';
+const GTM_ID = String(import.meta.env.PUBLIC_GTM_ID || import.meta.env.GTM_ID || '').trim();
+const hasGtm = GTM_ID.startsWith('GTM-');
+const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GTM_ID}');`;
 
 ---
 
@@ -66,15 +72,15 @@ const GTM_ID = import.meta.env.GTM_ID || '';
     <!-- Iconify -->
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" is:inline></script>
 
-    <!-- Google Tag Manager (Cookiebot controlled) -->
-		{GTM_ID && (
-			<script is:inline define:vars={{ GTM_ID }}>
-				var s = document.createElement('script');
-				s.type = 'text/plain';
-				s.setAttribute('data-cookieconsent', 'statistics');
-				s.text = '(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script","dataLayer","' + GTM_ID + '");';
-				document.head.appendChild(s);
-			</script>
+    <!-- Google Tag Manager (Cookiebot controlled: statistics consent) -->
+    {hasGtm && (
+      <script
+        type="text/plain"
+        data-cookieconsent="statistics"
+        is:inline
+        set:html={gtmScript}
+      />
+    )}
 
     <!-- Structured Data - Organization Schema -->
     <OrganizationSchema />
@@ -82,13 +88,16 @@ const GTM_ID = import.meta.env.GTM_ID || '';
   <body
     class="bg-primary-bg text-primary-text font-sans antialiased selection:bg-accent selection:text-primary-bg overflow-x-hidden"
   >
-
- 	{GTM_ID && (
-			<div data-cookieconsent="statistics" style="display:none">
-				<noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-				height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-			</div>
-			)}
+    {hasGtm && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    )}
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:bg-accent focus:text-primary-bg focus:rounded-full focus:text-sm focus:font-bold focus:uppercase focus:tracking-[0.2em] focus:shadow-lg"
