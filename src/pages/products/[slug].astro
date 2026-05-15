@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ProductDetail from '../../components/Products/ProductDetail.astro';
 import LocalBusinessSchema from '../../components/SEO/LocalBusinessSchema.astro';
@@ -10,13 +10,13 @@ export async function getStaticPaths() {
   });
 
   return productEntries.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id },
     props: { entry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const pageTitle = `${entry.data.title} - ${entry.data.category} | InuWood`;
 const pageDescription = entry.data.excerpt;
@@ -39,7 +39,7 @@ const pageDescription = entry.data.excerpt;
     price={entry.data.price}
     dimensions={entry.data.dimensions}
     finish={entry.data.finish}
-    slug={entry.slug}
+    slug={entry.id}
   >
     <Content />
   </ProductDetail>
