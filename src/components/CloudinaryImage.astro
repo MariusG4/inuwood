@@ -1,6 +1,4 @@
 ---
-import { CldImage } from 'astro-cloudinary';
-
 interface Props {
   src: string;
   alt: string;
@@ -30,6 +28,18 @@ const isCloudinary = !isExternalUrl && !isLocalPath;
 const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
 const cloudinaryReady = isCloudinary && !!cloudName;
 
+const cloudinaryTransformations = [
+  'f_auto',
+  'q_auto',
+  width ? `w_${width}` : undefined,
+  height ? `h_${height}` : undefined,
+  width && height ? 'c_fill' : 'c_limit',
+].filter(Boolean).join(',');
+
+const cloudinarySrc = cloudinaryReady
+  ? `https://res.cloudinary.com/${cloudName}/image/upload/${cloudinaryTransformations}/${src}`
+  : undefined;
+
 // Fallback to local images when Cloudinary is not configured
 let resolvedSrc = src;
 if (isCloudinary && !cloudName) {
@@ -52,15 +62,13 @@ for (const [key, value] of Object.entries(rest)) {
 
 {
   cloudinaryReady ? (
-    <CldImage
-      src={src}
-      width={width ?? 800}
-      height={height ?? 600}
+    <img
+      src={cloudinarySrc}
       alt={alt}
+      width={width}
+      height={height}
       class={className}
       loading={loading}
-      format="auto"
-      quality="auto"
       {...extraAttrs}
     />
   ) : (
