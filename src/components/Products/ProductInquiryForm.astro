@@ -1,0 +1,111 @@
+---
+interface Props {
+  productName: string;
+  productSlug: string;
+}
+
+const { productName, productSlug } = Astro.props;
+---
+
+<section class="bg-secondary-bg rounded-[24px] p-8 md:p-12 border border-secondary-text/10">
+  <h2 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-4">
+    Interesat de Această Piesă?
+  </h2>
+  <p class="text-lg text-primary-text/70 mb-8">
+    Completează formularul de mai jos și te contactăm în cel mai scurt timp pentru a discuta despre această piesă și opțiunile de personalizare.
+  </p>
+
+  <form
+    class="space-y-6"
+    method="POST"
+    name={`product-inquiry-${productSlug}`}
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    action="/contact?success=true"
+  >
+    <input type="hidden" name="form-name" value={`product-inquiry-${productSlug}`} />
+    <input type="hidden" name="product" value={productName} />
+    <p class="hidden">
+      <label>Nu completa dacă ești om: <input name="bot-field" /></label>
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label
+          for={`inquiry-name-${productSlug}`}
+          class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+        >
+          Nume
+        </label>
+        <input
+          type="text"
+          id={`inquiry-name-${productSlug}`}
+          name="name"
+          required
+          class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+          autocomplete="name"
+          aria-required="true"
+        />
+      </div>
+
+      <div>
+        <label
+          for={`inquiry-email-${productSlug}`}
+          class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+        >
+          Email
+        </label>
+        <input
+          type="email"
+          id={`inquiry-email-${productSlug}`}
+          name="email"
+          required
+          class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+          autocomplete="email"
+          aria-required="true"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label
+        for={`inquiry-phone-${productSlug}`}
+        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+      >
+        Telefon (opțional)
+      </label>
+      <input
+        type="tel"
+        id={`inquiry-phone-${productSlug}`}
+        name="phone"
+        class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+        autocomplete="tel"
+      />
+    </div>
+
+    <div>
+      <label
+        for={`inquiry-message-${productSlug}`}
+        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+      >
+        Mesaj
+      </label>
+      <textarea
+        id={`inquiry-message-${productSlug}`}
+        name="message"
+        required
+        rows="4"
+        class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300 resize-none"
+        placeholder={`Sunt interesat de ${productName}. Aș dori mai multe detalii despre...`}
+        aria-required="true"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      class="w-full md:w-auto bg-accent text-primary-bg px-12 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
+    >
+      Trimite Cererea
+    </button>
+  </form>
+</section>

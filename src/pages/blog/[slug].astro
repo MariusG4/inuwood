@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import BlogPost from '../../components/Blog/BlogPost.astro';
 import BlogPostSchema from '../../components/SEO/BlogPostSchema.astro';
@@ -11,13 +11,13 @@ export async function getStaticPaths() {
   });
   
   return blogEntries.map(entry => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id },
     props: { entry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const pageTitle = `${entry.data.title} | Blog InuWood`;
 const pageDescription = entry.data.excerpt;
@@ -104,7 +104,7 @@ const cta = ctaData[entry.data.category as keyof typeof ctaData] || {
     date={entry.data.date}
     category={entry.data.category}
     image={entry.data.image}
-    slug={entry.slug}
+    slug={entry.id}
     author={entry.data.author}
   />
 </Layout>

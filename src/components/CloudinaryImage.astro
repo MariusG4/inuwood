@@ -1,0 +1,77 @@
+---
+import { CldImage } from 'astro-cloudinary';
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  itemprop?: string;
+  [key: string]: unknown;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  class: className,
+  loading = 'lazy',
+  itemprop,
+  ...rest
+} = Astro.props;
+
+const isExternalUrl = src.startsWith('http://') || src.startsWith('https://');
+const isLocalPath = src.startsWith('/') || src.startsWith('.');
+const isCloudinary = !isExternalUrl && !isLocalPath;
+
+const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+const cloudinaryReady = isCloudinary && !!cloudName;
+
+// Fallback to local images when Cloudinary is not configured
+let resolvedSrc = src;
+if (isCloudinary && !cloudName) {
+  const extensionMap: Record<string, string> = {
+    'about-us/despre-noi': '.jpg',
+  };
+  const ext = extensionMap[src] || '.webp';
+  resolvedSrc = `/img/${src}${ext}`;
+}
+
+// Build extra HTML attributes map
+const extraAttrs: Record<string, string | number | undefined> = {};
+if (itemprop) extraAttrs['itemprop'] = itemprop;
+for (const [key, value] of Object.entries(rest)) {
+  if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+    extraAttrs[key] = value as string | number;
+  }
+}
+---
+
+{
+  cloudinaryReady ? (
+    <CldImage
+      src={src}
+      width={width ?? 800}
+      height={height ?? 600}
+      alt={alt}
+      class={className}
+      loading={loading}
+      format="auto"
+      quality="auto"
+      {...extraAttrs}
+    />
+  ) : (
+    <img
+      src={resolvedSrc}
+      alt={alt}
+      width={width}
+      height={height}
+      class={className}
+      loading={loading}
+      {...extraAttrs}
+    />
+  )
+}

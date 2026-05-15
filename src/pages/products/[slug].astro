@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ProductDetail from '../../components/Products/ProductDetail.astro';
+import LocalBusinessSchema from '../../components/SEO/LocalBusinessSchema.astro';
+
+export async function getStaticPaths() {
+  const productEntries = await getCollection('products', ({ data }) => {
+    return data.draft !== true;
+  });
+
+  return productEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const pageTitle = `${entry.data.title} - ${entry.data.category} | InuWood`;
+const pageDescription = entry.data.excerpt;
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  ogType="product"
+>
+  <ProductDetail
+    title={entry.data.title}
+    category={entry.data.category}
+    wood={entry.data.wood}
+    year={entry.data.year}
+    image={entry.data.image}
+    alt={entry.data.alt}
+    excerpt={entry.data.excerpt}
+    gallery={entry.data.gallery}
+    price={entry.data.price}
+    dimensions={entry.data.dimensions}
+    finish={entry.data.finish}
+    slug={entry.slug}
+  >
+    <Content />
+  </ProductDetail>
+
+  <LocalBusinessSchema includedIn="WebPage" />
+</Layout>

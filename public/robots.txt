@@ -1,25 +1,41 @@
-# InuWood Robots.txt
+# ============================================================
+# InuWood.ro - Robots.txt
+# Optimizat pentru Search Engines, LLM Indexing, GEO & AEO
 # https://inuwood.ro/robots.txt
+# Last updated: 2026-05-15
+# ============================================================
 
+# -------------------------------
+# 1. REGULA DEFAULT (toti botii)
+# -------------------------------
 User-agent: *
 Allow: /
 
-# Sitemaps
-Sitemap: https://inuwood.ro/sitemap.xml
+# Blocheaza zone sensibile sau non-SEO
+Disallow: /.netlify/
+Disallow: /404
+Disallow: /success
 
-# Crawl-delay (optional - adjust based on server capacity)
+# -------------------------------
+# 2. SEARCH ENGINES (Clasice)
+# -------------------------------
+
+User-agent: Googlebot
+Allow: /
 Crawl-delay: 1
 
-# Disallow sensitive or duplicate content (if any)
-# Disallow: /admin/
-# Disallow: /api/
+User-agent: Googlebot-Image
+Allow: /
 
-# Allow all major search engine bots explicitly
-User-agent: Googlebot
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Googlebot-Video
 Allow: /
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Slurp
 Allow: /
@@ -32,3 +48,110 @@ Allow: /
 
 User-agent: YandexBot
 Allow: /
+
+# -------------------------------
+# 3. LLM / AI CRAWLERS (GEO & AEO)
+#    Allow = continutul este indexat de AI pentru
+#    Generative Engine Optimization (GEO) si
+#    Answer Engine Optimization (AEO)
+# -------------------------------
+
+# OpenAI (GPTBot crawls for training; ChatGPT-User for browsing)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Google Extended (Gemini, SGE, AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic / Claude
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI (Facebook, Instagram, WhatsApp AI)
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Amazon (Alexa, Rufus)
+User-agent: Amazonbot
+Allow: /
+
+# Apple (Applebot - Siri, Apple Intelligence)
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Copilot / Bing AI
+User-agent: BingPreview
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Common Crawl (CCBot - alimenteaza majoritatea LLM-urilor open-source)
+User-agent: CCBot
+Allow: /
+
+# ByteDance / TikTok
+User-agent: Bytespider
+Allow: /
+
+# Samsung
+User-agent: Samsung-SBrowserBot
+Allow: /
+
+# Nutch (Apache - folosit de multe scrapere academice)
+User-agent: Nutch
+Allow: /
+
+# -------------------------------
+# 4. SEO & MARKETING TOOLS
+# -------------------------------
+
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: AhrefsSiteAudit
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+User-agent: SemrushBot-SA
+Allow: /
+
+User-agent: MJ12bot
+Allow: /
+
+User-agent: DotBot
+Allow: /
+
+User-agent: Screaming Frog SEO Spider
+Allow: /
+
+# -------------------------------
+# 5. SITEMAPS
+# -------------------------------
+Sitemap: https://inuwood.ro/sitemap.xml
+
+# Optional: sitemap dedicat pentru imagini (daca e generat separat)
+# Sitemap: https://inuwood.ro/sitemap-images.xml

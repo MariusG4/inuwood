@@ -1,0 +1,246 @@
+---
+interface Props {
+  variant: 'home' | 'blog';
+  source: string;
+  headingId?: string;
+}
+
+const { variant, source, headingId = 'newsletter-heading' } = Astro.props;
+
+const isHomeVariant = variant === 'home';
+const title = isHomeVariant
+  ? 'Primește noutăți direct din atelier'
+  : 'Rămâi Inspirat';
+const description = isHomeVariant
+  ? 'Abonează-te pentru a primi lansări de produse, povești din culisele atelierului și idei despre mobilier din lemn masiv lucrat manual.'
+  : 'Abonează-te la newsletter-ul nostru pentru sfaturi de tâmplărie, actualizări despre proiecte și insight-uri exclusive din atelierul nostru.';
+const consentText =
+  'Prin abonare, ești de acord să primești emailuri ocazionale de la InuWood. Te poți dezabona oricând.';
+const submitLabel = 'Abonează-te';
+const inputPlaceholder = isHomeVariant ? 'exemplu@email.ro' : 'Adresa ta de email';
+const benefits = [
+  'Noutăți despre proiecte noi și colecții în ediție limitată.',
+  'Sfaturi utile pentru întreținerea mobilierului din lemn masiv.',
+  'Invitații la lansări, oferte speciale și inspirație pentru casa ta.',
+];
+---
+
+{
+  isHomeVariant ? (
+    <section class="py-32 md:py-40 px-6 md:px-12 bg-secondary-bg" aria-labelledby={headingId}>
+      <div class="max-w-[1440px] mx-auto" data-newsletter-signup>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div class="lg:col-span-6 reveal-up">
+            <span class="util-label text-accent mb-4 block">Newsletter InuWood</span>
+            <h2 id={headingId} class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-8">
+              {title}
+            </h2>
+            <p class="text-xl text-primary-text/70 leading-relaxed max-w-2xl mb-10">{description}</p>
+
+            <ul class="space-y-4 text-primary-text/70 text-base md:text-lg">
+              {benefits.map((benefit) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-2 h-2.5 w-2.5 rounded-full bg-accent shrink-0" aria-hidden="true"></span>
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="lg:col-span-6 reveal-up bg-primary-bg border border-secondary-text/10 rounded-[24px] p-8 md:p-10 shadow-[0_20px_60px_rgba(51,75,73,0.08)]" style="transition-delay: 100ms">
+            <form class="space-y-5" aria-describedby="newsletter-consent newsletter-status">
+              <p class="hidden">
+                <label>Nu completa dacă ești om</label>
+                <input name="bot-field" autocomplete="off" tabindex="-1" />
+              </p>
+              <input type="hidden" name="source" value={source} />
+
+              <div>
+                <label class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-3">
+                  Adresa ta de email
+                </label>
+                <div class="flex flex-col sm:flex-row gap-4">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder={inputPlaceholder}
+                    required
+                    autocomplete="email"
+                    aria-required="true"
+                    class="flex-1 px-6 py-4 bg-secondary-bg border border-secondary-text/20 rounded-full focus:outline-none focus:border-accent transition-colors duration-300"
+                  />
+                  <button
+                    type="submit"
+                    class="bg-accent text-primary-bg px-8 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500 whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {submitLabel}
+                  </button>
+                </div>
+              </div>
+
+              <p data-newsletter-consent class="text-sm text-primary-text/60 leading-relaxed">{consentText}</p>
+              <p
+                data-newsletter-status
+                class="min-h-[1.5rem] text-sm font-medium text-primary-text/70"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="py-32 md:py-48 px-6 md:px-12 bg-secondary-bg" aria-labelledby={headingId}>
+      <div class="max-w-[1440px] mx-auto" data-newsletter-signup>
+        <div class="max-w-3xl mx-auto text-center reveal-up">
+          <h2 id={headingId} class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-8">
+            {title}
+          </h2>
+          <p class="text-xl text-primary-text/70 mb-12">{description}</p>
+
+          <form class="max-w-xl mx-auto space-y-4" aria-describedby="newsletter-consent newsletter-status">
+            <p class="hidden">
+              <label>Nu completa dacă ești om</label>
+              <input name="bot-field" autocomplete="off" tabindex="-1" />
+            </p>
+            <input type="hidden" name="source" value={source} />
+
+            <div class="flex flex-col sm:flex-row gap-4">
+              <input
+                type="email"
+                name="email"
+                placeholder={inputPlaceholder}
+                required
+                autocomplete="email"
+                aria-required="true"
+                class="flex-1 px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-full focus:outline-none focus:border-accent transition-colors duration-300"
+                aria-label="Adresa de email pentru newsletter"
+              />
+              <button
+                type="submit"
+                class="bg-accent text-primary-bg px-8 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500 whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {submitLabel}
+              </button>
+            </div>
+
+            <p data-newsletter-consent class="text-sm text-primary-text/60 leading-relaxed">{consentText}</p>
+            <p
+              data-newsletter-status
+              class="min-h-[1.5rem] text-sm font-medium text-primary-text/70"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  const confirmMessage = 'Abonarea ta a fost confirmată. Mulțumim!';
+  const defaultSuccessMessage = 'Mulțumim! Verifică emailul pentru a confirma abonarea.';
+  const defaultErrorMessage = 'A apărut o eroare. Încearcă din nou.';
+
+  const setStatus = (
+    status: HTMLParagraphElement,
+    message: string,
+    type: 'neutral' | 'success' | 'error' = 'neutral',
+  ) => {
+    status.textContent = message;
+    status.classList.remove('text-primary-text/70', 'text-accent', 'text-secondary-text');
+
+    if (type === 'success') {
+      status.classList.add('text-accent');
+      return;
+    }
+
+    if (type === 'error') {
+      status.classList.add('text-secondary-text');
+      return;
+    }
+
+    status.classList.add('text-primary-text/70');
+  };
+
+  document.querySelectorAll('[data-newsletter-signup]').forEach((root) => {
+    if (!(root instanceof HTMLElement) || root.dataset.newsletterBound === 'true') {
+      return;
+    }
+
+    const form = root.querySelector('form');
+    const emailInput = root.querySelector('input[name="email"]');
+    const status = root.querySelector('[data-newsletter-status]');
+    const submitButton = root.querySelector('button[type="submit"]');
+
+    if (
+      !(form instanceof HTMLFormElement) ||
+      !(emailInput instanceof HTMLInputElement) ||
+      !(status instanceof HTMLParagraphElement) ||
+      !(submitButton instanceof HTMLButtonElement)
+    ) {
+      return;
+    }
+
+    root.dataset.newsletterBound = 'true';
+
+    const defaultButtonText = submitButton.textContent?.trim() || 'Abonează-te';
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('newsletter') === 'confirmat') {
+      setStatus(status, confirmMessage, 'success');
+      const nextUrl = `${window.location.pathname}${window.location.hash}`;
+      window.history.replaceState({}, '', nextUrl);
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      setStatus(status, '');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Se trimite...';
+      form.setAttribute('aria-busy', 'true');
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch('/.netlify/functions/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            email: formData.get('email'),
+            source: formData.get('source'),
+            botField: formData.get('bot-field'),
+          }),
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Nu am putut procesa abonarea acum.');
+        }
+
+        form.reset();
+        setStatus(status, data.message || defaultSuccessMessage, 'success');
+      } catch (error) {
+        setStatus(
+          status,
+          error instanceof Error ? error.message : defaultErrorMessage,
+          'error',
+        );
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultButtonText;
+        form.removeAttribute('aria-busy');
+      }
+    });
+  });
+</script>
