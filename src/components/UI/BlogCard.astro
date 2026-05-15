@@ -1,4 +1,6 @@
 ---
+import CloudinaryImage from '../CloudinaryImage.astro';
+
 interface Props {
   title: string;
   excerpt: string;
@@ -22,21 +24,21 @@ const {
 } = Astro.props;
 ---
 
-<article 
-  class="group reveal-up" 
+<article
+  class="group reveal-up"
   style={delay ? `transition-delay: ${delay}ms` : undefined}
-  itemscope 
+  itemscope
   itemtype="https://schema.org/BlogPosting"
 >
   <a href={`/blog/${slug}`} class="block" aria-label={`Citește ${title}`}>
     <div class="relative rounded-[16px] overflow-hidden aspect-[4/3] mb-6">
-      <img
+      <CloudinaryImage
         src={image}
         alt={title}
+        width={1200}
+        height={900}
         class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 ease-custom"
         loading="lazy"
-        width="1200"
-        height="900"
         itemprop="image"
       />
     </div>

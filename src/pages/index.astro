@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import LocalBusinessSchema from '../components/SEO/LocalBusinessSchema.astro';
 import SectionHeader from '../components/UI/SectionHeader.astro';
 import ProductCard from '../components/UI/ProductCard.astro';
+import NewsletterSignup from '../components/UI/NewsletterSignup.astro';
+import CloudinaryImage from '../components/CloudinaryImage.astro';
 
 const pageTitle = "InuWood - Mobilier din Lemn Masiv Realizat Manual";
 const pageDescription = "Atelier de tâmplărie artizanală în Bacău. Creăm mobilier din lemn masiv cu tehnici tradiționale, design personalizat și calitate superioară. Comenzi și restaurări mobilier.";
@@ -14,16 +16,18 @@ const featuredProducts = [
     category: 'Oglinda',
     wood: 'Nuc',
     year: '2024',
-    image: '../img/homepage/oglinda-homepage.webp',
-    alt: 'Oglinda artizanal din lemn de nuc cu finisaj manual'
+    image: 'homepage/oglinda-homepage',
+    alt: 'Oglinda artizanal din lemn de nuc cu finisaj manual',
+    slug: 'oglinda-artizanala'
   },
   {
     title: 'Tocator Live Edge',
     category: 'Platou/Tocator',
     wood: 'Stejar',
     year: '2024',
-    image: '../img/homepage/tocatoare-homepage.webp',
-    alt: 'Platou de dining din stejar cu margine naturală live edge'
+    image: 'homepage/tocatoare-homepage',
+    alt: 'Platou de dining din stejar cu margine naturală live edge',
+    slug: 'set-platou-tocator-lemn-live-edge'
   }
 ];
 ---
@@ -74,13 +78,13 @@ const featuredProducts = [
       <!-- Right: Visual Element -->
       <div class="lg:col-span-5 relative reveal-up" style="transition-delay: 300ms">
         <div class="relative aspect-[3/4] overflow-hidden rounded-[24px]">
-          <img
+          <CloudinaryImage
             src="https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=800"
             alt="Detaliu mobilier din lemn meșteșugit manual în atelierul InuWood"
+            width={800}
+            height={1067}
             class="w-full h-full object-cover"
             loading="eager"
-            width="800"
-            height="1067"
           />
         </div>
       </div>
@@ -189,13 +193,15 @@ const featuredProducts = [
       </header>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-16 gap-y-24">
-        <ProductCard {...featuredProducts[0]} />
+        <ProductCard {...featuredProducts[0]} slug={featuredProducts[0].slug} />
         <div class="md:pt-[120px]">
-          <ProductCard {...featuredProducts[1]} delay={100} />
+          <ProductCard {...featuredProducts[1]} slug={featuredProducts[1].slug} delay={100} />
         </div>
       </div>
     </div>
   </section>
+
+  <NewsletterSignup variant="home" source="homepage" />
 
   <!-- Structured Data for WebPage with LocalBusiness -->
   <LocalBusinessSchema includedIn="WebPage" />

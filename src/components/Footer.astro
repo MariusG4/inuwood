@@ -1,4 +1,5 @@
 ---
+import CloudinaryImage from './CloudinaryImage.astro';
 ---
 
 <footer class="bg-secondary-bg py-24 px-6 md:px-12 border-t border-secondary-text/10">
@@ -7,11 +8,11 @@
       <!-- Brand Column -->
       <div class="reveal-up col-span-2 md:col-span-1">
         <a href="/" aria-label="InuWood - Acasă" class="inline-block mb-6">
-          <img
+          <CloudinaryImage
             src="/logo.png"
             alt="InuWood"
-            width="160"
-            height="64"
+            width={160}
+            height={64}
             class="h-16 w-auto object-contain"
             loading="lazy"
           />
@@ -60,7 +61,7 @@
             <a href="mailto:contact@inuwood.ro" class="hover:text-accent transition-colors"
               >contact@inuwood.ro</a
             ><br />
-            <a href="tel:+40234555198" class="hover:text-accent transition-colors">+40 234 555 198</a>
+            <a href="tel:+40753481013" class="hover:text-accent transition-colors">+40 234 555 198</a>
           </p>
         </address>
       </div>

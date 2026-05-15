@@ -14,6 +14,34 @@ const blogCollection = defineCollection({
   }),
 });
 
+const productCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    category: z.string(),
+    wood: z.string(),
+    year: z.string(),
+    image: z.string(),
+    alt: z.string(),
+    excerpt: z.string(),
+    gallery: z
+      .array(
+        z.object({
+          src: z.string(),
+          alt: z.string(),
+        }),
+      )
+      .optional()
+      .default([]),
+    price: z.string().optional(),
+    dimensions: z.string().optional(),
+    finish: z.string().optional(),
+    featured: z.boolean().optional().default(false),
+    draft: z.boolean().optional().default(false),
+  }),
+});
+
 export const collections = {
-  'blog': blogCollection,
+  blog: blogCollection,
+  products: productCollection,
 };

@@ -150,6 +150,44 @@ Or specify in `netlify.toml`:
 - Astro Documentation: https://docs.astro.build/
 - Community Support: https://answers.netlify.com/
 
+## Environment Variables
+
+The site uses external services for images and newsletter subscriptions.
+Copy `.env.example` to `.env` locally and set the same variables in
+**Netlify → Site Settings → Environment Variables**.
+
+### Cloudinary (Images)
+
+1. Create a free account at [cloudinary.com](https://cloudinary.com)
+2. Upload your product / about / homepage images
+3. Use the same **public ID** referenced in the code (e.g. `products/masa-lemn-1`)
+4. Add these environment variables to Netlify:
+   - `PUBLIC_CLOUDINARY_CLOUD_NAME` — your Cloudinary cloud name
+
+Optional (only for signed uploads or the upload widget):
+   - `PUBLIC_CLOUDINARY_API_KEY`
+   - `CLOUDINARY_API_SECRET`
+
+When the cloud name is set, images are served via Cloudinary with
+`f_auto` (format auto) and `q_auto` (quality auto) for optimal delivery.
+When it is **not** set, the site falls back to local images in `public/img/`
+so you can develop without a Cloudinary account.
+
+### Brevo (Newsletter)
+
+1. Create a free account at [brevo.com](https://brevo.com)
+2. Create a contact list for newsletter subscribers
+3. Generate an API v3 key
+4. Add these environment variables to Netlify:
+   - `BREVO_API_KEY` — your Brevo API key
+   - `BREVO_LIST_ID` — numeric ID of the newsletter list (default: 3)
+   - `BREVO_DOI_TEMPLATE_ID` — double opt-in template ID, or 0 for single opt-in
+   - `BREVO_DOI_REDIRECT_URL` — optional redirect after DOI confirmation
+
+When the API key is missing in a **dev** environment the function returns a
+simulated success so the UI can be tested. In **production** the function
+returns an error if the key is missing.
+
 ---
 
-Your Wood & Grain website is now ready to be deployed! 🚀
+Your InuWood website is now ready to be deployed! 🚀

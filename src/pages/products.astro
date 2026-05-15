@@ -1,100 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CloudinaryImage from '../components/CloudinaryImage.astro';
+import { getCollection } from 'astro:content';
 
 const pageTitle = "Produse - Mobilier din Lemn Masiv | InuWood";
 const pageDescription = "Explorează colecția noastră de mobilier artizanal din lemn masiv. Fiecare piesă este realizată manual cu îmbinări tradiționale și lemn de provenință sustenabilă.";
 const pageKeywords = "mobilier lemn masiv, catalog mobilier artizanal, scaune lemn masiv, mese lemn natural, dulapuri lemn, birou lemn masiv, rafturi lemn, mobilier stejar nuc cireș";
 
-const products = [
-  {
-    title: 'Masa Artizanului',
-    category: 'Mese',
-    wood: 'Nuc',
-    year: '2024',
-    image: '../img/products/masa-lemn-1.webp',
-    alt: 'Masa din lemn de nuc cu finisaj manual si rasina'
-  },
-  {
-    title: 'Masă Live Edge',
-    category: 'Mese',
-    wood: 'Stejar',
-    year: '2024',
-    image: '../img/products/masa-lemn-picioare-edge.webp',
-    alt: 'Masă de dining din stejar cu stand natural live edge'
-  },
-  {
-    title: 'Oglinda Artizanala',
-    category: 'Oglinzi',
-    wood: 'Stejar Alb',
-    year: '2023',
-    image: '../img/products/oglinda-artizanala-lemn.webp',
-    alt: 'Oglinda artizanala din lemn de stejar alb cu finisaj manual rasina albastra'
-  },
-  {
-    title: 'Platou de lemn',
-    category: 'Platou/Tocator',
-    wood: 'Cireș',
-    year: '2023',
-    image: '../img/products/platou-lemn.webp',
-    alt: 'Platou de lemn cu finisaj manual'
-  },
-  {
-    title: 'Platou de lemn',
-    category: 'Platou/Tocator',
-    wood: 'Arțar',
-    year: '2024',
-    image: '../img/products/platou-lemn-3.webp',
-    alt: 'Platou de lemn din arțar cu finisaj manual'
-  },
-  {
-    title: 'Raft Artizanal tip Scara',
-    category: 'Depozitare',
-    wood: 'Frasin',
-    year: '2023',
-    image: '../img/products/raft-artizanal-scara.webp',
-    alt: 'Raft plutitor minimalist din lemn de frasin'
-  },
-  {
-    title: 'Suport de Umbrele Restaurat',
-    category: 'Depozitare',
-    wood: 'Frasin',
-    year: '2023',
-    image: '../img/products/restaurare-suport-umbrele.webp',
-    alt: 'Suport de umbrele restaurat din lemn de frasin'
-  },
-  {
-    title: 'Set Platou/Tocator Lemn',
-    category: 'Platou/Tocator',
-    wood: 'Frasin',
-    year: '2023',
-    image: '../img/products/set-platou-tocator-lemn.webp',
-    alt: 'Set de platou/tocator din lemn de frasin'
-  },
-  {
-    title: 'Stand Monitor / Spatiu depozitare pentru birou',
-    category: 'Accesorii Birou',
-    wood: 'Frasin',
-    year: '2023',
-    image: '../img/products/stand-monitor-birou.webp',
-    alt: 'Stand monitor / spatiu depozitare pentru birou din lemn de frasin'
-  },
-  {
-    title: 'Set Platou/Tocator Lemn Live Edge',
-    category: 'Platou/Tocator',
-    wood: 'Frasin',
-    year: '2023',
-    image: '../img/products/tocator-platou-lemn-3.webp',
-    alt: 'Set de platou/tocator din lemn de frasin cu finisaj manual live edge'
-  },
-  {
-    title: 'Trofeu lemn Durau',
-    category: 'Trofee',
-    wood: 'Frasin',
-    year: '2023',
-    image: '../img/products/Trofeu-lemn-durau-1.webp',
-    alt: 'Trofeu lemn durau din lemn de frasin'
-  }
-];
+const allProducts = await getCollection('products', ({ data }) => data.draft !== true);
+const products = allProducts.map((entry) => ({
+  slug: entry.slug,
+  title: entry.data.title,
+  category: entry.data.category,
+  wood: entry.data.wood,
+  year: entry.data.year,
+  image: entry.data.image,
+  alt: entry.data.alt,
+}));
 ---
 
 <Layout
@@ -125,15 +47,15 @@ const products = [
         <!-- Column 1 (Odds) -->
         <div class="flex flex-col gap-y-24">
           {products.filter((_, i) => i % 2 === 0).map((product) => (
-            <article class="group reveal-up" itemscope itemtype="https://schema.org/Product">
+            <a href={`/products/${product.slug}`} class="group block reveal-up" itemscope itemtype="https://schema.org/Product" aria-label={`Vezi detalii ${product.title}`}>
               <div class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8">
-                <img
+                <CloudinaryImage
                   src={product.image}
                   alt={product.alt}
+                  width={1200}
+                  height={1600}
                   class="w-full h-full object-cover grayscale touch-color group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
                   loading="lazy"
-                  width="1200"
-                  height="1600"
                   itemprop="image"
                 />
                 <div class="absolute inset-0 bg-primary-text/20 opacity-0 touch-overlay group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10">
@@ -144,29 +66,29 @@ const products = [
               </div>
               <div>
                 <span class="util-label text-accent mb-4 block" itemprop="category">{product.category}</span>
-                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3" itemprop="name">
+                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3 group-hover:text-accent transition-colors duration-300" itemprop="name">
                   {product.title}
                 </h3>
                 <div class="text-sm text-primary-text/60 font-medium" itemprop="material">
                   {product.wood} &bull; {product.year}
                 </div>
               </div>
-            </article>
+            </a>
           ))}
         </div>
 
         <!-- Column 2 (Evens - Staggered) -->
         <div class="flex flex-col gap-y-24 md:pt-[120px]">
           {products.filter((_, i) => i % 2 === 1).map((product, index) => (
-            <article class="group reveal-up" style={`transition-delay: ${(index + 1) * 100}ms`} itemscope itemtype="https://schema.org/Product">
+            <a href={`/products/${product.slug}`} class="group block reveal-up" style={`transition-delay: ${(index + 1) * 100}ms`} itemscope itemtype="https://schema.org/Product" aria-label={`Vezi detalii ${product.title}`}>
               <div class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8">
-                <img
+                <CloudinaryImage
                   src={product.image}
                   alt={product.alt}
+                  width={1200}
+                  height={1600}
                   class="w-full h-full object-cover grayscale touch-color group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
                   loading="lazy"
-                  width="1200"
-                  height="1600"
                   itemprop="image"
                 />
                 <div class="absolute inset-0 bg-primary-text/20 opacity-0 touch-overlay group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10">
@@ -177,14 +99,14 @@ const products = [
               </div>
               <div>
                 <span class="util-label text-accent mb-4 block" itemprop="category">{product.category}</span>
-                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3" itemprop="name">
+                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3 group-hover:text-accent transition-colors duration-300" itemprop="name">
                   {product.title}
                 </h3>
                 <div class="text-sm text-primary-text/60 font-medium" itemprop="material">
                   {product.wood} &bull; {product.year}
                 </div>
               </div>
-            </article>
+            </a>
           ))}
         </div>
       </div>

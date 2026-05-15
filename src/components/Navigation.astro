@@ -1,4 +1,6 @@
 ---
+import CloudinaryImage from './CloudinaryImage.astro';
+
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
@@ -19,11 +21,11 @@ const navLinks = [
     class="z-50 relative flex items-center"
     aria-label="InuWood - Acasă"
   >
-    <img
+    <CloudinaryImage
       src="/logo.png"
       alt="InuWood"
-      width="120"
-      height="48"
+      width={120}
+      height={48}
       class="h-10 sm:h-12 w-auto object-contain"
       loading="eager"
     />

@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/UI/Hero.astro';
 import SectionHeader from '../components/UI/SectionHeader.astro';
 import CTASection from '../components/UI/CTASection.astro';
+import CloudinaryImage from '../components/CloudinaryImage.astro';
 
 const pageTitle = "Despre Noi - InuWood";
 const pageDescription = "Descoperă povestea InuWood, atelierul de tâmplărie artizanală din Bacău. Peste două decenii de experiență în crearea mobilierului din lemn masiv cu tehnici tradiționale.";
@@ -33,13 +34,13 @@ const pageKeywords = "despre InuWood, atelier tâmplărie Bacău, meșteri lemn 
     <div class="max-w-[1440px] mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
         <div class="reveal-up">
-          <img
-            src="../img/about-us/despre-noi.jpg"
+          <CloudinaryImage
+            src="about-us/despre-noi"
             alt="Interiorul atelierului InuWood din Bacău cu unelte tradiționale de tâmplărie"
+            width={1200}
+            height={900}
             class="w-full aspect-[4/3] object-cover rounded-[24px]"
             loading="lazy"
-            width="1200"
-            height="900"
           />
         </div>
         <div class="reveal-up" style="transition-delay: 100ms">
