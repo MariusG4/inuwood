@@ -32,7 +32,20 @@ const pageKeywords = "contact InuWood, atelier lemn Bacău contact, comanda mobi
           <h2 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-8">
             Trimite-ne un Mesaj
           </h2>
-          <form class="space-y-6" method="POST" name="contact" data-netlify="true" netlify-honeypot="bot-field">
+          <div
+            id="form-success"
+            class="hidden mb-8 rounded-2xl border border-accent/30 bg-accent/10 px-6 py-5 text-primary-text"
+            role="status"
+            aria-live="polite"
+            tabindex="-1"
+          >
+            <p class="font-bold text-secondary-text mb-2">Mulțumim! Mesajul a fost trimis.</p>
+            <p class="text-primary-text/70">
+              Am primit solicitarea ta și te vom contacta cât mai curând la datele trimise.
+            </p>
+          </div>
+
+          <form class="space-y-6" method="POST" name="contact" data-netlify="true" netlify-honeypot="bot-field" action="/contact?success=true">
             <input type="hidden" name="form-name" value="contact" />
             <p class="hidden">
               <label>Nu completa dacă ești om: <input name="bot-field" /></label>
@@ -195,4 +208,15 @@ const pageKeywords = "contact InuWood, atelier lemn Bacău contact, comanda mobi
 
   <!-- Structured Data for Contact Page -->
   <LocalBusinessSchema includedIn="ContactPage" />
+
+  <script is:inline>
+    const params = new URLSearchParams(window.location.search);
+    const successMessage = document.getElementById('form-success');
+
+    if (params.get('success') === 'true' && successMessage) {
+      successMessage.classList.remove('hidden');
+      successMessage.focus({ preventScroll: true });
+      successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  </script>
 </Layout>
