@@ -1,0 +1,29 @@
+{
+  "id": "/",
+  "name": "InuWood - Mobilier din Lemn Masiv",
+  "short_name": "InuWood",
+  "description": "Atelier de tâmplărie artizanală din Bacău. Mobilier din lemn masiv realizat manual, cu design personalizat și finisaje premium.",
+  "lang": "ro",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F9F7F2",
+  "theme_color": "#334B49",
+  "categories": ["furniture", "home", "business", "lifestyle"],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
