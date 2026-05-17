@@ -18,13 +18,14 @@ const { productName, productSlug } = Astro.props;
   <form
     class="space-y-6"
     method="POST"
-    name={`product-inquiry-${productSlug}`}
+    name="product-inquiry"
     data-netlify="true"
     netlify-honeypot="bot-field"
     action="/contact?success=true"
   >
-    <input type="hidden" name="form-name" value={`product-inquiry-${productSlug}`} />
+    <input type="hidden" name="form-name" value="product-inquiry" />
     <input type="hidden" name="product" value={productName} />
+    <input type="hidden" name="productSlug" value={productSlug} />
     <p class="hidden">
       <label>Nu completa dacă ești om: <input name="bot-field" /></label>
     </p>
