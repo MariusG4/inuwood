@@ -1,10 +1,13 @@
 ---
+import TurnstileWidget from '../UI/TurnstileWidget.astro';
+
 interface Props {
   productName: string;
   productSlug: string;
 }
 
 const { productName, productSlug } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <section class="bg-secondary-bg rounded-[24px] p-8 md:p-12 border border-secondary-text/10">
@@ -15,15 +18,31 @@ const { productName, productSlug } = Astro.props;
     Completează formularul de mai jos și te contactăm în cel mai scurt timp pentru a discuta despre această piesă și opțiunile de personalizare.
   </p>
 
+  <div
+    id="product-form-error"
+    class="hidden mb-8 rounded-2xl border border-red-500/30 bg-red-500/10 px-6 py-5 text-primary-text"
+    role="alert"
+    aria-live="assertive"
+    tabindex="-1"
+  >
+    <p class="font-bold text-secondary-text mb-2">Cererea nu a putut fi trimisă.</p>
+    <p id="product-form-error-text" class="text-primary-text/70">
+      Te rugăm să verifici câmpurile și să încerci din nou.
+    </p>
+  </div>
+
   <form
     class="space-y-6"
     method="POST"
     name="product-inquiry"
     data-netlify="true"
     netlify-honeypot="bot-field"
-    action="/contact?success=true"
+    action="/.netlify/functions/validate-form"
+    novalidate
   >
     <input type="hidden" name="form-name" value="product-inquiry" />
+    <input type="hidden" name="redirect-success" value="/contact?success=true" />
+    <input type="hidden" name="redirect-error" value={currentPath} />
     <input type="hidden" name="product" value={productName} />
     <input type="hidden" name="productSlug" value={productSlug} />
     <p class="hidden">
@@ -73,14 +92,16 @@ const { productName, productSlug } = Astro.props;
         for={`inquiry-phone-${productSlug}`}
         class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
       >
-        Telefon (opțional)
+        Telefon
       </label>
       <input
         type="tel"
         id={`inquiry-phone-${productSlug}`}
         name="phone"
+        required
         class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
         autocomplete="tel"
+        aria-required="true"
       />
     </div>
 
@@ -102,6 +123,8 @@ const { productName, productSlug } = Astro.props;
       ></textarea>
     </div>
 
+    <TurnstileWidget />
+
     <button
       type="submit"
       class="w-full md:w-auto bg-accent text-primary-bg px-12 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
@@ -110,3 +133,27 @@ const { productName, productSlug } = Astro.props;
     </button>
   </form>
 </section>
+
+<script is:inline>
+  const params = new URLSearchParams(window.location.search);
+  const errorMessage = document.getElementById('product-form-error');
+  const errorText = document.getElementById('product-form-error-text');
+  const errors = {
+    required: 'Toate câmpurile sunt obligatorii.',
+    email: 'Te rugăm să introduci o adresă de email validă.',
+    phone: 'Te rugăm să introduci un număr de telefon valid.',
+    verification: 'Verificarea anti-spam a eșuat. Te rugăm să încerci din nou.',
+    server: 'A apărut o eroare la trimitere. Te rugăm să încerci din nou.',
+    'bad-request': 'Cererea trimisă nu este validă. Te rugăm să încerci din nou.',
+  };
+
+  if (params.has('error') && errorMessage) {
+    const errorCode = params.get('error');
+    if (errorText && errors[errorCode]) {
+      errorText.textContent = errors[errorCode];
+    }
+    errorMessage.classList.remove('hidden');
+    errorMessage.focus({ preventScroll: true });
+    errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+</script>

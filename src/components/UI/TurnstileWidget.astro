@@ -1,0 +1,21 @@
+---
+const turnstileSiteKey = String(
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
+).trim();
+---
+
+<div class="pt-2">
+  <div
+    class="cf-turnstile"
+    data-sitekey={turnstileSiteKey}
+    data-language="ro"
+    data-theme="light"
+  ></div>
+</div>
+
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+  is:inline
+></script>
