@@ -1,0 +1,59 @@
+---
+interface Props {
+  code: string;
+  label: string;
+  heading: string;
+  description: string;
+  primaryHref: string;
+  primaryText: string;
+  secondaryHref?: string;
+  secondaryText?: string;
+}
+
+const {
+  code,
+  label,
+  heading,
+  description,
+  primaryHref,
+  primaryText,
+  secondaryHref,
+  secondaryText
+} = Astro.props;
+---
+
+<section class="min-h-[calc(100vh-80px)] md:min-h-[calc(100vh-96px)] pt-[152px] md:pt-[184px] pb-32 md:pb-40 px-6 md:px-12 flex items-start bg-primary-bg">
+  <div class="max-w-[1440px] mx-auto w-full">
+    <div class="max-w-4xl reveal-up py-6 md:py-10">
+      <span class="util-label text-accent mb-8 block">{label}</span>
+      <p class="text-[88px] leading-none md:text-[160px] font-black tracking-[-0.06em] text-secondary-text/12 select-none mb-6 md:mb-8">
+        {code}
+      </p>
+      <h1 class="text-5xl md:text-7xl font-black text-secondary-text tracking-tighter mb-8 md:mb-10">
+        {heading}
+      </h1>
+      <p class="text-lg md:text-2xl text-primary-text/70 max-w-2xl leading-relaxed mb-12 md:mb-14">
+        {description}
+      </p>
+
+      <div class="flex flex-col sm:flex-row sm:flex-wrap gap-4 mb-14 md:mb-16">
+        <a
+          href={primaryHref}
+          class="inline-flex items-center justify-center gap-3 rounded-full bg-accent px-8 py-4 text-sm font-bold uppercase tracking-[0.2em] text-primary-bg transition-colors duration-300 hover:bg-secondary-text"
+        >
+          {primaryText}
+          <iconify-icon icon="lucide:arrow-right" class="text-base" aria-hidden="true"></iconify-icon>
+        </a>
+
+        {secondaryHref && secondaryText && (
+          <a
+            href={secondaryHref}
+            class="inline-flex items-center justify-center gap-3 rounded-full bg-secondary-bg px-8 py-4 text-sm font-bold uppercase tracking-[0.2em] text-secondary-text transition-colors duration-300 hover:bg-accent hover:text-primary-bg"
+          >
+            {secondaryText}
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ErrorPageContent from '../components/UI/ErrorPageContent.astro';
+
+const pageTitle = '404 - Pagina nu a fost găsită';
+const pageDescription = 'Pagina căutată nu există sau a fost mutată. Revino pe homepage, în produse, blog sau contact pentru a continua navigarea.';
+---
+
+<Layout title={pageTitle} description={pageDescription} ogType="website" noindex>
+  <ErrorPageContent
+    code="404"
+    label="Pagină inexistentă"
+    heading="Nu am găsit pagina pe care o cauți"
+    description="Linkul poate fi greșit, pagina poate fi mutată sau poate nu mai există. Te poți întoarce la homepage sau poți continua spre cele mai importante secțiuni ale site-ului." 
+    primaryHref="/"
+    primaryText="Înapoi Acasă"
+    secondaryHref="/products"
+    secondaryText="Vezi Produsele"
+  />
+</Layout>

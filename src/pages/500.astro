@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ErrorPageContent from '../components/UI/ErrorPageContent.astro';
+
+const pageTitle = '500 - A apărut o eroare';
+const pageDescription = 'A apărut o eroare neașteptată. Reîncearcă pagina sau contactează echipa InuWood dacă problema persistă.';
+---
+
+<Layout title={pageTitle} description={pageDescription} ogType="website" noindex>
+  <ErrorPageContent
+    code="500"
+    label="Eroare neașteptată"
+    heading="Ceva nu a mers cum trebuie"
+    description="A apărut o problemă temporară. Te rugăm să reîncarci pagina sau să ne contactezi dacă eroarea persistă și te împiedică să finalizezi o solicitare." 
+    primaryHref="/"
+    primaryText="Mergi Acasă"
+    secondaryHref="/contact"
+    secondaryText="Contactează-ne"
+  />
+</Layout>
