@@ -37,7 +37,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 ---
 
 <!doctype html>
-<html lang="ro" class="scroll-smooth">
+<html lang="ro">
   <head>
     <!-- Start CookieYes banner -->
     <script
@@ -114,16 +114,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </a>
 
 
-    <Navigation />
-    <main class="w-full" id="main-content">
-      <slot />
-    </main>
-    <Footer />
+    <div id="swup" class="transition-fade">
+      <Navigation />
+      <main class="w-full" id="main-content">
+        <slot />
+      </main>
+      <Footer />
+    </div>
     <WhatsAppButton />
   </body>
 </html>
 
 <style is:global>
+  .transition-fade {
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html.is-animating .transition-fade {
+    opacity: 0;
+  }
+
   /* Custom scrollbar for an editorial feel */
   ::-webkit-scrollbar {
     width: 8px;
@@ -187,24 +197,195 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Intersection Observer for Reveal Up Animation
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.15,
-    };
+  import Swup from 'swup';
+  import SwupHeadPlugin from '@swup/head-plugin';
+  import SwupScriptsPlugin from '@swup/scripts-plugin';
+  import LocomotiveScroll from 'locomotive-scroll';
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+  let revealObserver: IntersectionObserver | null = null;
+  let locomotive: LocomotiveScroll | null = null;
+  let swup: Swup | null = null;
+
+  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const initRevealAnimations = () => {
+    revealObserver?.disconnect();
+    revealObserver = null;
+
+    const revealElements = document.querySelectorAll<HTMLElement>('.reveal-up');
+    if (!revealElements.length) {
+      return;
+    }
+
+    if (reducedMotionQuery.matches) {
+      revealElements.forEach((el) => el.classList.add('is-visible'));
+      return;
+    }
+
+    revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
           entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15,
+      },
+    );
 
-    const revealElements = document.querySelectorAll('.reveal-up');
-    revealElements.forEach((el) => observer.observe(el));
+    revealElements.forEach((el) => revealObserver?.observe(el));
+  };
+
+  const destroyLocomotive = () => {
+    if (!locomotive) {
+      return;
+    }
+    locomotive.destroy();
+    locomotive = null;
+    document.documentElement.removeAttribute('data-scroll-orientation');
+  };
+
+  const initLocomotive = () => {
+    if (reducedMotionQuery.matches) {
+      destroyLocomotive();
+      return;
+    }
+
+    destroyLocomotive();
+    locomotive = new LocomotiveScroll({
+      lenisOptions: {
+        smoothWheel: true,
+      },
+    });
+  };
+
+  const renderTurnstileWidgets = () => {
+    const turnstileApi = (
+      window as {
+        turnstile?: {
+          render: (
+            container: HTMLElement,
+            options?: Record<string, unknown>,
+          ) => unknown;
+        };
+      }
+    ).turnstile;
+
+    if (!turnstileApi) {
+      return;
+    }
+
+    document.querySelectorAll<HTMLElement>('.cf-turnstile').forEach((widget) => {
+      if (widget.dataset.turnstileRendered === 'true') {
+        return;
+      }
+
+      if (widget.childElementCount > 0) {
+        widget.dataset.turnstileRendered = 'true';
+        return;
+      }
+
+      const sitekey = widget.dataset.sitekey;
+      if (!sitekey) {
+        return;
+      }
+
+      turnstileApi.render(widget, {
+        sitekey,
+        language: widget.dataset.language || 'ro',
+        theme: widget.dataset.theme || 'light',
+      });
+      widget.dataset.turnstileRendered = 'true';
+    });
+  };
+
+  const ensureTurnstileScript = () => {
+    if (!document.querySelector('.cf-turnstile')) {
+      return;
+    }
+
+    const turnstileApi = (
+      window as {
+        turnstile?: {
+          render: (
+            container: HTMLElement,
+            options?: Record<string, unknown>,
+          ) => unknown;
+        };
+      }
+    ).turnstile;
+
+    if (turnstileApi) {
+      renderTurnstileWidgets();
+      return;
+    }
+
+    if (document.querySelector('script[data-turnstile-api]')) {
+      return;
+    }
+
+    const turnstileScript = document.createElement('script');
+    turnstileScript.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    turnstileScript.async = true;
+    turnstileScript.defer = true;
+    turnstileScript.dataset.turnstileApi = 'true';
+    turnstileScript.addEventListener('load', renderTurnstileWidgets, { once: true });
+    document.head.appendChild(turnstileScript);
+  };
+
+  const initPageInteractions = () => {
+    initRevealAnimations();
+    ensureTurnstileScript();
+    renderTurnstileWidgets();
+    initLocomotive();
+  };
+
+  const initSwup = () => {
+    if (swup) {
+      return;
+    }
+
+    swup = new Swup({
+      containers: ['#swup'],
+      plugins: [
+        new SwupHeadPlugin(),
+        new SwupScriptsPlugin({
+          head: false,
+          body: true,
+        }),
+      ],
+    });
+
+    swup.hooks.before('content:replace', () => {
+      revealObserver?.disconnect();
+      revealObserver = null;
+      destroyLocomotive();
+    });
+
+    swup.hooks.on('page:view', () => {
+      initPageInteractions();
+    });
+  };
+
+  const bootstrapClient = () => {
+    initPageInteractions();
+    initSwup();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootstrapClient, { once: true });
+  } else {
+    bootstrapClient();
+  }
+
+  reducedMotionQuery.addEventListener('change', () => {
+    initRevealAnimations();
+    initLocomotive();
   });
 </script>

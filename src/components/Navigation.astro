@@ -114,14 +114,23 @@ const navLinks = [
   </ul>
 </div>
 
-<script>
+<script is:inline>
   (function() {
-    const toggle = document.getElementById('mobile-menu-toggle')!;
-    const overlay = document.getElementById('mobile-menu-overlay')!;
-    const line1 = document.getElementById('hamburger-line-1')!;
-    const line2 = document.getElementById('hamburger-line-2')!;
-    const line3 = document.getElementById('hamburger-line-3')!;
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const overlay = document.getElementById('mobile-menu-overlay');
+    const line1 = document.getElementById('hamburger-line-1');
+    const line2 = document.getElementById('hamburger-line-2');
+    const line3 = document.getElementById('hamburger-line-3');
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (!toggle || !overlay || !line1 || !line2 || !line3) {
+      return;
+    }
+
+    if (toggle.dataset.menuBound === 'true') {
+      return;
+    }
+    toggle.dataset.menuBound = 'true';
 
     let isOpen = false;
 
@@ -137,7 +146,9 @@ const navLinks = [
       line3.classList.add('-rotate-45', '-translate-y-2');
       setTimeout(() => {
         const firstLink = overlay.querySelector('a');
-        if (firstLink) (firstLink as HTMLElement).focus();
+        if (firstLink instanceof HTMLElement) {
+          firstLink.focus();
+        }
       }, 100);
     }
 
@@ -151,7 +162,7 @@ const navLinks = [
       line1.classList.remove('rotate-45', 'translate-y-2');
       line2.classList.remove('opacity-0');
       line3.classList.remove('-rotate-45', '-translate-y-2');
-      (toggle as HTMLElement).focus();
+      toggle.focus();
     }
 
     toggle.addEventListener('click', () => {

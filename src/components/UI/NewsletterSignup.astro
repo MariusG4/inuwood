@@ -139,16 +139,12 @@ const benefits = [
   )
 }
 
-<script>
+<script is:inline>
   const confirmMessage = 'Abonarea ta a fost confirmată. Mulțumim!';
   const defaultSuccessMessage = 'Mulțumim! Verifică emailul pentru a confirma abonarea.';
   const defaultErrorMessage = 'A apărut o eroare. Încearcă din nou.';
 
-  const setStatus = (
-    status: HTMLParagraphElement,
-    message: string,
-    type: 'neutral' | 'success' | 'error' = 'neutral',
-  ) => {
+  const setStatus = (status, message, type = 'neutral') => {
     status.textContent = message;
     status.classList.remove('text-primary-text/70', 'text-accent', 'text-secondary-text');
 
@@ -178,7 +174,7 @@ const benefits = [
     if (
       !(form instanceof HTMLFormElement) ||
       !(emailInput instanceof HTMLInputElement) ||
-      !(status instanceof HTMLParagraphElement) ||
+      !(status instanceof HTMLElement) ||
       !(submitButton instanceof HTMLButtonElement)
     ) {
       return;
