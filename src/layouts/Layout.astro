@@ -354,10 +354,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     swup = new Swup({
       containers: ['#swup'],
       plugins: [
-        new SwupHeadPlugin(),
+        new SwupHeadPlugin({
+          // Keep third-party style/script tags injected at runtime (CookieYes, Turnstile, etc.).
+          persistAssets: true,
+        }),
         new SwupScriptsPlugin({
           head: false,
           body: true,
+          optin: true,
         }),
       ],
     });
