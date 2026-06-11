@@ -4,7 +4,6 @@ import Footer from '../components/Footer.astro';
 import SEOHead from '../components/SEO/SEOHead.astro';
 import OrganizationSchema from '../components/SEO/OrganizationSchema.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
-import Particle from '@astrojs/partytown';
 import '../styles/global.css';
 
 interface Props {
@@ -37,11 +36,10 @@ const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
 <html lang="ro">
   <head>
     <!-- Start CookieYes banner -->
-    // @ts-ignore
     <script
       id="cookieyes"
       src="https://cdn-cookieyes.com/client_data/052e0cefac940a4135d1590a0efd33ea/script.js"
-      partytown
+      type="text/partytown"
       is:inline
     ></script>
     <!-- End CookieYes banner -->
@@ -66,11 +64,15 @@ const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
 
     <!-- Iconify -->
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" is:inline></script>
+    <!-- Google Font: League Spartan -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Google Tag Manager (CookieYes controlled: analytics consent) -->
     {hasGtm && (
       // @ts-ignore
-      <script partytown is:inline set:html={gtmScript} />
+      <script type="text/partytown" is:inline set:html={gtmScript} />
     )}
 
     <!-- Structured Data - Organization Schema -->
@@ -130,13 +132,18 @@ const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
 
   /* Reveal Animation Base Class */
   .reveal-up {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.js-reveal .reveal-up {
     opacity: 0;
     transform: translateY(40px);
     transition:
       opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
       transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .reveal-up.is-visible {
+  html.js-reveal .reveal-up.is-visible {
     opacity: 1;
     transform: translateY(0);
   }
@@ -194,15 +201,41 @@ const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
     revealObserver?.disconnect();
     revealObserver = null;
 
-    const revealElements = document.querySelectorAll<HTMLElement>('.reveal-up');
+    const revealElements = Array.from(document.querySelectorAll<HTMLElement>('.reveal-up'));
     if (!revealElements.length) {
       return;
     }
 
+    document.documentElement.classList.add('js-reveal');
+
+    const showElement = (el: HTMLElement) => {
+      el.classList.add('is-visible');
+      revealObserver?.unobserve(el);
+    };
+
     if (reducedMotionQuery.matches) {
-      revealElements.forEach((el) => el.classList.add('is-visible'));
+      revealElements.forEach(showElement);
       return;
     }
+
+    if (!('IntersectionObserver' in window)) {
+      revealElements.forEach(showElement);
+      return;
+    }
+
+    const showInitiallyVisibleElements = () => {
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      revealElements.forEach((el) => {
+        if (el.classList.contains('is-visible')) {
+          return;
+        }
+
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= viewportHeight * 0.9 && rect.bottom >= 0) {
+          showElement(el);
+        }
+      });
+    };
 
     revealObserver = new IntersectionObserver(
       (entries, observer) => {
@@ -222,6 +255,8 @@ const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
     );
 
     revealElements.forEach((el) => revealObserver?.observe(el));
+    showInitiallyVisibleElements();
+    requestAnimationFrame(showInitiallyVisibleElements);
   };
 
   const renderTurnstileWidgets = () => {
