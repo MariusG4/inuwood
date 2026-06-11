@@ -31,7 +31,7 @@ const products = defineCollection({
         z.object({
           src: z.string(),
           alt: z.string(),
-        }),
+        })
       )
       .optional()
       .default([]),

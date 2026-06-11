@@ -72,7 +72,7 @@ După șase săptămâni, credința transformată complet. Nucul strălucește, 
 ## Cuvintele Clientului
 
 > "Când am văzut credința finalizată, am plâns. Nu doar pentru că arăta spectaculos, ci pentru că am putut vedea aceeași piesă din amintirile mele de copil. InuWood nu a restaurat doar mobilier - a restaurat amintiri."
-> 
+>
 > **- Elena Ionescu, Bacău**
 
 ## Concluzie

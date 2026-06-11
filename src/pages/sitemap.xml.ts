@@ -9,8 +9,14 @@ function pageXml(loc: string, priority: number, changefreq: string) {
 }
 
 export const GET: APIRoute = async () => {
-  const blogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
-  const products = await getCollection('products', ({ data }) => data.draft !== true);
+  const blogPosts = await getCollection(
+    'blog',
+    ({ data }) => data.draft !== true
+  );
+  const products = await getCollection(
+    'products',
+    ({ data }) => data.draft !== true
+  );
 
   const staticPages = [
     { loc: '/', priority: 1.0, changefreq: 'weekly' },

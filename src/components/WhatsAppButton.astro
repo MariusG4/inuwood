@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-  phoneNumber = '40753481013',
-  message = 'Bună! Sunt interesat de produsele InuWood. Aș dori mai multe informații.',
+  phoneNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '40753481013',
+  message = import.meta.env.PUBLIC_WHATSAPP_MESSAGE || 'Bună! Sunt interesat de produsele InuWood. Aș dori mai multe informații.',
   position = 'bottom-right',
 } = Astro.props;
 

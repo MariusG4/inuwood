@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"League Spartan"', 'sans-serif'],
+        sans: ['system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 'sans-serif'],
       },
       colors: {
         primary: {
@@ -31,5 +31,4 @@ export default {
       },
     },
   },
-  plugins: [],
 };

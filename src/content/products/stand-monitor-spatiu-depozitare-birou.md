@@ -19,7 +19,7 @@ Acest stand pentru monitor ridică ecranul la o înălțime ergonomică și ofer
 ### Caracteristici
 
 - **Lemn**: Frasin masiv, 3 cm grosime
-- 
+-
 - **Spații**: 2 compartimente pentru depozitare
 - **Utilizare**: Monitor, laptop, documente
 - **Finisaj**: Ulei natural și ceară de albine

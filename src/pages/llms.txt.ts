@@ -4,15 +4,24 @@ import { getCollection } from 'astro:content';
 const site = 'https://inuwood.ro';
 
 export const GET: APIRoute = async () => {
-  const blogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
-  const products = await getCollection('products', ({ data }) => data.draft !== true);
+  const blogPosts = await getCollection(
+    'blog',
+    ({ data }) => data.draft !== true
+  );
+  const products = await getCollection(
+    'products',
+    ({ data }) => data.draft !== true
+  );
 
   const blogLines = blogPosts
     .map((p) => `- [${p.data.title}](${site}/blog/${p.id}) — ${p.data.excerpt}`)
     .join('\n');
 
   const productLines = products
-    .map((p) => `- [${p.data.title}](${site}/products/${p.id}) — ${p.data.category}, lemn ${p.data.wood}. ${p.data.excerpt}`)
+    .map(
+      (p) =>
+        `- [${p.data.title}](${site}/products/${p.id}) — ${p.data.category}, lemn ${p.data.wood}. ${p.data.excerpt}`
+    )
     .join('\n');
 
   const body = `# InuWood — Atelier de Tâmplărie Artizanală din Bacău, România

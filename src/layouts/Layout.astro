@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import SEOHead from '../components/SEO/SEOHead.astro';
 import OrganizationSchema from '../components/SEO/OrganizationSchema.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Particle from '@astrojs/partytown';
 import '../styles/global.css';
 
 interface Props {
@@ -28,11 +29,7 @@ const {
 
 const GTM_ID = String(import.meta.env.PUBLIC_GTM_ID || import.meta.env.GTM_ID || '').trim();
 const hasGtm = GTM_ID.startsWith('GTM-');
-const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`;
+const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`;
 
 ---
 
@@ -40,10 +37,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <html lang="ro">
   <head>
     <!-- Start CookieYes banner -->
+    // @ts-ignore
     <script
       id="cookieyes"
-      type="text/javascript"
       src="https://cdn-cookieyes.com/client_data/052e0cefac940a4135d1590a0efd33ea/script.js"
+      partytown
       is:inline
     ></script>
     <!-- End CookieYes banner -->
@@ -61,33 +59,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       noindex={noindex}
     />
 
-    <!-- Fonts - Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="VERIFICATION_CODE_HERE" />
+
+
 
     <!-- Iconify -->
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" is:inline></script>
 
     <!-- Google Tag Manager (CookieYes controlled: analytics consent) -->
     {hasGtm && (
-      <script
-        type="text/plain"
-        data-cookieyes="cookieyes-analytics"
-        is:inline
-        set:html={gtmScript}
-      />
+      // @ts-ignore
+      <script partytown is:inline set:html={gtmScript} />
     )}
 
     <!-- Structured Data - Organization Schema -->
@@ -200,10 +183,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   import Swup from 'swup';
   import SwupHeadPlugin from '@swup/head-plugin';
   import SwupScriptsPlugin from '@swup/scripts-plugin';
-  import LocomotiveScroll from 'locomotive-scroll';
+  import SwupA11yPlugin from '@swup/a11y-plugin';
 
   let revealObserver: IntersectionObserver | null = null;
-  let locomotive: LocomotiveScroll | null = null;
   let swup: Swup | null = null;
 
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -240,29 +222,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     );
 
     revealElements.forEach((el) => revealObserver?.observe(el));
-  };
-
-  const destroyLocomotive = () => {
-    if (!locomotive) {
-      return;
-    }
-    locomotive.destroy();
-    locomotive = null;
-    document.documentElement.removeAttribute('data-scroll-orientation');
-  };
-
-  const initLocomotive = () => {
-    if (reducedMotionQuery.matches) {
-      destroyLocomotive();
-      return;
-    }
-
-    destroyLocomotive();
-    locomotive = new LocomotiveScroll({
-      lenisOptions: {
-        smoothWheel: true,
-      },
-    });
   };
 
   const renderTurnstileWidgets = () => {
@@ -343,7 +302,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     initRevealAnimations();
     ensureTurnstileScript();
     renderTurnstileWidgets();
-    initLocomotive();
   };
 
   const initSwup = () => {
@@ -363,13 +321,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           body: true,
           optin: true,
         }),
+        new SwupA11yPlugin(),
       ],
     });
 
     swup.hooks.before('content:replace', () => {
       revealObserver?.disconnect();
       revealObserver = null;
-      destroyLocomotive();
     });
 
     swup.hooks.on('page:view', () => {
@@ -390,6 +348,5 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   reducedMotionQuery.addEventListener('change', () => {
     initRevealAnimations();
-    initLocomotive();
   });
 </script>

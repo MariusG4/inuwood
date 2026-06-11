@@ -11,13 +11,20 @@ interface Props {
 
 const {
   title,
-  description = 'Mobilier din lemn masiv realizat manual cu tehnici tradiționale de tâmplărie. Calitate superioară și design personalizat în Bacău, Moldova, România.',
-  keywords = 'mobilier lemn masiv, tâmplărie artizanală, mobila personalizată, lemn masiv Bacău, mobilier handmade România, restaurare mobilier Bacău, design mobilier lemn, atelier lemn Bacău',
-  ogImage = '/og-image.svg',
-  ogType = 'website',
-  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
-  noindex = false
+  description,
+  keywords,
+  ogImage,
+  ogType,
+  canonicalURL,
+  noindex
 } = Astro.props;
+
+const descriptionToUse = description ?? 'Mobilier din lemn masiv realizat manual cu tehnici tradiționale de tâmplărie. Calitate superioară și design personalizat în Bacău, Moldova, România.';
+const keywordsToUse = keywords ?? 'mobilier lemn masiv, tâmplărie artizanală, mobila personalizată, lemn masiv Bacău, mobilier handmade România, restaurare mobilier Bacău, design mobilier lemn, atelier lemn Bacău';
+const ogImageToUse = ogImage ?? '/og-image.svg';
+const ogTypeToUse = ogType ?? 'website';
+const canonicalURLToUse = canonicalURL ?? new URL(Astro.url.pathname, Astro.site).href;
+const noindexToUse = noindex ?? false;
 
 const siteURL = Astro.site || 'https://inuwood.ro';
 const fullTitle = title.includes('InuWood') ? title : `${title} | InuWood`;
@@ -26,15 +33,15 @@ const fullTitle = title.includes('InuWood') ? title : `${title} | InuWood`;
 <!-- Primary Meta Tags -->
 <title>{fullTitle}</title>
 <meta name="title" content={fullTitle} />
-<meta name="description" content={description} />
-<meta name="keywords" content={keywords} />
+<meta name="description" content={descriptionToUse} />
+<meta name="keywords" content={keywordsToUse} />
 <meta name="author" content="InuWood" />
 <meta name="generator" content={Astro.generator} />
-{noindex && <meta name="robots" content="noindex, nofollow" />}
-{!noindex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+{noindexToUse && <meta name="robots" content="noindex, nofollow" />}
+{!noindexToUse && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
 
 <!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
+<link rel="canonical" href={canonicalURLToUse} />
 
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -44,20 +51,20 @@ const fullTitle = title.includes('InuWood') ? title : `${title} | InuWood`;
 <link rel="shortcut icon" href="/favicon.ico" />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content={ogType} />
-<meta property="og:url" content={canonicalURL} />
+<meta property="og:type" content={ogTypeToUse} />
+<meta property="og:url" content={canonicalURLToUse} />
 <meta property="og:title" content={fullTitle} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(ogImage, siteURL).href} />
+<meta property="og:description" content={descriptionToUse} />
+<meta property="og:image" content={new URL(ogImageToUse, siteURL).href} />
 <meta property="og:locale" content="ro_RO" />
 <meta property="og:site_name" content="InuWood" />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:url" content={canonicalURLToUse} />
 <meta name="twitter:title" content={fullTitle} />
-<meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={new URL(ogImage, siteURL).href} />
+<meta name="twitter:description" content={descriptionToUse} />
+<meta name="twitter:image" content={new URL(ogImageToUse, siteURL).href} />
 
 <!-- Additional Meta Tags -->
 <meta name="theme-color" content="#334B49" />

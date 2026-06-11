@@ -21,7 +21,7 @@ Acest platou de servire din lemn de cireș aduce căldură și autenticitate la 
 - **Lemn**: Cireș masiv, secționat longitudinal
 - **Utilizare**: Servire preparate, brânzeturi, aperitive
 - **Finisaj**: Ulei de in alimentar, sigur pentru contact cu mâncarea
-- 
+-
 - **Mâner**: Caneluri integrate pentru prindere ușoară
 
 ### Proces de Realizare
