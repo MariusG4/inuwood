@@ -1,0 +1,263 @@
+---
+import TurnstileWidget from '../UI/TurnstileWidget.astro';
+
+interface ProductOption {
+  label: string;
+  type?: 'select' | 'radio';
+  required?: boolean;
+  values: Array<{
+    value: string;
+    label: string;
+    priceModifier?: string;
+  }>;
+}
+
+interface Props {
+  productName: string;
+  productSlug: string;
+  basePrice?: string;
+  options?: ProductOption[];
+}
+
+const { productName, productSlug, basePrice, options = [] } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<section class="bg-secondary-bg rounded-[24px] p-8 md:p-12 border border-secondary-text/10">
+  <h2 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-4">
+    Rezervă Acest Produs
+  </h2>
+  <p class="text-lg text-primary-text/70 mb-8">
+    Completează formularul pentru a rezerva <strong>{productName}</strong>. Te contactăm în cel mai scurt timp cu detalii finale despre preț, livrare și termen de execuție.
+  </p>
+
+  {basePrice && (
+    <div class="mb-8 p-6 bg-accent/10 rounded-2xl border border-accent/20">
+      <div class="flex items-baseline gap-2">
+        <span class="text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70">Preț de bază:</span>
+        <span class="text-3xl font-black text-accent">{basePrice}</span>
+      </div>
+      <p class="text-sm text-primary-text/60 mt-2">
+        Prețul final poate varia în funcție de opțiunile selectate și locația de livrare.
+      </p>
+    </div>
+  )}
+
+  <div
+    id="reservation-form-error"
+    class="hidden mb-8 rounded-2xl border border-red-500/30 bg-red-500/10 px-6 py-5 text-primary-text"
+    role="alert"
+    aria-live="assertive"
+    tabindex="-1"
+  >
+    <p class="font-bold text-secondary-text mb-2">Rezervarea nu a putut fi trimisă.</p>
+    <p id="reservation-form-error-text" class="text-primary-text/70">
+      Te rugăm să verifici câmpurile și să încerci din nou.
+    </p>
+  </div>
+
+  <form
+    class="space-y-6"
+    method="POST"
+    name="product-reservation"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    action="/.netlify/functions/validate-form"
+    novalidate
+  >
+    <input type="hidden" name="form-name" value="product-reservation" />
+    <input type="hidden" name="redirect-success" value="/rezervare-confirmata?product={encodeURIComponent(productName)}" />
+    <input type="hidden" name="redirect-error" value={currentPath} />
+    <input type="hidden" name="product" value={productName} />
+    <input type="hidden" name="productSlug" value={productSlug} />
+    {basePrice && <input type="hidden" name="basePrice" value={basePrice} />}
+    <p class="hidden">
+      <label>Nu completa dacă ești om: <input name="bot-field" /></label>
+    </p>
+
+    <!-- Product Options -->
+    {options.length > 0 && (
+      <div class="space-y-6 p-6 bg-primary-bg rounded-2xl border border-secondary-text/10">
+        <h3 class="text-xl font-black text-secondary-text tracking-tight">
+          Selectează Opțiunile
+        </h3>
+        
+        {options.map((option, optionIndex) => (
+          <div>
+            <label class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-3">
+              {option.label}
+              {option.required && <span class="text-accent ml-1">*</span>}
+            </label>
+            
+            {option.type === 'radio' ? (
+              <div class="space-y-3">
+                {option.values.map((val, valIndex) => (
+                  <label class="flex items-center gap-3 p-4 bg-secondary-bg rounded-lg border border-secondary-text/10 cursor-pointer hover:border-accent/50 transition-colors">
+                    <input
+                      type="radio"
+                      name={`option_${optionIndex}_${option.label.toLowerCase().replace(/\s+/g, '_')}`}
+                      value={val.value}
+                      required={option.required}
+                      class="w-5 h-5 text-accent focus:ring-accent focus:ring-2"
+                    />
+                    <div class="flex-1">
+                      <span class="text-primary-text font-medium">{val.label}</span>
+                      {val.priceModifier && (
+                        <span class="text-sm text-accent ml-2">({val.priceModifier})</span>
+                      )}
+                    </div>
+                  </label>
+                ))}
+              </div>
+            ) : (
+              <select
+                name={`option_${optionIndex}_${option.label.toLowerCase().replace(/\s+/g, '_')}`}
+                required={option.required}
+                class="w-full px-6 py-4 bg-secondary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+              >
+                <option value="">Alege {option.label.toLowerCase()}</option>
+                {option.values.map((val) => (
+                  <option value={val.value}>
+                    {val.label}{val.priceModifier ? ` (${val.priceModifier})` : ''}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+        ))}
+      </div>
+    )}
+
+    <!-- Customer Information -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label
+          for={`reservation-name-${productSlug}`}
+          class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+        >
+          Nume <span class="text-accent">*</span>
+        </label>
+        <input
+          type="text"
+          id={`reservation-name-${productSlug}`}
+          name="name"
+          required
+          class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+          autocomplete="name"
+          aria-required="true"
+        />
+      </div>
+
+      <div>
+        <label
+          for={`reservation-email-${productSlug}`}
+          class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+        >
+          Email <span class="text-accent">*</span>
+        </label>
+        <input
+          type="email"
+          id={`reservation-email-${productSlug}`}
+          name="email"
+          required
+          class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+          autocomplete="email"
+          aria-required="true"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label
+        for={`reservation-phone-${productSlug}`}
+        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+      >
+        Telefon <span class="text-accent">*</span>
+      </label>
+      <input
+        type="tel"
+        id={`reservation-phone-${productSlug}`}
+        name="phone"
+        required
+        class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+        autocomplete="tel"
+        aria-required="true"
+      />
+    </div>
+
+    <div>
+      <label
+        for={`reservation-delivery-${productSlug}`}
+        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+      >
+        Locație Livrare <span class="text-accent">*</span>
+      </label>
+      <input
+        type="text"
+        id={`reservation-delivery-${productSlug}`}
+        name="deliveryLocation"
+        required
+        placeholder="Oraș, Județ"
+        class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
+        aria-required="true"
+      />
+      <p class="text-sm text-primary-text/60 mt-2">
+        Necesară pentru calcularea costurilor de transport
+      </p>
+    </div>
+
+    <div>
+      <label
+        for={`reservation-message-${productSlug}`}
+        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+      >
+        Mesaj Adițional
+      </label>
+      <textarea
+        id={`reservation-message-${productSlug}`}
+        name="message"
+        rows="4"
+        class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300 resize-none"
+        placeholder="Întrebări despre personalizări, termen de livrare, sau alte detalii..."
+      ></textarea>
+    </div>
+
+    <TurnstileWidget />
+
+    <div class="flex flex-col sm:flex-row gap-4 items-center justify-between pt-4">
+      <p class="text-sm text-primary-text/60">
+        <span class="text-accent">*</span> Câmpuri obligatorii
+      </p>
+      <button
+        type="submit"
+        class="w-full sm:w-auto bg-accent text-primary-bg px-12 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
+      >
+        Trimite Rezervarea
+      </button>
+    </div>
+  </form>
+</section>
+
+<script is:inline data-swup-reload-script>
+  const params = new URLSearchParams(window.location.search);
+  const errorMessage = document.getElementById('reservation-form-error');
+  const errorText = document.getElementById('reservation-form-error-text');
+  const errors = {
+    required: 'Toate câmpurile marcate cu * sunt obligatorii.',
+    email: 'Te rugăm să introduci o adresă de email validă.',
+    phone: 'Te rugăm să introduci un număr de telefon valid.',
+    verification: 'Verificarea anti-spam a eșuat. Te rugăm să încerci din nou.',
+    server: 'A apărut o eroare la trimitere. Te rugăm să încerci din nou.',
+    'bad-request': 'Cererea trimisă nu este validă. Te rugăm să încerci din nou.',
+  };
+
+  if (params.has('error') && errorMessage) {
+    const errorCode = params.get('error');
+    if (errorText && errors[errorCode]) {
+      errorText.textContent = errors[errorCode];
+    }
+    errorMessage.classList.remove('hidden');
+    errorMessage.focus({ preventScroll: true });
+    errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+</script>

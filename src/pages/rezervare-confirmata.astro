@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Rezervare Confirmată | InuWood";
+const pageDescription = "Rezervarea ta a fost trimisă cu succes. Te vom contacta în cel mai scurt timp.";
+
+// Get product name from URL params
+const productName = Astro.url.searchParams.get('product') || 'produsul selectat';
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  ogType="website"
+>
+  <!-- Success Section -->
+  <section class="min-h-screen pt-[80px] flex items-center px-6 md:px-12">
+    <div class="max-w-3xl mx-auto py-20 text-center">
+      <!-- Success Icon -->
+      <div class="reveal-up mb-8">
+        <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-accent/10 border-2 border-accent">
+          <iconify-icon icon="lucide:check" class="text-5xl text-accent"></iconify-icon>
+        </div>
+      </div>
+
+      <!-- Heading -->
+      <h1 class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-6 reveal-up" style="transition-delay: 100ms">
+        Rezervare Confirmată!
+      </h1>
+
+      <!-- Product Name -->
+      <p class="text-xl md:text-2xl text-accent font-bold mb-8 reveal-up" style="transition-delay: 200ms">
+        {productName}
+      </p>
+
+      <!-- Message -->
+      <div class="reveal-up space-y-4 text-lg text-primary-text/70 mb-12" style="transition-delay: 300ms">
+        <p>
+          Mulțumim pentru rezervarea ta! Am primit cererea și vom reveni către tine <strong class="text-secondary-text">în maxim 24 de ore</strong> cu:
+        </p>
+        
+        <div class="text-left max-w-xl mx-auto mt-8 space-y-4">
+          <div class="flex items-start gap-4 p-4 bg-secondary-bg rounded-xl">
+            <iconify-icon icon="lucide:calculator" class="text-2xl text-accent mt-1 flex-shrink-0"></iconify-icon>
+            <div>
+              <h3 class="font-bold text-secondary-text mb-1">Ofertă de Preț Finală</h3>
+              <p class="text-sm text-primary-text/70">Inclusiv costurile de transport către locația ta</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 bg-secondary-bg rounded-xl">
+            <iconify-icon icon="lucide:calendar-clock" class="text-2xl text-accent mt-1 flex-shrink-0"></iconify-icon>
+            <div>
+              <h3 class="font-bold text-secondary-text mb-1">Termen de Livrare Estimat</h3>
+              <p class="text-sm text-primary-text/70">Calculat în funcție de disponibilitatea curentă</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 bg-secondary-bg rounded-xl">
+            <iconify-icon icon="lucide:credit-card" class="text-2xl text-accent mt-1 flex-shrink-0"></iconify-icon>
+            <div>
+              <h3 class="font-bold text-secondary-text mb-1">Link de Plată Securizat</h3>
+              <p class="text-sm text-primary-text/70">Pentru finalizarea comenzii rapid și sigur</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 bg-secondary-bg rounded-xl">
+            <iconify-icon icon="lucide:package" class="text-2xl text-accent mt-1 flex-shrink-0"></iconify-icon>
+            <div>
+              <h3 class="font-bold text-secondary-text mb-1">Detalii de Livrare</h3>
+              <p class="text-sm text-primary-text/70">Opțiuni și programare pentru livrare/ridicare</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Box -->
+      <div class="reveal-up bg-accent/5 border border-accent/20 rounded-2xl p-6 mb-12" style="transition-delay: 400ms">
+        <div class="flex items-start gap-4 text-left">
+          <iconify-icon icon="lucide:info" class="text-2xl text-accent mt-1 flex-shrink-0"></iconify-icon>
+          <div>
+            <h3 class="font-bold text-secondary-text mb-2">Ce se întâmplă acum?</h3>
+            <p class="text-primary-text/70 text-sm leading-relaxed">
+              Verifică email-ul pentru confirmarea rezervării (inclusiv în folderul spam). 
+              Un membru al echipei noastre va analiza cererea ta și te va contacta telefonic sau prin email 
+              pentru a confirma toate detaliile și a-ți trimite oferta finală.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="reveal-up flex flex-col sm:flex-row gap-4 justify-center items-center" style="transition-delay: 500ms">
+        <a
+          href="/products"
+          class="inline-flex items-center gap-3 bg-accent text-primary-bg px-8 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
+        >
+          <iconify-icon icon="lucide:shopping-bag" class="text-lg"></iconify-icon>
+          Vezi Alte Produse
+        </a>
+        
+        <a
+          href="/"
+          class="inline-flex items-center gap-3 border-2 border-secondary-text text-secondary-text px-8 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text hover:text-primary-bg transition-all duration-500"
+        >
+          <iconify-icon icon="lucide:home" class="text-lg"></iconify-icon>
+          Înapoi Acasă
+        </a>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="reveal-up mt-12 pt-8 border-t border-secondary-text/10" style="transition-delay: 600ms">
+        <p class="text-sm text-primary-text/60 mb-4">
+          Ai întrebări? Contactează-ne direct:
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center text-sm">
+          <a href="tel:+40234555198" class="flex items-center gap-2 text-accent hover:text-secondary-text transition-colors">
+            <iconify-icon icon="lucide:phone" class="text-base"></iconify-icon>
+            +40 234 555 198
+          </a>
+          <span class="hidden sm:inline text-primary-text/30">•</span>
+          <a href="mailto:contact@inuwood.ro" class="flex items-center gap-2 text-accent hover:text-secondary-text transition-colors">
+            <iconify-icon icon="lucide:mail" class="text-base"></iconify-icon>
+            contact@inuwood.ro
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

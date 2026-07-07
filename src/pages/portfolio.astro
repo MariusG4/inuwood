@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CloudinaryImage from '../components/CloudinaryImage.astro';
+import { getCollection } from 'astro:content';
+
+const pageTitle = "Portofoliu - Lucrări Anterioare | InuWood";
+const pageDescription = "Explorează portofoliul nostru de mobilier artizanal din lemn masiv. Fiecare piesă demonstrează meșteșugul tradițional și poate fi realizată la comandă.";
+const pageKeywords = "portofoliu mobilier lemn, lucrări anterioare, mobilier artizanal, mese lemn la comandă, scaune personalizate, mobilier stejar nuc cireș";
+
+const allProducts = await getCollection('products', ({ data }) => data.draft !== true && data.inStock !== true);
+const products = allProducts.map((entry) => ({
+  slug: entry.id,
+  title: entry.data.title,
+  category: entry.data.category,
+  wood: entry.data.wood,
+  year: entry.data.year,
+  image: entry.data.image,
+  alt: entry.data.alt,
+}));
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  ogType="website"
+>
+  <!-- Hero Section -->
+  <section class="min-h-[60vh] pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto" aria-labelledby="portfolio-heading">
+    <div class="w-full py-20">
+      <div class="reveal-up">
+        <span class="util-label text-accent mb-4 block">Portofoliul Nostru</span>
+        <h1 id="portfolio-heading" class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
+          Lucrări Anterioare
+        </h1>
+        <p class="text-xl md:text-2xl text-primary-text/70 max-w-3xl font-light leading-relaxed">
+          Fiecare piesă este realizată cu meticulozitate folosind tehnici tradiționale de îmbinare și lemn masiv de provenință sustenabilă. Acestea pot fi realizate la comandă.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Grid -->
+  <section class="py-32 md:py-48 px-6 md:px-12 bg-primary-bg">
+    <div class="max-w-[1440px] mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-16 gap-y-24">
+        <!-- Column 1 (Odds) -->
+        <div class="flex flex-col gap-y-24">
+          {products.filter((_, i) => i % 2 === 0).map((product) => (
+            <a href={`/portfolio/${product.slug}`} class="group block reveal-up" itemscope itemtype="https://schema.org/Product" aria-label={`Vezi detalii ${product.title}`}>
+              <div class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8">
+                <CloudinaryImage
+                  src={product.image}
+                  alt={product.alt}
+                  width={1200}
+                  height={1600}
+                  class="w-full h-full object-cover grayscale touch-color group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                  loading="lazy"
+                  itemprop="image"
+                />
+                <div class="absolute inset-0 bg-primary-text/20 opacity-0 touch-overlay group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10">
+                  <span class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 touch-badge group-hover:scale-100 transition-transform duration-1000 ease-custom" aria-hidden="true">
+                    Vezi
+                  </span>
+                </div>
+              </div>
+              <div>
+                <span class="util-label text-accent mb-4 block" itemprop="category">{product.category}</span>
+                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3 group-hover:text-accent transition-colors duration-300" itemprop="name">
+                  {product.title}
+                </h3>
+                <div class="text-sm text-primary-text/60 font-medium" itemprop="material">
+                  {product.wood} &bull; {product.year}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <!-- Column 2 (Evens - Staggered) -->
+        <div class="flex flex-col gap-y-24 md:pt-[120px]">
+          {products.filter((_, i) => i % 2 === 1).map((product, index) => (
+            <a href={`/portfolio/${product.slug}`} class="group block reveal-up" style={`transition-delay: ${(index + 1) * 100}ms`} itemscope itemtype="https://schema.org/Product" aria-label={`Vezi detalii ${product.title}`}>
+              <div class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8">
+                <CloudinaryImage
+                  src={product.image}
+                  alt={product.alt}
+                  width={1200}
+                  height={1600}
+                  class="w-full h-full object-cover grayscale touch-color group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+                  loading="lazy"
+                  itemprop="image"
+                />
+                <div class="absolute inset-0 bg-primary-text/20 opacity-0 touch-overlay group-hover:opacity-100 transition-opacity duration-1000 ease-custom flex items-center justify-center z-10">
+                  <span class="w-[96px] h-[96px] rounded-full bg-primary-text flex items-center justify-center text-primary-bg util-label text-[9px] transform scale-50 touch-badge group-hover:scale-100 transition-transform duration-1000 ease-custom" aria-hidden="true">
+                    Vezi
+                  </span>
+                </div>
+              </div>
+              <div>
+                <span class="util-label text-accent mb-4 block" itemprop="category">{product.category}</span>
+                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3 group-hover:text-accent transition-colors duration-300" itemprop="name">
+                  {product.title}
+                </h3>
+                <div class="text-sm text-primary-text/60 font-medium" itemprop="material">
+                  {product.wood} &bull; {product.year}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-32 md:py-48 px-6 md:px-12 bg-secondary-bg">
+    <div class="max-w-[1440px] mx-auto text-center reveal-up">
+      <h2 class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-8">
+        Comandă o Piesă Personalizată
+      </h2>
+      <p class="text-xl text-primary-text/70 mb-12 max-w-2xl mx-auto">
+        Ai o viziune pentru o piesă de mobilier unică? Lucrăm îndeaproape cu clienții pentru a da viață designurilor personalizate.
+      </p>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-4 bg-accent text-primary-bg px-12 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
+        aria-label="Începe proiectul tău personalizat"
+      >
+        Începe Proiectul Tău
+        <iconify-icon icon="lucide:arrow-right" class="text-lg" aria-hidden="true"></iconify-icon>
+      </a>
+    </div>
+  </section>
+
+  <!-- Structured Data for ItemList -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Portofoliu Mobilier InuWood",
+    "description": "Portofoliul nostru de mobilier artizanal din lemn masiv",
+    "numberOfItems": products.length,
+    "itemListElement": products.map((product, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Product",
+        "name": product.title,
+        "category": product.category,
+        "material": product.wood,
+        "image": product.image,
+        "brand": {
+          "@type": "Brand",
+          "name": "InuWood"
+        }
+      }
+    }))
+  })} />
+
+<style>
+  /* Touch devices: always show color images and subtle overlay */
+  @media (hover: none) and (pointer: coarse) {
+    .touch-color {
+      filter: grayscale(0) !important;
+    }
+    .touch-overlay {
+      opacity: 0.35 !important;
+    }
+    .touch-badge {
+      transform: scale(1) !important;
+      opacity: 1 !important;
+    }
+  }
+</style>
+</Layout>
