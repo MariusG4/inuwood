@@ -3,11 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import CloudinaryImage from '../components/CloudinaryImage.astro';
 import { getCollection } from 'astro:content';
 
-const pageTitle = "Produse - Mobilier din Lemn Masiv | InuWood";
-const pageDescription = "Explorează colecția noastră de mobilier artizanal din lemn masiv. Fiecare piesă este realizată manual cu îmbinări tradiționale și lemn de provenință sustenabilă.";
-const pageKeywords = "mobilier lemn masiv, catalog mobilier artizanal, scaune lemn masiv, mese lemn natural, dulapuri lemn, birou lemn masiv, rafturi lemn, mobilier stejar nuc cireș";
+const pageTitle = "Produse în Stoc - Mobilier din Lemn Masiv | InuWood";
+const pageDescription = "Descoperă produsele disponibile în stoc, gata de livrare. Mobilier artizanal din lemn masiv realizat manual cu îmbinări tradiționale.";
+const pageKeywords = "mobilier lemn stoc, produse disponibile, mobilier artizanal vânzare, scaune lemn masiv, mese lemn natural, mobilier stejar nuc cireș";
 
-const allProducts = await getCollection('products', ({ data }) => data.draft !== true);
+const allProducts = await getCollection('products', ({ data }) => data.draft !== true && data.inStock === true);
 const products = allProducts.map((entry) => ({
   slug: entry.id,
   title: entry.data.title,
@@ -29,12 +29,12 @@ const products = allProducts.map((entry) => ({
   <section class="min-h-[60vh] pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto" aria-labelledby="products-heading">
     <div class="w-full py-20">
       <div class="reveal-up">
-        <span class="util-label text-accent mb-4 block">Colecția Noastră</span>
+        <span class="util-label text-accent mb-4 block">Disponibile Acum</span>
         <h1 id="products-heading" class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
-          Produse Meșteșugite Manual
+          Produse în Stoc
         </h1>
         <p class="text-xl md:text-2xl text-primary-text/70 max-w-3xl font-light leading-relaxed">
-          Fiecare piesă este realizată cu meticulozitate folosind tehnici tradiționale de îmbinare și lemn masiv de provenință sustenabilă. Descoperă portofoliul lucrărilor finalizate.
+          Produse finalizate și disponibile pentru livrare imediată. Mobilier artizanal din lemn masiv, realizat cu îmbinări tradiționale și atenție la detalii.
         </p>
       </div>
     </div>
@@ -117,17 +117,17 @@ const products = allProducts.map((entry) => ({
   <section class="py-32 md:py-48 px-6 md:px-12 bg-secondary-bg">
     <div class="max-w-[1440px] mx-auto text-center reveal-up">
       <h2 class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-8">
-        Comandă o Piesă Personalizată
+        Vezi Portofoliul Complet
       </h2>
       <p class="text-xl text-primary-text/70 mb-12 max-w-2xl mx-auto">
-        Ai o viziune pentru o piesă de mobilier unică? Lucrăm îndeaproape cu clienții pentru a da viață designurilor personalizate.
+        Explorează lucrările noastre anterioare care pot fi realizate la comandă. Fiecare piesă este unică și personalizabilă după preferintele tale.
       </p>
       <a
-        href="/contact"
+        href="/portfolio"
         class="inline-flex items-center gap-4 bg-accent text-primary-bg px-12 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500"
-        aria-label="Începe proiectul tău personalizat"
+        aria-label="Vezi portofoliul complet"
       >
-        Începe Proiectul Tău
+        Descoperă Portofoliul
         <iconify-icon icon="lucide:arrow-right" class="text-lg" aria-hidden="true"></iconify-icon>
       </a>
     </div>

@@ -65,14 +65,18 @@ function isValidPhone(phone) {
 }
 
 function validatePayload(formName, payload) {
-  const required = ["name", "email", "phone", "message"];
+  const required = ["name", "email", "phone"];
 
   if (formName === "contact") {
-    required.push("project");
+    required.push("project", "message");
   }
 
   if (formName === "product-inquiry") {
-    required.push("product", "productSlug");
+    required.push("product", "productSlug", "message");
+  }
+
+  if (formName === "product-reservation") {
+    required.push("product", "productSlug", "deliveryLocation");
   }
 
   for (const field of required) {
@@ -149,7 +153,7 @@ export const handler = async (event) => {
     return redirect(successLocation);
   }
 
-  if (!["contact", "product-inquiry"].includes(formName)) {
+  if (!["contact", "product-inquiry", "product-reservation"].includes(formName)) {
     return errorRedirect(event, payload, "bad-request");
   }
 
@@ -177,7 +181,16 @@ export const handler = async (event) => {
     project: clean(payload.project),
     product: clean(payload.product),
     productSlug: clean(payload.productSlug),
+    deliveryLocation: clean(payload.deliveryLocation),
+    basePrice: clean(payload.basePrice),
   };
+
+  // Add all dynamic option fields (option_0_dimensiuni, etc.)
+  for (const [key, value] of Object.entries(payload)) {
+    if (key.startsWith('option_')) {
+      fields[key] = clean(value);
+    }
+  }
 
   try {
     const submitted = await submitToNetlifyForms(event, formName, fields);

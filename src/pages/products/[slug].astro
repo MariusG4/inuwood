@@ -6,7 +6,7 @@ import LocalBusinessSchema from '../../components/SEO/LocalBusinessSchema.astro'
 
 export async function getStaticPaths() {
   const productEntries = await getCollection('products', ({ data }) => {
-    return data.draft !== true;
+    return data.draft !== true && data.inStock === true;
   });
 
   return productEntries.map((entry) => ({
@@ -40,6 +40,9 @@ const pageDescription = entry.data.excerpt;
     dimensions={entry.data.dimensions}
     finish={entry.data.finish}
     slug={entry.id}
+    inStock={entry.data.inStock}
+    basePrice={entry.data.basePrice}
+    options={entry.data.options}
   >
     <Content />
   </ProductDetail>

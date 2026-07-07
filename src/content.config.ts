@@ -39,6 +39,25 @@ const products = defineCollection({
     dimensions: z.string().optional(),
     finish: z.string().optional(),
     featured: z.boolean().optional().default(false),
+    inStock: z.boolean().optional().default(false),
+    basePrice: z.string().optional(),
+    options: z
+      .array(
+        z.object({
+          label: z.string(),
+          type: z.enum(['select', 'radio']).optional().default('select'),
+          required: z.boolean().optional().default(true),
+          values: z.array(
+            z.object({
+              value: z.string(),
+              label: z.string(),
+              priceModifier: z.string().optional(),
+            })
+          ),
+        })
+      )
+      .optional()
+      .default([]),
     draft: z.boolean().optional().default(false),
   }),
 });

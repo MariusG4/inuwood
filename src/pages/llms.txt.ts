@@ -8,16 +8,26 @@ export const GET: APIRoute = async () => {
     'blog',
     ({ data }) => data.draft !== true
   );
-  const products = await getCollection(
+  const allProducts = await getCollection(
     'products',
     ({ data }) => data.draft !== true
   );
+
+  const portfolioItems = allProducts.filter(p => !p.data.inStock);
+  const inStockProducts = allProducts.filter(p => p.data.inStock);
 
   const blogLines = blogPosts
     .map((p) => `- [${p.data.title}](${site}/blog/${p.id}) — ${p.data.excerpt}`)
     .join('\n');
 
-  const productLines = products
+  const portfolioLines = portfolioItems
+    .map(
+      (p) =>
+        `- [${p.data.title}](${site}/portfolio/${p.id}) — ${p.data.category}, lemn ${p.data.wood}. ${p.data.excerpt}`
+    )
+    .join('\n');
+
+  const productLines = inStockProducts
     .map(
       (p) =>
         `- [${p.data.title}](${site}/products/${p.id}) — ${p.data.category}, lemn ${p.data.wood}. ${p.data.excerpt}`
@@ -58,7 +68,13 @@ Oferim mobilier din lemn masiv lucrat manual și servicii de restaurare, fiecare
 - **Accesorii**: Tocătoare, platouri de servire, standuri monitor, trofee, suporturi de umbrele.
 - **Finisaje Naturale**: Ulei de in alimentar, ceară de albine, lac poliuretanic mat — aplicate manual în mai multe straturi.
 
-## Catalog Produse (${products.length})
+## Portofoliu Lucrări Anterioare (${portfolioItems.length})
+Piese realizate anterior care pot fi comandate personalizat:
+
+${portfolioLines}
+
+## Produse în Stoc (${inStockProducts.length})
+Produse disponibile pentru livrare imediată:
 
 ${productLines}
 
@@ -68,7 +84,8 @@ ${blogLines}
 
 ## Link-uri Importante
 - **Pagina Principală**: ${site}/
-- **Catalog Produse**: ${site}/products
+- **Portofoliu**: ${site}/portfolio
+- **Produse în Stoc**: ${site}/products
 - **Blog**: ${site}/blog
 - **Despre Atelier**: ${site}/about
 - **Contact și Comenzi**: ${site}/contact

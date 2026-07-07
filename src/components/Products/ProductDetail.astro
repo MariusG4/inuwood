@@ -1,6 +1,19 @@
 ---
 import CloudinaryImage from '../CloudinaryImage.astro';
 import ProductInquiryForm from './ProductInquiryForm.astro';
+import ProductReservationForm from './ProductReservationForm.astro';
+import { getFullImageUrl } from '../../utils/cloudinaryUrl';
+
+interface ProductOption {
+  label: string;
+  type?: 'select' | 'radio';
+  required?: boolean;
+  values: Array<{
+    value: string;
+    label: string;
+    priceModifier?: string;
+  }>;
+}
 
 interface Props {
   title: string;
@@ -15,6 +28,9 @@ interface Props {
   dimensions?: string;
   finish?: string;
   slug: string;
+  inStock?: boolean;
+  basePrice?: string;
+  options?: ProductOption[];
 }
 
 const {
@@ -30,6 +46,9 @@ const {
   dimensions,
   finish,
   slug,
+  inStock = false,
+  basePrice,
+  options = [],
 } = Astro.props;
 
 const specs = [
@@ -45,6 +64,17 @@ const allImages =
   gallery.length > 0
     ? gallery
     : [{ src: image, alt }];
+
+// Dimensions declared for PhotoSwipe placeholders; also enforced via Cloudinary
+// crop so the lightbox images always match the expected aspect ratio.
+const LIGHTBOX_MAIN_SIZE = { width: 1500, height: 2000 };
+const LIGHTBOX_GALLERY_SIZE = { width: 1600, height: 1200 };
+
+const mainImageFull = getFullImageUrl(image, { ...LIGHTBOX_MAIN_SIZE, crop: 'fill' });
+const galleryImagesFull = allImages.map((img) => ({
+  ...img,
+  fullSrc: getFullImageUrl(img.src, { ...LIGHTBOX_GALLERY_SIZE, crop: 'fill' }),
+}));
 ---
 
 <article class="max-w-[1440px] mx-auto px-6 md:px-12 py-20" itemscope itemtype="https://schema.org/Product">
@@ -57,79 +87,112 @@ const allImages =
     </ol>
   </nav>
 
-  <!-- Product Hero -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-16">
-    <!-- Main Image -->
-    <div class="reveal-up">
-      <div class="relative rounded-[24px] overflow-hidden aspect-[3/4]">
-        <CloudinaryImage
-          src={image}
-          alt={alt}
-          width={1200}
-          height={1600}
-          class="w-full h-full object-cover"
-          loading="eager"
-          itemprop="image"
-        />
-      </div>
-    </div>
-
-    <!-- Product Info -->
-    <div class="reveal-up flex flex-col justify-center" style="transition-delay: 100ms">
-      <span class="util-label text-accent mb-4 block" itemprop="category">{category}</span>
-      <h1 class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-6" itemprop="name">
-        {title}
-      </h1>
-      <p class="text-xl text-primary-text/70 leading-relaxed mb-8" itemprop="description">
-        {excerpt}
-      </p>
-
-      <!-- Specs Grid -->
-      <div class="grid grid-cols-2 gap-4 mb-10">
-        {specs.map((spec) => (
-          <div class="bg-secondary-bg rounded-xl p-4 border border-secondary-text/10">
-            <div class="text-xs uppercase tracking-[0.2em] text-primary-text/50 font-bold mb-1">
-              {spec.label}
-            </div>
-            <div class="text-lg font-bold text-secondary-text">{spec.value}</div>
-          </div>
-        ))}
+  <!-- Product Media (Hero + Gallery) -->
+  <div data-lightbox-gallery={`gallery-${slug}`}>
+    <!-- Product Hero -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-16">
+      <!-- Main Image -->
+      <div class="reveal-up">
+        <div class="group relative rounded-[24px] overflow-hidden aspect-[3/4]">
+          <a
+            href={mainImageFull}
+            data-lightbox-item
+            data-pswp-width={LIGHTBOX_MAIN_SIZE.width}
+            data-pswp-height={LIGHTBOX_MAIN_SIZE.height}
+            class="block w-full h-full cursor-zoom-in"
+            aria-label={`Mărește imaginea: ${alt}`}
+          >
+            <CloudinaryImage
+              src={image}
+              alt={alt}
+              width={1200}
+              height={1600}
+              class="w-full h-full object-cover"
+              loading="eager"
+              itemprop="image"
+            />
+            <span
+              class="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-primary-bg/90 backdrop-blur flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              aria-hidden="true"
+            >
+              <iconify-icon icon="lucide:zoom-in" class="text-xl text-secondary-text"></iconify-icon>
+            </span>
+          </a>
+        </div>
       </div>
 
-      <a
-        href="#inquiry-form"
-        class="inline-flex items-center gap-4 bg-accent text-primary-bg px-8 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500 w-fit"
-      >
-        Solicită Oferă
-        <iconify-icon icon="lucide:arrow-right" class="text-lg" aria-hidden="true"></iconify-icon>
-      </a>
-    </div>
-  </div>
+      <!-- Product Info -->
+      <div class="reveal-up flex flex-col justify-center" style="transition-delay: 100ms">
+        <span class="util-label text-accent mb-4 block" itemprop="category">{category}</span>
+        <h1 class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-6" itemprop="name">
+          {title}
+        </h1>
+        <p class="text-xl text-primary-text/70 leading-relaxed mb-8" itemprop="description">
+          {excerpt}
+        </p>
 
-  <!-- Gallery -->
-  {
-    allImages.length > 1 && (
-      <section class="mb-20" aria-labelledby="gallery-heading">
-        <h2 id="gallery-heading" class="text-2xl md:text-3xl font-black text-secondary-text tracking-tighter mb-8">
-          Galerie
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allImages.map((img, i) => (
-            <div class="relative rounded-[16px] overflow-hidden aspect-[4/3] reveal-up" style={`transition-delay: ${i * 100}ms`}>
-              <CloudinaryImage
-                src={img.src}
-                alt={img.alt}
-                width={800}
-                height={600}
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
+        <!-- Specs Grid -->
+        <div class="grid grid-cols-2 gap-4 mb-10">
+          {specs.map((spec) => (
+            <div class="bg-secondary-bg rounded-xl p-4 border border-secondary-text/10">
+              <div class="text-xs uppercase tracking-[0.2em] text-primary-text/50 font-bold mb-1">
+                {spec.label}
+              </div>
+              <div class="text-lg font-bold text-secondary-text">{spec.value}</div>
             </div>
           ))}
         </div>
-      </section>
-    )
-  }
+
+        <a
+          href="#inquiry-form"
+          class="inline-flex items-center gap-4 bg-accent text-primary-bg px-8 py-4 rounded-full text-sm uppercase font-bold tracking-[0.2em] hover:bg-secondary-text transition-colors duration-500 w-fit"
+        >
+          Solicită Oferă
+          <iconify-icon icon="lucide:arrow-right" class="text-lg" aria-hidden="true"></iconify-icon>
+        </a>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    {
+      allImages.length > 1 && (
+        <section class="mb-20" aria-labelledby="gallery-heading">
+          <h2 id="gallery-heading" class="text-2xl md:text-3xl font-black text-secondary-text tracking-tighter mb-8">
+            Galerie
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {galleryImagesFull.map((img, i) => (
+              <div class="group relative rounded-[16px] overflow-hidden aspect-[4/3] reveal-up" style={`transition-delay: ${i * 100}ms`}>
+                <a
+                  href={img.fullSrc}
+                  data-lightbox-item
+                  data-pswp-width={LIGHTBOX_GALLERY_SIZE.width}
+                  data-pswp-height={LIGHTBOX_GALLERY_SIZE.height}
+                  class="block w-full h-full cursor-zoom-in"
+                  aria-label={`Mărește imaginea: ${img.alt}`}
+                >
+                  <CloudinaryImage
+                    src={img.src}
+                    alt={img.alt}
+                    width={800}
+                    height={600}
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <span
+                    class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-primary-bg/90 backdrop-blur flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    aria-hidden="true"
+                  >
+                    <iconify-icon icon="lucide:zoom-in" class="text-lg text-secondary-text"></iconify-icon>
+                  </span>
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
 
   <!-- Product Content -->
   <div class="max-w-3xl mx-auto mb-20">
@@ -138,9 +201,18 @@ const allImages =
     </div>
   </div>
 
-  <!-- Inquiry Form -->
+  <!-- Inquiry/Reservation Form -->
   <div id="inquiry-form" class="max-w-3xl mx-auto">
-    <ProductInquiryForm productName={title} productSlug={slug} />
+    {inStock ? (
+      <ProductReservationForm
+        productName={title}
+        productSlug={slug}
+        basePrice={basePrice}
+        options={options}
+      />
+    ) : (
+      <ProductInquiryForm productName={title} productSlug={slug} />
+    )}
   </div>
 
   <!-- Back Link -->

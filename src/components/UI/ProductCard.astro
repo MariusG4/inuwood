@@ -10,6 +10,7 @@ interface Props {
   alt: string;
   slug?: string;
   delay?: number;
+  basePath?: string;
 }
 
 const {
@@ -20,7 +21,8 @@ const {
   image,
   alt,
   slug,
-  delay = 0
+  delay = 0,
+  basePath = '/portfolio'
 } = Astro.props;
 
 ---
@@ -28,7 +30,7 @@ const {
 {
   slug ? (
     <a
-      href={`/products/${slug}`}
+      href={`${basePath}/${slug}`}
       class="group block reveal-up"
       style={delay ? `transition-delay: ${delay}ms` : undefined}
       aria-label={`Vezi detalii ${title}`}

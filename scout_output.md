@@ -1,35 +1,18 @@
-# Code Context
+# Project Scout 🛰️ - Updated Mapping
 
-## Files Retrieved
-1. `package.json` (full) - Project metadata, dependencies (Astro, Tailwind, Swup, etc.), scripts.
-2. `astro.config.mjs` (full) - Astro configuration: site URL, static output, HTML compression.
-3. `src/content.config.ts` (full) - Content collections definitions for blog and products using Zod schemas.
-4. `SUMMARY.md` (lines 170-180) - Post-launch TODO section indicating pending tasks.
+## Core Architecture
+- **Framework**: Astro 6.4.4 (Static Output)
+- **Styling**: Tailwind CSS 4.3.0 (Vite-integrated)
+- **Transitions**: Swup 4.9.0 with A11y, Head, and Scripts plugins.
+- **Optimization**: PartyTown for offloading GTM and CookieYes scripts.
 
-## Key Code
-- **package.json**: Shows reliance on Astro 6.3.3, Tailwind 3.4.1, Swup for page transitions, Locomotive Scroll for smooth scrolling, and dotenv for environment variables.
-- **astro.config.mjs**: Simple configuration with static output and compression.
-- **src/content.config.ts**: Defines two content collections (blog, products) with detailed Zod schemas, enabling type-safe content loading.
+## Key Components Mapping
+- `src/layouts/Layout.astro`: Central layout handling SEO, fonts, and client-side orchestration (Reveal animations, Swup).
+- `src/components/SEO/`: Specialized components for Schema.org (Organization, LocalBusiness).
+- `src/components/UI/`: Reusable interface elements (ProductCard, BlogCard, Hero).
+- `src/content/`: Data-driven content managed via `src/content.config.ts`.
 
-## Architecture
-The project follows Astra's standard structure:
-- **src/pages**: Contains .astro files for routing (index, about, contact, 404, 500, blog, products).
-- **src/layouts**: Contains a base Layout.astro component.
-- **src/components**: Reusable UI components.
-- **src/content**: Markdown files for blog and products, processed via content collections.
-- **src/styles**: Global CSS (Tailwind base).
-- Build output goes to `dist/` (already present).
-
-## Start Here
-Open `src/pages/index.astro` to see the home page implementation, as it's the entry point and likely imports layouts and components.
-
-## Observations & Potential Improvements
-- **Critical**: None observed; the project builds and runs (evidenced by dist/).
-- **High**: 
-  - Consider adding ESLint and Prettier for code quality (none found).
-  - The `swup` plugin might interfere with Astro's navigation; ensure it's necessary.
-  - Large `node_modules` and lockfiles (pnpm-lock.yaml, package-lock.json) suggest possible duplication; check if using pnpm correctly.
-- **Moderate**:
-  - The TODO in SUMMARY.md about Google Search Console should be addressed post-deployment.
-  - Check for unused dependencies (e.g., `@swup/head-plugin` and `@swup/scripts-plugin` if not using Swup fully).
-  - Ensure environment variables are handled via `.env` (see .env.example).
+## Observations
+- **Build System**: The project uses pnpm with a workspace configuration for build optimization.
+- **Environment**: Relies on `.env` for Cloudinary, WhatsApp, and GTM configuration.
+- **Ghost Code**: `locomotive-scroll` remains in `package.json` and `global.css` despite being removed from the logic.

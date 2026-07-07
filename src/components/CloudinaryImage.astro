@@ -4,6 +4,8 @@ interface Props {
   alt: string;
   width?: number;
   height?: number;
+  widths?: number[];
+  sizes?: string;
   class?: string;
   loading?: 'lazy' | 'eager';
   itemprop?: string;
@@ -15,6 +17,8 @@ const {
   alt,
   width,
   height,
+  widths = [400, 800, 1200, 1600, 2000],
+  sizes = '(max-width: 1440px) 100vw, 1440px',
   class: className,
   loading = 'lazy',
   itemprop,
@@ -28,16 +32,19 @@ const isCloudinary = !isExternalUrl && !isLocalPath;
 const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
 const cloudinaryReady = isCloudinary && !!cloudName;
 
-const cloudinaryTransformations = [
-  'f_auto',
-  'q_auto',
-  width ? `w_${width}` : undefined,
-  height ? `h_${height}` : undefined,
-  width && height ? 'c_fill' : 'c_limit',
-].filter(Boolean).join(',');
+const generateCloudinaryUrl = (w?: number) => {
+  const transformations = [
+    'f_auto',
+    'q_auto',
+    w ? `w_${w}` : undefined,
+    height && !w ? `h_${height}` : undefined,
+  ].filter(Boolean).join(',');
+  return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations}/${src}`;
+};
 
-const cloudinarySrc = cloudinaryReady
-  ? `https://res.cloudinary.com/${cloudName}/image/upload/${cloudinaryTransformations}/${src}`
+const cloudinarySrc = cloudinaryReady ? generateCloudinaryUrl(width) : undefined;
+const cloudinarySrcSet = cloudinaryReady
+  ? widths.filter(w => !width || w <= width * 2).map(w => `${generateCloudinaryUrl(w)} ${w}w`).join(', ')
   : undefined;
 
 // Fallback to local images when Cloudinary is not configured
@@ -64,6 +71,8 @@ for (const [key, value] of Object.entries(rest)) {
   cloudinaryReady ? (
     <img
       src={cloudinarySrc}
+      srcset={cloudinarySrcSet}
+      sizes={sizes}
       alt={alt}
       width={width}
       height={height}

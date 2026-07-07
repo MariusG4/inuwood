@@ -58,16 +58,14 @@ const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
     />
 
     <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="VERIFICATION_CODE_HERE" />
+    {import.meta.env.PUBLIC_GSC_VERIFICATION && (
+      <meta name="google-site-verification" content={import.meta.env.PUBLIC_GSC_VERIFICATION} />
+    )}
 
 
 
     <!-- Iconify -->
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" is:inline></script>
-    <!-- Google Font: League Spartan -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Google Tag Manager (CookieYes controlled: analytics consent) -->
     {hasGtm && (
@@ -107,6 +105,7 @@ const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
       <Footer />
     </div>
     <WhatsAppButton />
+    <script src="/src/pwa.ts"></script>
   </body>
 </html>
 
@@ -191,6 +190,7 @@ const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
   import SwupHeadPlugin from '@swup/head-plugin';
   import SwupScriptsPlugin from '@swup/scripts-plugin';
   import SwupA11yPlugin from '@swup/a11y-plugin';
+  import { initLightbox } from '../scripts/lightbox';
 
   let revealObserver: IntersectionObserver | null = null;
   let swup: Swup | null = null;
@@ -337,6 +337,7 @@ const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
     initRevealAnimations();
     ensureTurnstileScript();
     renderTurnstileWidgets();
+    initLightbox();
   };
 
   const initSwup = () => {
