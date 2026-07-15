@@ -12,13 +12,15 @@ const pageKeywords = "mobilier lemn masiv Bacău, tâmplărie artizanală, mobil
 
 const featuredProducts = [
   {
-    title: 'Oglinda Artizanului',
+    title: 'Masă Live Edge',
     category: 'Oglinda',
     wood: 'Nuc',
     year: '2024',
     image: 'inuWood/masa-picioare-lemn_1_ej3flr.png',
     alt: 'Oglinda artizanal din lemn de nuc cu finisaj manual',
-    slug: 'oglinda-artizanala'
+    cardClass: '',
+    imageClass: 'object-cover object-center group-hover:grayscale-0 group-hover:scale-[1.08]',
+    slug: 'masa-live-edge'
   },
   {
     title: 'Tocator Live Edge',
@@ -27,6 +29,8 @@ const featuredProducts = [
     year: '2024',
     image: 'inuWood/tocator-lemn_1_wcq7z0',
     alt: 'Platou de dining din stejar cu margine naturală live edge',
+    cardClass: '',
+    imageClass: 'object-contain object-center bg-primary-bg p-6 group-hover:grayscale-0 group-hover:scale-100',
     slug: 'set-platou-tocator-lemn-live-edge'
   }
 ];
@@ -213,6 +217,7 @@ const featuredProducts = [
       </header>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-16 gap-y-24">
+        <!-- Tweak featuredProducts[n].cardClass and imageClass above to adjust only homepage image sizing/fit -->
         <ProductCard {...featuredProducts[0]} slug={featuredProducts[0].slug} />
         <div class="md:pt-[120px]">
           <ProductCard {...featuredProducts[1]} slug={featuredProducts[1].slug} delay={100} />

@@ -11,6 +11,8 @@ interface Props {
   slug?: string;
   delay?: number;
   basePath?: string;
+  cardClass?: string;
+  imageClass?: string;
 }
 
 const {
@@ -22,8 +24,14 @@ const {
   alt,
   slug,
   delay = 0,
-  basePath = '/portfolio'
+  basePath = '/portfolio',
+  cardClass,
+  imageClass
 } = Astro.props;
+
+const rootClass = `group block reveal-up ${cardClass ?? ''}`.trim();
+const defaultImageClass = 'object-cover group-hover:grayscale-0 group-hover:scale-[1.08]';
+const resolvedImageClass = `product-card-img w-full h-full grayscale transition-all duration-1000 ease-custom ${imageClass ?? defaultImageClass}`.trim();
 
 ---
 
@@ -31,7 +39,7 @@ const {
   slug ? (
     <a
       href={`${basePath}/${slug}`}
-      class="group block reveal-up"
+      class={rootClass}
       style={delay ? `transition-delay: ${delay}ms` : undefined}
       aria-label={`Vezi detalii ${title}`}
     >
@@ -41,7 +49,7 @@ const {
           alt={alt}
           width={1200}
           height={1600}
-          class="product-card-img w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+          class={resolvedImageClass}
           loading="lazy"
           itemprop="image"
         />
@@ -68,7 +76,7 @@ const {
     </a>
   ) : (
     <article
-      class="group reveal-up"
+      class={rootClass}
       style={delay ? `transition-delay: ${delay}ms` : undefined}
       itemscope
       itemtype="https://schema.org/Product"
@@ -79,7 +87,7 @@ const {
           alt={alt}
           width={1200}
           height={1600}
-          class="product-card-img w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.08] transition-all duration-1000 ease-custom"
+          class={resolvedImageClass}
           loading="lazy"
           itemprop="image"
         />
