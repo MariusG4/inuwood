@@ -3,7 +3,7 @@ title: 'Alegerea Lemnului Potrivit pentru Proiectul Tău'
 excerpt: 'Un ghid complet pentru selectarea esențelor de lemn în funcție de durabilitate, aspect și aplicație.'
 date: '8 Martie 2024'
 category: 'Materiale'
-image: 'https://images.unsplash.com/photo-1606137034906-cd2fabc93e5b?auto=format&fit=crop&q=80&w=1600'
+image: 'inuWood/tipuri-de-lemn_torini'
 readTime: '7 min citire'
 ---
 
