@@ -38,7 +38,7 @@ const navLinks = [
       <li>
         <a
           href={link.href}
-          class={`text-[10px] uppercase font-bold tracking-[0.2em] hover:text-accent transition-colors duration-500 ${currentPath === link.href ? 'text-accent' : 'text-primary-text/70'}`}
+          class={`text-[10px] uppercase font-bold tracking-[0.2em] hover:text-accent transition-colors duration-500 ${currentPath === link.href ? 'text-accent' : 'text-primary-text/85'}`}
           aria-label={link.ariaLabel}
           aria-current={currentPath === link.href ? 'page' : undefined}
         >
@@ -135,6 +135,30 @@ const navLinks = [
 
     let isOpen = false;
 
+    function setBackgroundInert(isInert) {
+      const backgroundEls = [
+        document.getElementById('main-content'),
+        document.querySelector('footer'),
+        document.getElementById('whatsapp-button'),
+      ];
+      backgroundEls.forEach((el) => {
+        if (!el) return;
+        if (isInert) {
+          el.setAttribute('inert', '');
+          el.setAttribute('aria-hidden', 'true');
+        } else {
+          el.removeAttribute('inert');
+          el.removeAttribute('aria-hidden');
+        }
+      });
+    }
+
+    function getFocusableElements() {
+      return Array.from(
+        overlay.querySelectorAll('a[href], button:not([disabled])')
+      ).filter((el) => el instanceof HTMLElement);
+    }
+
     function openMenu() {
       isOpen = true;
       document.body.style.overflow = 'hidden';
@@ -145,6 +169,7 @@ const navLinks = [
       line1.classList.add('rotate-45', 'translate-y-2');
       line2.classList.add('opacity-0');
       line3.classList.add('-rotate-45', '-translate-y-2');
+      setBackgroundInert(true);
       setTimeout(() => {
         const firstLink = overlay.querySelector('a');
         if (firstLink instanceof HTMLElement) {
@@ -163,6 +188,7 @@ const navLinks = [
       line1.classList.remove('rotate-45', 'translate-y-2');
       line2.classList.remove('opacity-0');
       line3.classList.remove('-rotate-45', '-translate-y-2');
+      setBackgroundInert(false);
       toggle.focus();
     }
 
@@ -176,8 +202,27 @@ const navLinks = [
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (!isOpen) return;
+
+      if (e.key === 'Escape') {
         closeMenu();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const focusable = getFocusableElements();
+        if (!focusable.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     });
 

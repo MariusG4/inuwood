@@ -35,9 +35,9 @@ const benefits = [
             <h2 id={headingId} class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-8">
               {title}
             </h2>
-            <p class="text-xl text-primary-text/70 leading-relaxed max-w-2xl mb-10">{description}</p>
+            <p class="text-xl text-primary-text/85 leading-relaxed max-w-2xl mb-10">{description}</p>
 
-            <ul class="space-y-4 text-primary-text/70 text-base md:text-lg">
+            <ul class="space-y-4 text-primary-text/85 text-base md:text-lg">
               {benefits.map((benefit) => (
                 <li class="flex items-start gap-3">
                   <span class="mt-2 h-2.5 w-2.5 rounded-full bg-accent shrink-0" aria-hidden="true"></span>
@@ -56,7 +56,7 @@ const benefits = [
               <input type="hidden" name="source" value={source} />
 
               <div>
-                <label class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-3">
+                <label class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/85 mb-3">
                   Adresa ta de email
                 </label>
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -78,10 +78,10 @@ const benefits = [
                 </div>
               </div>
 
-              <p data-newsletter-consent class="text-sm text-primary-text/60 leading-relaxed">{consentText}</p>
+              <p data-newsletter-consent class="text-sm text-primary-text/85 leading-relaxed">{consentText}</p>
               <p
                 data-newsletter-status
-                class="min-h-[1.5rem] text-sm font-medium text-primary-text/70"
+                class="min-h-[1.5rem] text-sm font-medium text-primary-text/85"
                 role="status"
                 aria-live="polite"
               ></p>
@@ -97,7 +97,7 @@ const benefits = [
           <h2 id={headingId} class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-8">
             {title}
           </h2>
-          <p class="text-xl text-primary-text/70 mb-12">{description}</p>
+          <p class="text-xl text-primary-text/85 mb-12">{description}</p>
 
           <form class="max-w-xl mx-auto space-y-4" aria-describedby="newsletter-consent newsletter-status">
             <p class="hidden">
@@ -125,10 +125,10 @@ const benefits = [
               </button>
             </div>
 
-            <p data-newsletter-consent class="text-sm text-primary-text/60 leading-relaxed">{consentText}</p>
+            <p data-newsletter-consent class="text-sm text-primary-text/85 leading-relaxed">{consentText}</p>
             <p
               data-newsletter-status
-              class="min-h-[1.5rem] text-sm font-medium text-primary-text/70"
+              class="min-h-[1.5rem] text-sm font-medium text-primary-text/85"
               role="status"
               aria-live="polite"
             ></p>
@@ -146,7 +146,7 @@ const benefits = [
 
   const setStatus = (status, message, type = 'neutral') => {
     status.textContent = message;
-    status.classList.remove('text-primary-text/70', 'text-accent', 'text-secondary-text');
+    status.classList.remove('text-primary-text/85', 'text-accent', 'text-secondary-text');
 
     if (type === 'success') {
       status.classList.add('text-accent');
@@ -158,7 +158,7 @@ const benefits = [
       return;
     }
 
-    status.classList.add('text-primary-text/70');
+    status.classList.add('text-primary-text/85');
   };
 
   document.querySelectorAll('[data-newsletter-signup]').forEach((root) => {

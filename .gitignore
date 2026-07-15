@@ -24,6 +24,8 @@ pnpm-debug.log*
 *.swp
 *.swo
 *~
+.junie/
+.prototype/
 
 # Astro
 .astro/

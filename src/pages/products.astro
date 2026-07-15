@@ -7,6 +7,14 @@ const pageTitle = "Produse în Stoc - Mobilier din Lemn Masiv | InuWood";
 const pageDescription = "Descoperă produsele disponibile în stoc, gata de livrare. Mobilier artizanal din lemn masiv realizat manual cu îmbinări tradiționale.";
 const pageKeywords = "mobilier lemn stoc, produse disponibile, mobilier artizanal vânzare, scaune lemn masiv, mese lemn natural, mobilier stejar nuc cireș";
 
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
 const allProducts = await getCollection('products', ({ data }) => data.draft !== true && data.inStock === true);
 const products = allProducts.map((entry) => ({
   slug: entry.id,
@@ -16,7 +24,17 @@ const products = allProducts.map((entry) => ({
   year: entry.data.year,
   image: entry.data.image,
   alt: entry.data.alt,
+  tags: entry.data.tags,
+  searchText: [entry.data.title, entry.data.category, entry.data.wood, entry.data.year, ...entry.data.tags]
+    .join(' ')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, ''),
 }));
+
+const woodTypes = [...new Set(products.map((product) => product.wood))].sort((a, b) => a.localeCompare(b, 'ro'));
+const categories = [...new Set(products.map((product) => product.category))].sort((a, b) => a.localeCompare(b, 'ro'));
+const tagList = [...new Set(products.flatMap((product) => product.tags))].sort((a, b) => a.localeCompare(b, 'ro'));
 ---
 
 <Layout
@@ -33,12 +51,66 @@ const products = allProducts.map((entry) => ({
         <h1 id="products-heading" class="text-6xl md:text-8xl font-black text-secondary-text tracking-tighter mb-8">
           Produse în Stoc
         </h1>
-        <p class="text-xl md:text-2xl text-primary-text/70 max-w-3xl font-light leading-relaxed">
+        <p class="text-xl md:text-2xl text-primary-text/85 max-w-3xl font-light leading-relaxed">
           Produse finalizate și disponibile pentru livrare imediată. Mobilier artizanal din lemn masiv, realizat cu îmbinări tradiționale și atenție la detalii.
         </p>
       </div>
     </div>
   </section>
+
+  <!-- Product Filters -->
+  {(woodTypes.length > 1 || categories.length > 1 || tagList.length > 1 || products.length > 1) && (
+    <section class="px-6 md:px-12 max-w-[1440px] mx-auto pb-16 md:pb-0" aria-label="Filtrare produse">
+      <div class="flex flex-col md:flex-row md:flex-wrap md:items-end gap-6 md:gap-12 bg-secondary-bg rounded-[24px] p-6 md:p-8" data-product-filters>
+        <div class="flex flex-col gap-2 w-full md:w-auto md:min-w-[280px]">
+          <label for="product-search" class="util-label text-primary-text/85">Caută:</label>
+          <input
+            type="search"
+            id="product-search"
+            name="product-search"
+            class="product-search-input"
+            placeholder="Caută după nume, lemn, categorie..."
+            data-product-search
+          />
+        </div>
+        {woodTypes.length > 1 && (
+          <div class="flex flex-wrap items-center gap-3" role="group" aria-label="Filtrează după tip de lemn">
+            <span class="util-label text-primary-text/85 mr-1">Lemn:</span>
+            <button type="button" class="filter-btn is-active" data-filter-group="wood" data-filter-value="all" aria-pressed="true">Toate</button>
+            {woodTypes.map((wood) => (
+              <button type="button" class="filter-btn" data-filter-group="wood" data-filter-value={slugify(wood)} aria-pressed="false">{wood}</button>
+            ))}
+          </div>
+        )}
+        {categories.length > 1 && (
+          <div class="flex flex-wrap items-center gap-3" role="group" aria-label="Filtrează după categorie">
+            <span class="util-label text-primary-text/85 mr-1">Categorie:</span>
+            <button type="button" class="filter-btn is-active" data-filter-group="category" data-filter-value="all" aria-pressed="true">Toate</button>
+            {categories.map((category) => (
+              <button type="button" class="filter-btn" data-filter-group="category" data-filter-value={slugify(category)} aria-pressed="false">{category}</button>
+            ))}
+          </div>
+        )}
+        {tagList.length > 1 && (
+          <div class="flex flex-wrap items-center gap-3" role="group" aria-label="Filtrează după etichete">
+            <span class="util-label text-primary-text/85 mr-1">Etichete:</span>
+            <button type="button" class="filter-btn is-active" data-filter-group="tag" data-filter-value="all" aria-pressed="true">Toate</button>
+            {tagList.map((tag) => (
+              <button type="button" class="filter-btn" data-filter-group="tag" data-filter-value={slugify(tag)} aria-pressed="false">{tag}</button>
+            ))}
+          </div>
+        )}
+        <button type="button" class="ml-auto md:ml-0 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.2em] text-accent hover:text-secondary-text transition-colors" data-product-filters-reset>
+          <iconify-icon icon="lucide:rotate-ccw" class="text-base" aria-hidden="true"></iconify-icon>
+          Reset
+        </button>
+      </div>
+      <p id="product-filters-live" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+      <p id="product-filters-empty" class="hidden text-center text-primary-text/85 py-16" role="status">
+        Niciun produs nu corespunde filtrelor selectate.
+      </p>
+    </section>
+  )}
 
   <!-- Portfolio Grid -->
   <section class="py-32 md:py-48 px-6 md:px-12 bg-primary-bg">
@@ -47,7 +119,7 @@ const products = allProducts.map((entry) => ({
         <!-- Column 1 (Odds) -->
         <div class="flex flex-col gap-y-24">
           {products.filter((_, i) => i % 2 === 0).map((product) => (
-            <a href={`/products/${product.slug}`} class="group block reveal-up" itemscope itemtype="https://schema.org/Product" aria-label={`Vezi detalii ${product.title}`}>
+            <a href={`/products/${product.slug}`} class="group block reveal-up product-card" data-product-wood={slugify(product.wood)} data-product-category={slugify(product.category)} data-product-tags={product.tags.map(slugify).join(' ')} data-product-search={product.searchText} itemscope itemtype="https://schema.org/Product" aria-label={`Vezi detalii ${product.title}`}>
               <div class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8">
                 <CloudinaryImage
                   src={product.image}
@@ -66,10 +138,10 @@ const products = allProducts.map((entry) => ({
               </div>
               <div>
                 <span class="util-label text-accent mb-4 block" itemprop="category">{product.category}</span>
-                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3 group-hover:text-accent transition-colors duration-300" itemprop="name">
+                <h2 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3 group-hover:text-accent transition-colors duration-300" itemprop="name">
                   {product.title}
-                </h3>
-                <div class="text-sm text-primary-text/60 font-medium" itemprop="material">
+                </h2>
+                <div class="text-sm text-primary-text/85 font-medium" itemprop="material">
                   {product.wood} &bull; {product.year}
                 </div>
               </div>
@@ -80,7 +152,7 @@ const products = allProducts.map((entry) => ({
         <!-- Column 2 (Evens - Staggered) -->
         <div class="flex flex-col gap-y-24 md:pt-[120px]">
           {products.filter((_, i) => i % 2 === 1).map((product, index) => (
-            <a href={`/products/${product.slug}`} class="group block reveal-up" style={`transition-delay: ${(index + 1) * 100}ms`} itemscope itemtype="https://schema.org/Product" aria-label={`Vezi detalii ${product.title}`}>
+            <a href={`/products/${product.slug}`} class="group block reveal-up product-card" data-product-wood={slugify(product.wood)} data-product-category={slugify(product.category)} data-product-tags={product.tags.map(slugify).join(' ')} data-product-search={product.searchText} style={`transition-delay: ${(index + 1) * 100}ms`} itemscope itemtype="https://schema.org/Product" aria-label={`Vezi detalii ${product.title}`}>
               <div class="block relative rounded-[16px] overflow-hidden aspect-[3/4] mb-8">
                 <CloudinaryImage
                   src={product.image}
@@ -99,10 +171,10 @@ const products = allProducts.map((entry) => ({
               </div>
               <div>
                 <span class="util-label text-accent mb-4 block" itemprop="category">{product.category}</span>
-                <h3 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3 group-hover:text-accent transition-colors duration-300" itemprop="name">
+                <h2 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-3 group-hover:text-accent transition-colors duration-300" itemprop="name">
                   {product.title}
-                </h3>
-                <div class="text-sm text-primary-text/60 font-medium" itemprop="material">
+                </h2>
+                <div class="text-sm text-primary-text/85 font-medium" itemprop="material">
                   {product.wood} &bull; {product.year}
                 </div>
               </div>
@@ -119,7 +191,7 @@ const products = allProducts.map((entry) => ({
       <h2 class="text-4xl md:text-6xl font-black text-secondary-text tracking-tighter mb-8">
         Vezi Portofoliul Complet
       </h2>
-      <p class="text-xl text-primary-text/70 mb-12 max-w-2xl mx-auto">
+      <p class="text-xl text-primary-text/85 mb-12 max-w-2xl mx-auto">
         Explorează lucrările noastre anterioare care pot fi realizate la comandă. Fiecare piesă este unică și personalizabilă după preferintele tale.
       </p>
       <a
@@ -157,6 +229,107 @@ const products = allProducts.map((entry) => ({
     }))
   })} />
 
+<script is:inline data-swup-reload-script>
+  (function () {
+    const filters = document.querySelector('[data-product-filters]');
+    if (!filters) return;
+
+    const buttons = Array.from(filters.querySelectorAll('[data-filter-group]'));
+    const searchInput = filters.querySelector('[data-product-search]');
+    const resetButton = filters.querySelector('[data-product-filters-reset]');
+    const cards = Array.from(document.querySelectorAll('.product-card'));
+    const emptyMessage = document.getElementById('product-filters-empty');
+    const liveRegion = document.getElementById('product-filters-live');
+    const state = { wood: 'all', category: 'all', tag: 'all', search: '' };
+
+    const normalizeSearch = (value) => {
+      return value
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim();
+    };
+
+    const announceResults = (visibleCount) => {
+      if (!liveRegion) return;
+      const message = visibleCount === 0
+        ? 'Niciun produs nu corespunde filtrelor.'
+        : `${visibleCount} ${visibleCount === 1 ? 'produs găsit' : 'produse găsite'}`;
+      liveRegion.textContent = message;
+    };
+
+    const applyFilters = () => {
+      const query = normalizeSearch(state.search);
+      let visibleCount = 0;
+      cards.forEach((card) => {
+        const matchesWood = state.wood === 'all' || card.dataset.productWood === state.wood;
+        const matchesCategory = state.category === 'all' || card.dataset.productCategory === state.category;
+        const cardTags = (card.dataset.productTags || '').split(' ').filter(Boolean);
+        const matchesTag = state.tag === 'all' || cardTags.includes(state.tag);
+        const searchText = (card.dataset.productSearch || '').toLowerCase();
+        const matchesSearch = !query || searchText.includes(query);
+        const isVisible = matchesWood && matchesCategory && matchesTag && matchesSearch;
+        card.classList.toggle('hidden', !isVisible);
+        if (isVisible) visibleCount += 1;
+      });
+      if (emptyMessage) {
+        emptyMessage.classList.toggle('hidden', visibleCount !== 0);
+      }
+      announceResults(visibleCount);
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const group = button.dataset.filterGroup;
+        const value = button.dataset.filterValue;
+        if (!group || !value) return;
+
+        state[group] = value;
+
+        buttons
+          .filter((btn) => btn.dataset.filterGroup === group)
+          .forEach((btn) => {
+            const isActive = btn === button;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-pressed', String(isActive));
+          });
+
+        applyFilters();
+      });
+    });
+
+    if (searchInput) {
+      let debounceTimer;
+      searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          state.search = searchInput.value;
+          applyFilters();
+        }, 150);
+      });
+    }
+
+    if (resetButton) {
+      resetButton.addEventListener('click', () => {
+        state.wood = 'all';
+        state.category = 'all';
+        state.tag = 'all';
+        state.search = '';
+        if (searchInput) searchInput.value = '';
+        buttons.forEach((btn) => {
+          const isActive = btn.dataset.filterValue === 'all';
+          btn.classList.toggle('is-active', isActive);
+          btn.setAttribute('aria-pressed', String(isActive));
+        });
+        applyFilters();
+      });
+    }
+
+    applyFilters();
+  })();
+</script>
+
 <style>
   /* Touch devices: always show color images and subtle overlay */
   @media (hover: none) and (pointer: coarse) {
@@ -170,6 +343,51 @@ const products = allProducts.map((entry) => ({
       transform: scale(1) !important;
       opacity: 1 !important;
     }
+  }
+
+  .filter-btn {
+    padding: 0.6rem 1.4rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #2d2c2c;
+    background-color: transparent;
+    border: 1px solid rgba(45, 44, 44, 0.25);
+    transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
+    cursor: pointer;
+  }
+
+  .filter-btn:hover {
+    border-color: #2d2c2c;
+  }
+
+  .filter-btn.is-active {
+    background-color: #334b49;
+    border-color: #334b49;
+    color: #f9f7f2;
+  }
+
+  .product-search-input {
+    width: 100%;
+    padding: 0.6rem 1.2rem;
+    border-radius: 9999px;
+    font-size: 0.95rem;
+    color: #2d2c2c;
+    background-color: #f9f7f2;
+    border: 1px solid rgba(45, 44, 44, 0.2);
+    transition: border-color 300ms ease, box-shadow 300ms ease;
+  }
+
+  .product-search-input::placeholder {
+    color: rgba(45, 44, 44, 0.55);
+  }
+
+  .product-search-input:focus {
+    outline: none;
+    border-color: #334b49;
+    box-shadow: 0 0 0 3px rgba(51, 75, 73, 0.15);
   }
 </style>
 </Layout>

@@ -3,13 +3,16 @@ title: 'Trofeu Lemn Durau'
 category: 'Trofee'
 wood: 'Frasin'
 year: '2023'
-image: 'products/Trofeu-lemn-durau-1'
+image: 'inuWood/Trofeu-lemn-durau-1_zocrpn'
 alt: 'Trofeu lemn durau din lemn de frasin'
 excerpt: 'Trofeu artizanal realizat din lemn de frasin, cu design modern și forme geometrice, perfect pentru competiții sportive sau evenimente corporate.'
 dimensions: '25 x 15 x 8 cm'
 finish: 'Lac poliuretanic mat și ulei'
 featured: false
 draft: false
+gallery:
+  - src: 'inuWood/trofeu-lemn-durau_rf6clt'
+    alt: 'Trofeu Durau prelucrat manual'
 ---
 
 ## Descriere

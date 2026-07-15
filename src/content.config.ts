@@ -38,6 +38,7 @@ const products = defineCollection({
     price: z.string().optional(),
     dimensions: z.string().optional(),
     finish: z.string().optional(),
+    tags: z.array(z.string()).optional().default([]),
     featured: z.boolean().optional().default(false),
     inStock: z.boolean().optional().default(false),
     basePrice: z.string().optional(),

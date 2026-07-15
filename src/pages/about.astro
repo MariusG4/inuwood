@@ -8,6 +8,35 @@ import CloudinaryImage from '../components/CloudinaryImage.astro';
 const pageTitle = "Despre Noi - InuWood";
 const pageDescription = "Descoperă povestea InuWood, atelierul de tâmplărie artizanală din Bacău. Peste două decenii de experiență în crearea mobilierului din lemn masiv cu tehnici tradiționale.";
 const pageKeywords = "despre InuWood, atelier tâmplărie Bacău, meșteri lemn România, mobilier artizanal Bacău, experiență tâmplărie, atelier lemn masiv, craftsman Bacău";
+const aboutPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'Despre InuWood',
+  description:
+    'Descoperă povestea InuWood, atelierul de tâmplărie artizanală din Cluj-Napoca cu peste două decenii de experiență.',
+  url: 'https://inuwood.ro/about',
+  inLanguage: 'ro-RO',
+  mainEntity: {
+    '@type': 'LocalBusiness',
+    name: 'InuWood',
+    foundingDate: '2002',
+    description: 'Atelier de tâmplărie artizanală specializat în mobilier din lemn masiv realizat manual',
+    knowsAbout: [
+      'Tâmplărie artizanală',
+      'Mobilier din lemn masiv',
+      'Restaurare mobilier',
+      'Design personalizat',
+    ],
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Str. Meșteșugului nr. 24',
+      addressLocality: 'Bacău',
+      addressRegion: 'BC',
+      postalCode: '600001',
+      addressCountry: 'RO',
+    },
+  },
+};
 ---
 
 <Layout
@@ -35,7 +64,7 @@ const pageKeywords = "despre InuWood, atelier tâmplărie Bacău, meșteri lemn 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
         <div class="reveal-up">
           <CloudinaryImage
-            src="about-us/despre-noi"
+            src="inuWood/despre-noi_rztrnx"
             alt="Interiorul atelierului InuWood din Bacău cu unelte tradiționale de tâmplărie"
             width={1200}
             height={900}
@@ -47,7 +76,7 @@ const pageKeywords = "despre InuWood, atelier tâmplărie Bacău, meșteri lemn 
           <h2 class="text-4xl md:text-5xl font-black text-secondary-text tracking-tighter mb-8">
             Meșteșug Înrădăcinat în Tradiție
           </h2>
-          <div class="space-y-6 text-lg text-primary-text/70 leading-relaxed">
+          <div class="space-y-6 text-lg text-primary-text/85 leading-relaxed">
             <p>
                 Inu.Wood este un atelier de prelucrare a lemnului care creează obiecte funcționale și durabile, realizate cu respect pentru material și pentru utilizator.
                 Lucrăm cu lemn ales atent, prelucrat manual și finisat cu uleiuri naturale, pentru a păstra textura, rezistența și autenticitatea fiecărei piese.
@@ -88,7 +117,7 @@ const pageKeywords = "despre InuWood, atelier tâmplărie Bacău, meșteri lemn 
           <h3 class="text-2xl md:text-3xl font-black text-secondary-text mb-4">
             Sustenabilitate
           </h3>
-          <p class="text-base text-primary-text/70 leading-relaxed">
+          <p class="text-base text-primary-text/85 leading-relaxed">
             Ne aprovizionăm doar din păduri certificate sustenabil și folosim fiecare parte a lemnului, minimizând deșeurile și respectând resursa.
           </p>
         </article>
@@ -104,7 +133,7 @@ const pageKeywords = "despre InuWood, atelier tâmplărie Bacău, meșteri lemn 
           <h3 class="text-2xl md:text-3xl font-black text-secondary-text mb-4">
             Calitate
           </h3>
-          <p class="text-base text-primary-text/70 leading-relaxed">
+          <p class="text-base text-primary-text/85 leading-relaxed">
             Fiecare piesă trece prin controale riguroase de calitate. Nu acceptăm niciodată compromisuri în privința materialelor sau tehnicilor, asigurând mobilier durabil.
           </p>
         </article>
@@ -120,7 +149,7 @@ const pageKeywords = "despre InuWood, atelier tâmplărie Bacău, meșteri lemn 
           <h3 class="text-2xl md:text-3xl font-black text-secondary-text mb-4">
             Comunitate
           </h3>
-          <p class="text-base text-primary-text/70 leading-relaxed">
+          <p class="text-base text-primary-text/85 leading-relaxed">
             Credem în salarii echitabile, sprijinirea furnizorilor locali și împărtășirea cunoștințelor noastre prin workshop-uri și ucenicie.
           </p>
         </article>
@@ -138,29 +167,5 @@ const pageKeywords = "despre InuWood, atelier tâmplărie Bacău, meșteri lemn 
   />
 
   <!-- Structured Data for About Page -->
-  <script type="application/ld+json" is:inline>
-    {
-      "@context": "https://schema.org",
-      "@type": "AboutPage",
-      "name": "Despre InuWood",
-      "description": "Descoperă povestea InuWood, atelierul de tâmplărie artizanală din Cluj-Napoca cu peste două decenii de experiență.",
-      "url": "https://inuwood.ro/about",
-      "inLanguage": "ro-RO",
-      "mainEntity": {
-        "@type": "LocalBusiness",
-        "name": "InuWood",
-        "foundingDate": "2002",
-        "description": "Atelier de tâmplărie artizanală specializat în mobilier din lemn masiv realizat manual",
-        "knowsAbout": ["Tâmplărie artizanală", "Mobilier din lemn masiv", "Restaurare mobilier", "Design personalizat"],
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Str. Meșteșugului nr. 24",
-          "addressLocality": "Bacău",
-          "addressRegion": "BC",
-          "postalCode": "600001",
-          "addressCountry": "RO"
-        }
-      }
-    }
-  </script>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(aboutPageSchema)} />
 </Layout>

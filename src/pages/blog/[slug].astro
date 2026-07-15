@@ -21,6 +21,7 @@ const { Content } = await render(entry);
 
 const pageTitle = `${entry.data.title} | Blog InuWood`;
 const pageDescription = entry.data.excerpt;
+const pageOgImage = `/og/blog/${entry.id}.png`;
 
 // CTA personalizat bazat pe categorie
 const ctaData = {
@@ -77,7 +78,7 @@ const cta = ctaData[entry.data.category as keyof typeof ctaData] || {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription} ogType="article">
+<Layout title={pageTitle} description={pageDescription} ogImage={pageOgImage} ogType="article">
   <BlogPost 
     title={entry.data.title}
     excerpt={entry.data.excerpt}

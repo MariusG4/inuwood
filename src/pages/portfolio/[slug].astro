@@ -20,11 +20,13 @@ const { Content } = await render(entry);
 
 const pageTitle = `${entry.data.title} - ${entry.data.category} | InuWood`;
 const pageDescription = entry.data.excerpt;
+const pageOgImage = `/og/portfolio/${entry.id}.png`;
 ---
 
 <Layout
   title={pageTitle}
   description={pageDescription}
+  ogImage={pageOgImage}
   ogType="product"
 >
   <ProductDetail

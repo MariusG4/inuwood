@@ -27,17 +27,17 @@ const currentPath = Astro.url.pathname;
   <h2 class="text-3xl md:text-4xl font-black text-secondary-text tracking-tighter mb-4">
     Rezervă Acest Produs
   </h2>
-  <p class="text-lg text-primary-text/70 mb-8">
+  <p class="text-lg text-primary-text/85 mb-8">
     Completează formularul pentru a rezerva <strong>{productName}</strong>. Te contactăm în cel mai scurt timp cu detalii finale despre preț, livrare și termen de execuție.
   </p>
 
   {basePrice && (
     <div class="mb-8 p-6 bg-accent/10 rounded-2xl border border-accent/20">
       <div class="flex items-baseline gap-2">
-        <span class="text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70">Preț de bază:</span>
+        <span class="text-sm font-bold uppercase tracking-[0.2em] text-primary-text/85">Preț de bază:</span>
         <span class="text-3xl font-black text-accent">{basePrice}</span>
       </div>
-      <p class="text-sm text-primary-text/60 mt-2">
+      <p class="text-sm text-primary-text/85 mt-2">
         Prețul final poate varia în funcție de opțiunile selectate și locația de livrare.
       </p>
     </div>
@@ -51,10 +51,14 @@ const currentPath = Astro.url.pathname;
     tabindex="-1"
   >
     <p class="font-bold text-secondary-text mb-2">Rezervarea nu a putut fi trimisă.</p>
-    <p id="reservation-form-error-text" class="text-primary-text/70">
+    <p id="reservation-form-error-text" class="text-primary-text/85">
       Te rugăm să verifici câmpurile și să încerci din nou.
     </p>
   </div>
+
+  <p class="mb-6 text-sm md:text-base text-primary-text/85">
+    Trimite rezervarea. Confirmăm disponibilitatea, prețul final și livrarea, apoi îți trimitem un link securizat de plată.
+  </p>
 
   <form
     class="space-y-6"
@@ -82,36 +86,54 @@ const currentPath = Astro.url.pathname;
           Selectează Opțiunile
         </h3>
         
-        {options.map((option, optionIndex) => (
+        {options.map((option, optionIndex) => {
+          const optionFieldId = `reservation-option-${productSlug}-${optionIndex}`;
+          const optionName = `option_${optionIndex}_${option.label.toLowerCase().replace(/\s+/g, '_')}`;
+          return (
           <div>
-            <label class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-3">
-              {option.label}
-              {option.required && <span class="text-accent ml-1">*</span>}
-            </label>
+            {option.type === 'radio' ? (
+              <p class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/85 mb-3">
+                {option.label}
+                {option.required && <span class="text-accent ml-1">*</span>}
+              </p>
+            ) : (
+              <label
+                for={optionFieldId}
+                class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/85 mb-3"
+              >
+                {option.label}
+                {option.required && <span class="text-accent ml-1">*</span>}
+              </label>
+            )}
             
             {option.type === 'radio' ? (
-              <div class="space-y-3">
-                {option.values.map((val, valIndex) => (
+              <fieldset class="space-y-3" aria-label={option.label}>
+                {option.values.map((val, valueIndex) => {
+                  const radioId = `${optionFieldId}-${valueIndex}`;
+                  return (
                   <label class="flex items-center gap-3 p-4 bg-secondary-bg rounded-lg border border-secondary-text/10 cursor-pointer hover:border-accent/50 transition-colors">
                     <input
+                      id={radioId}
                       type="radio"
-                      name={`option_${optionIndex}_${option.label.toLowerCase().replace(/\s+/g, '_')}`}
+                      name={optionName}
                       value={val.value}
                       required={option.required}
                       class="w-5 h-5 text-accent focus:ring-accent focus:ring-2"
                     />
-                    <div class="flex-1">
+                    <span class="flex-1">
                       <span class="text-primary-text font-medium">{val.label}</span>
                       {val.priceModifier && (
                         <span class="text-sm text-accent ml-2">({val.priceModifier})</span>
                       )}
-                    </div>
+                    </span>
                   </label>
-                ))}
-              </div>
+                  );
+                })}
+              </fieldset>
             ) : (
               <select
-                name={`option_${optionIndex}_${option.label.toLowerCase().replace(/\s+/g, '_')}`}
+                id={optionFieldId}
+                name={optionName}
                 required={option.required}
                 class="w-full px-6 py-4 bg-secondary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
               >
@@ -124,7 +146,8 @@ const currentPath = Astro.url.pathname;
               </select>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
     )}
 
@@ -133,7 +156,7 @@ const currentPath = Astro.url.pathname;
       <div>
         <label
           for={`reservation-name-${productSlug}`}
-          class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+          class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/85 mb-2"
         >
           Nume <span class="text-accent">*</span>
         </label>
@@ -151,7 +174,7 @@ const currentPath = Astro.url.pathname;
       <div>
         <label
           for={`reservation-email-${productSlug}`}
-          class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+          class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/85 mb-2"
         >
           Email <span class="text-accent">*</span>
         </label>
@@ -170,7 +193,7 @@ const currentPath = Astro.url.pathname;
     <div>
       <label
         for={`reservation-phone-${productSlug}`}
-        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/85 mb-2"
       >
         Telefon <span class="text-accent">*</span>
       </label>
@@ -188,7 +211,7 @@ const currentPath = Astro.url.pathname;
     <div>
       <label
         for={`reservation-delivery-${productSlug}`}
-        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/85 mb-2"
       >
         Locație Livrare <span class="text-accent">*</span>
       </label>
@@ -201,7 +224,7 @@ const currentPath = Astro.url.pathname;
         class="w-full px-6 py-4 bg-primary-bg border border-secondary-text/20 rounded-lg focus:outline-none focus:border-accent transition-colors duration-300"
         aria-required="true"
       />
-      <p class="text-sm text-primary-text/60 mt-2">
+      <p class="text-sm text-primary-text/85 mt-2">
         Necesară pentru calcularea costurilor de transport
       </p>
     </div>
@@ -209,7 +232,7 @@ const currentPath = Astro.url.pathname;
     <div>
       <label
         for={`reservation-message-${productSlug}`}
-        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/70 mb-2"
+        class="block text-sm font-bold uppercase tracking-[0.2em] text-primary-text/85 mb-2"
       >
         Mesaj Adițional
       </label>
@@ -225,7 +248,7 @@ const currentPath = Astro.url.pathname;
     <TurnstileWidget />
 
     <div class="flex flex-col sm:flex-row gap-4 items-center justify-between pt-4">
-      <p class="text-sm text-primary-text/60">
+      <p class="text-sm text-primary-text/85">
         <span class="text-accent">*</span> Câmpuri obligatorii
       </p>
       <button
@@ -236,6 +259,10 @@ const currentPath = Astro.url.pathname;
       </button>
     </div>
   </form>
+
+  <p class="mt-6 text-sm text-primary-text/75">
+    Plata se face prin link securizat Stripe după confirmarea comenzii.
+  </p>
 </section>
 
 <script is:inline data-swup-reload-script>
