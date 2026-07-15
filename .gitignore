@@ -34,3 +34,4 @@ pnpm-lock.yaml
 
 *.md
 !README.md
+!src/content/**/*.md
