@@ -5,6 +5,7 @@ import Layout from '../../layouts/Layout.astro';
 import Hero from '../../components/UI/Hero.astro';
 import BlogCard from '../../components/UI/BlogCard.astro';
 import NewsletterSignup from '../../components/UI/NewsletterSignup.astro';
+import Breadcrumbs from '../../components/UI/Breadcrumbs.astro';
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const allPosts = await getCollection('blog', ({ data }) => {
@@ -29,6 +30,16 @@ const pageTitle = page.currentPage === 1
 
 const pageDescription = "Descoperă articole despre tehnici de tâmplărie, design de mobilier, practici sustenabile și povești din atelierul InuWood Bacău.";
 const pageKeywords = "blog tâmplărie, tehnici lemn masiv, design mobilier articole, îmbinări lemn tutorial, restaurare mobilier ghid, sfaturi amenajare lemn";
+const breadcrumbItems = page.currentPage === 1
+  ? [
+      { label: 'Acasă', href: '/' },
+      { label: 'Blog' },
+    ]
+  : [
+      { label: 'Acasă', href: '/' },
+      { label: 'Blog', href: '/blog' },
+      { label: `Pagina ${page.currentPage}` },
+    ];
 ---
 
 <Layout
@@ -36,6 +47,8 @@ const pageKeywords = "blog tâmplărie, tehnici lemn masiv, design mobilier arti
   description={pageDescription}
   keywords={pageKeywords}
 >
+  <Breadcrumbs items={breadcrumbItems} className="pt-28 -mb-12 relative z-10" />
+
   <!-- Hero Section -->
   <Hero
     label="Povești & Insight-uri"

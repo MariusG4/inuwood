@@ -1,5 +1,6 @@
 ---
 import CloudinaryImage from '../CloudinaryImage.astro';
+import Breadcrumbs from '../UI/Breadcrumbs.astro';
 
 interface Props {
   title: string;
@@ -23,6 +24,16 @@ const {
 ---
 
 <article class="max-w-4xl mx-auto px-6 md:px-12 py-20">
+  <Breadcrumbs
+    constrained={false}
+    className="mb-8"
+    items={[
+      { label: 'Acasă', href: '/' },
+      { label: 'Blog', href: '/blog' },
+      { label: title },
+    ]}
+  />
+
   <!-- Article Header -->
   <header class="mb-12">
     <div class="flex items-center gap-3 text-sm text-primary-text/85 font-medium mb-6">

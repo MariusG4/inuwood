@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CloudinaryImage from '../components/CloudinaryImage.astro';
+import Breadcrumbs from '../components/UI/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
 
 const pageTitle = "Produse în Stoc - Mobilier din Lemn Masiv | InuWood";
@@ -43,6 +44,14 @@ const tagList = [...new Set(products.flatMap((product) => product.tags))].sort((
   keywords={pageKeywords}
   ogType="website"
 >
+  <Breadcrumbs
+    className="pt-28 -mb-12 relative z-10"
+    items={[
+      { label: 'Acasă', href: '/' },
+      { label: 'Produse' },
+    ]}
+  />
+
   <!-- Hero Section -->
   <section class="min-h-[60vh] pt-[80px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto" aria-labelledby="products-heading">
     <div class="w-full py-20">

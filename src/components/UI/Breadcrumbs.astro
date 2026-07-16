@@ -1,0 +1,64 @@
+---
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  className?: string;
+  listClassName?: string;
+  constrained?: boolean;
+}
+
+const { items, className = '', listClassName = '', constrained = true } = Astro.props;
+
+const siteURL = Astro.site ?? 'https://inuwood.ro';
+const currentURL = new URL(Astro.url.pathname, siteURL).href;
+
+const breadcrumbItems = items.map((item, index) => {
+  const isLast = index === items.length - 1;
+  const href = item.href ? new URL(item.href, siteURL).href : currentURL;
+
+  return {
+    ...item,
+    href: item.href,
+    isLast,
+    absoluteUrl: href,
+  };
+});
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbItems.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    item: item.absoluteUrl,
+  })),
+};
+---
+
+<nav aria-label="Breadcrumb" class={`${constrained ? 'px-6 md:px-12' : ''} ${className}`}>
+  <ol class={`${constrained ? 'max-w-[1440px] mx-auto' : ''} flex flex-wrap items-center gap-2 text-sm text-primary-text/85 ${listClassName}`}>
+    {breadcrumbItems.map((item) => (
+      <li class="flex items-center gap-2">
+        {item.href && !item.isLast ? (
+          <a href={item.href} class="font-medium hover:text-accent transition-colors">
+            {item.label}
+          </a>
+        ) : (
+          <span aria-current="page" class="font-bold text-secondary-text">
+            {item.label}
+          </span>
+        )}
+        {!item.isLast && (
+          <iconify-icon icon="lucide:chevron-right" class="text-xs text-primary-text/50" aria-hidden="true"></iconify-icon>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
