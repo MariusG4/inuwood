@@ -4,6 +4,7 @@ import Hero from '../components/UI/Hero.astro';
 import SectionHeader from '../components/UI/SectionHeader.astro';
 import CTASection from '../components/UI/CTASection.astro';
 import CloudinaryImage from '../components/CloudinaryImage.astro';
+import Breadcrumbs from '../components/UI/Breadcrumbs.astro';
 
 const pageTitle = "Despre Noi - InuWood";
 const pageDescription = "Descoperă povestea InuWood, atelierul de tâmplărie artizanală din Bacău. Peste două decenii de experiență în crearea mobilierului din lemn masiv cu tehnici tradiționale.";
@@ -45,6 +46,13 @@ const aboutPageSchema = {
   keywords={pageKeywords}
   ogType="website"
 >
+  <Breadcrumbs
+    className="pt-28 -mb-12 relative z-10"
+    items={[
+      { label: 'Acasă', href: '/' },
+      { label: 'Despre Noi' },
+    ]}
+  />
   <!-- Hero Section -->
   <Hero
     label="Povestea Noastră"

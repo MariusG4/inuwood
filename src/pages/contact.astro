@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/UI/Hero.astro';
 import TurnstileWidget from '../components/UI/TurnstileWidget.astro';
 import LocalBusinessSchema from '../components/SEO/LocalBusinessSchema.astro';
+import Breadcrumbs from '../components/UI/Breadcrumbs.astro';
 
 const pageTitle = "Contact - InuWood";
 const pageDescription = "Contactează atelierul InuWood din Bacău pentru comenzi de mobilier personalizat, restaurări sau consultații. Program L-V 9-17, Sâmbătă 10-15.";
@@ -15,6 +16,13 @@ const pageKeywords = "contact InuWood, atelier lemn Bacău contact, comanda mobi
   keywords={pageKeywords}
   ogType="website"
 >
+  <Breadcrumbs
+    className="pt-28 -mb-12 relative z-10"
+    items={[
+      { label: 'Acasă', href: '/' },
+      { label: 'Contact' },
+    ]}
+  />
   <!-- Hero Section -->
   <Hero
     label="Suntem Aici"
