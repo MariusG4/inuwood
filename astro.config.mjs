@@ -44,8 +44,10 @@ export default defineConfig({
         ],
       },
       workbox: {
-        navigateFallback: '/',
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
+        // Keep the PWA fallback for unknown routes, but never serve the
+        // homepage for form success/error redirects that carry query params.
+        navigateFallbackDenylist: [/[?&](success|error)=/],
       },
     }),
   ],

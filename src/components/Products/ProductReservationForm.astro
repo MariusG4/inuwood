@@ -70,7 +70,7 @@ const currentPath = Astro.url.pathname;
     novalidate
   >
     <input type="hidden" name="form-name" value="product-reservation" />
-    <input type="hidden" name="redirect-success" value="/rezervare-confirmata?product={encodeURIComponent(productName)}" />
+    <input type="hidden" name="redirect-success" value={`/rezervare-confirmata?product=${encodeURIComponent(productName)}`} />
     <input type="hidden" name="redirect-error" value={currentPath} />
     <input type="hidden" name="product" value={productName} />
     <input type="hidden" name="productSlug" value={productSlug} />
