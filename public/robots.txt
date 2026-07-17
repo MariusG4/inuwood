@@ -1,7 +1,7 @@
 # ============================================================
 # InuWood.ro - Robots.txt
 # Optimizat pentru Search Engines, LLM Indexing, GEO & AEO
-# https://inuwood.ro/robots.txt
+# https://www.inuwood.ro/robots.txt
 # Last updated: 2026-05-15
 # ============================================================
 

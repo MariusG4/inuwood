@@ -26,7 +26,7 @@ const ogTypeToUse = ogType ?? 'website';
 const canonicalURLToUse = canonicalURL ?? new URL(Astro.url.pathname, Astro.site).href;
 const noindexToUse = noindex ?? false;
 
-const siteURL = Astro.site || 'https://inuwood.ro';
+const siteURL = Astro.site || 'https://www.inuwood.ro';
 const fullTitle = title.includes('InuWood') ? title : `${title} | InuWood`;
 
 import { pwaInfo } from 'virtual:pwa-info';

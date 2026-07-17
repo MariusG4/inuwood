@@ -13,7 +13,7 @@ interface Props {
 
 const { items, className = '', listClassName = '', constrained = true } = Astro.props;
 
-const siteURL = Astro.site ?? 'https://inuwood.ro';
+const siteURL = Astro.site ?? 'https://www.inuwood.ro';
 const currentURL = new URL(Astro.url.pathname, siteURL).href;
 
 const breadcrumbItems = items.map((item, index) => {

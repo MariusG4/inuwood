@@ -5,7 +5,7 @@ import pwa from '@vite-pwa/astro';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://inuwood.ro',
+  site: 'https://www.inuwood.ro',
   output: 'static',
   compressHTML: true,
 

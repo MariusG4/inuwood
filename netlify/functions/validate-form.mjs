@@ -34,7 +34,7 @@ function getSiteUrl(event) {
   const host = getHeader(event, "x-forwarded-host") ?? getHeader(event, "host");
   if (host) return `${protocol}://${host}`;
 
-  return process.env.URL ?? process.env.DEPLOY_PRIME_URL ?? "https://inuwood.ro";
+  return process.env.URL ?? process.env.DEPLOY_PRIME_URL ?? "https://www.inuwood.ro";
 }
 
 function buildRedirect(event, payload, key, fallbackPath = "/contact") {

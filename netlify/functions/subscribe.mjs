@@ -71,7 +71,7 @@ function getSiteUrl(event) {
     process.env.URL ??
     process.env.DEPLOY_PRIME_URL ??
     process.env.DEPLOY_URL ??
-    "https://inuwood.ro"
+    "https://www.inuwood.ro"
   );
 }
 

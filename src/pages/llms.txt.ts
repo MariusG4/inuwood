@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
-const site = 'https://inuwood.ro';
+const site = 'https://www.inuwood.ro';
 
 export const GET: APIRoute = async () => {
   const blogPosts = await getCollection(

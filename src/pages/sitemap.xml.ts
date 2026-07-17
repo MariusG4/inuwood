@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
-const site = 'https://inuwood.ro';
+const site = 'https://www.inuwood.ro';
 const today = new Date().toISOString().split('T')[0];
 
 function pageXml(loc: string, priority: number, changefreq: string) {
