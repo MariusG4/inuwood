@@ -36,7 +36,7 @@ src/components/
   keywords="keyword1, keyword2, keyword3"
   ogImage="/og-image.svg"
   ogType="website"
-  canonicalURL="https://inuwood.ro/page"
+  canonicalURL="https://www.inuwood.ro/page"
   noindex={false}
 />
 ```

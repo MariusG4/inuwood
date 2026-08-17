@@ -154,7 +154,7 @@ Fiecare articol are:
   "author": {"@type": "Organization", "name": "InuWood"},
   "publisher": {...},
   "articleSection": "...",
-  "url": "https://inuwood.ro/blog/..."
+  "url": "https://www.inuwood.ro/blog/..."
 }
 ```
 
