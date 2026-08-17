@@ -15,7 +15,7 @@ basePrice: '7500RON'
 gallery:
   - src: 'inuWood/birou-reglabil-electric-1_b04ekv'
     alt: 'Birou Electric Reglabil - vedere de ansamblu'
-draft: false
+draft: true
 ---
 
 ## Descriere
